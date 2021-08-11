@@ -34,7 +34,6 @@ public class JFFSeleccion extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jBtnSegundaDosis = new javax.swing.JButton();
         jBtnPrimerDosis = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
         jBtnRegresar = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -52,17 +51,22 @@ public class JFFSeleccion extends javax.swing.JFrame {
         jBtnSegundaDosis.setForeground(new java.awt.Color(255, 255, 255));
         jBtnSegundaDosis.setText("Segunda o más");
         jBtnSegundaDosis.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jBtnSegundaDosis.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBtnSegundaDosisActionPerformed(evt);
+            }
+        });
 
         jBtnPrimerDosis.setBackground(new java.awt.Color(51, 102, 255));
         jBtnPrimerDosis.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jBtnPrimerDosis.setForeground(new java.awt.Color(255, 255, 255));
         jBtnPrimerDosis.setText("Primera Dosis");
         jBtnPrimerDosis.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-
-        jButton1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(51, 102, 255));
-        jButton1.setText("Inicio");
-        jButton1.setMargin(new java.awt.Insets(2, 2, 2, 2));
+        jBtnPrimerDosis.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBtnPrimerDosisActionPerformed(evt);
+            }
+        });
 
         jBtnRegresar.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jBtnRegresar.setForeground(new java.awt.Color(51, 102, 255));
@@ -81,14 +85,9 @@ public class JFFSeleccion extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap(210, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jBtnPrimerDosis, javax.swing.GroupLayout.PREFERRED_SIZE, 533, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jBtnSegundaDosis, javax.swing.GroupLayout.PREFERRED_SIZE, 533, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(206, 206, 206))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(26, 26, 26))))
+                    .addComponent(jBtnPrimerDosis, javax.swing.GroupLayout.PREFERRED_SIZE, 533, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jBtnSegundaDosis, javax.swing.GroupLayout.PREFERRED_SIZE, 533, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(206, 206, 206))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(14, 14, 14)
                 .addComponent(jBtnRegresar, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -97,9 +96,7 @@ public class JFFSeleccion extends javax.swing.JFrame {
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(22, 22, 22)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 94, Short.MAX_VALUE)
+                .addContainerGap(158, Short.MAX_VALUE)
                 .addComponent(jBtnPrimerDosis, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(40, 40, 40)
                 .addComponent(jBtnSegundaDosis, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -157,6 +154,14 @@ public class JFFSeleccion extends javax.swing.JFrame {
         regresar();
     }//GEN-LAST:event_jBtnRegresarActionPerformed
 
+    private void jBtnSegundaDosisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnSegundaDosisActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jBtnSegundaDosisActionPerformed
+
+    private void jBtnPrimerDosisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnPrimerDosisActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jBtnPrimerDosisActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -199,7 +204,6 @@ public class JFFSeleccion extends javax.swing.JFrame {
     private javax.swing.JButton jBtnPrimerDosis;
     private javax.swing.JButton jBtnRegresar;
     private javax.swing.JButton jBtnSegundaDosis;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
