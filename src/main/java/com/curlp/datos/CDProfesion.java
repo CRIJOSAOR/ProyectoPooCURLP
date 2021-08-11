@@ -117,7 +117,7 @@ public class CDProfesion {
         }
         return miLista;
     }
-    
+
     //metodo que nos permitira llenar el combo de profesiones
     public List<String> cragarComboProfesiones() throws SQLException {
 
@@ -130,7 +130,7 @@ public class CDProfesion {
             miLista = new ArrayList<>();
             miLista.add("--SELECCIONE--");
             while (rs.next()) {
-               miLista.add(rs.getString("Profesiones"));
+                miLista.add(rs.getString("Profesiones"));
             }
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Error" + e.getMessage());
@@ -138,4 +138,3 @@ public class CDProfesion {
         return miLista;
     }
 }
-
