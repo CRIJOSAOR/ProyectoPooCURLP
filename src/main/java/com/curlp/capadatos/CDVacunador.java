@@ -71,7 +71,7 @@ public class CDVacunador {
     //Metodo para eliminar un vacunador de la tabla.
     public void eliminarVacunador(CLVacunador cl) throws SQLException {
         
-       String sql = "{CALL actualizarVacunador(?)}";
+       String sql = "{CALL eliminarVacunador(?)}";
         
        try {
            ps = cn.prepareCall(sql);
