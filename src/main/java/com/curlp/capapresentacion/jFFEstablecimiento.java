@@ -48,8 +48,8 @@ public class jFFEstablecimiento extends javax.swing.JFrame {
     private void poblarTablasEstablecimiento() throws SQLException {
         limpiarTabla();
 
-        CDEstablecimiento cdc = new CDEstablecimiento();
-        List<CLEstablecimiento> miLista = cdc.obtenerListaEstablecimiento();
+        CDEstablecimiento cde = new CDEstablecimiento();
+        List<CLEstablecimiento> miLista = cde.obtenerListaEstablecimiento();
         DefaultTableModel temp = (DefaultTableModel) this.jTblEstablecimiento.getModel();
 
         miLista.stream().map((CLEstablecimiento cl) -> {
@@ -62,17 +62,17 @@ public class jFFEstablecimiento extends javax.swing.JFrame {
     // Metodo para crear el correlativo 
 
     private void encontrarCorrelativo() throws SQLException {
-        CDEstablecimiento cdp = new CDEstablecimiento();
+        CDEstablecimiento cde = new CDEstablecimiento();
         CLEstablecimiento cl = new CLEstablecimiento();
 
-        cl.setCodEstablecimiento(cdp.autoincrementarEstablecimiento());
+        cl.setCodEstablecimiento(cde.autoincrementarEstablecimiento());
         this.jTFCod_Establecimiento.setText(String.valueOf(cl.getCodEstablecimiento()));
 
     }
 
     //metodo para habilitar y deshabilitar botones
-    private void habilitarBotones(boolean agregar, boolean editar, boolean eliminar, boolean limpiar) {
-        this.jBtnAgregrar.setEnabled(agregar);
+    private void habilitarBotones(boolean guardar, boolean editar, boolean eliminar, boolean limpiar) {
+        this.jBtnGuardar.setEnabled(guardar);
         this.jBtnEditar.setEnabled(editar);
         this.jBtnEliminar.setEnabled(eliminar);
         this.jBtnLimpiar.setEnabled(limpiar);
@@ -90,33 +90,33 @@ public class jFFEstablecimiento extends javax.swing.JFrame {
     private boolean validarTextField() {
         boolean estado;
 
-        estado = this.jTFNombre_Establecimiento.getText().equals("");
+        estado = !this.jTFNombre_Establecimiento.getText().equals("");
 
         return estado;
     }
 
     private void insertarEstablecimiento() {
         if (!validarTextField()) {
-            JOptionPane.showMessageDialog(null, "Ingrese el nombre del Establecimiento ", "Proyecto Vacunación",
-                    JOptionPane.INFORMATION_MESSAGE);
+             JOptionPane.showMessageDialog(null, "tiene que ingresar nombre del Establecimiento", "Proyecto Vacunación",
+                                           JOptionPane.INFORMATION_MESSAGE);
+             this.jTFNombre_Establecimiento.requestFocus();
+        }else{
             
-            this.jTFNombre_Establecimiento.requestFocus();
-        } else {
+        
             try {
                 CDEstablecimiento cde = new CDEstablecimiento();
                 CLEstablecimiento cl = new CLEstablecimiento();
                 cl.setNombreEstablecimiento(this.jTFNombre_Establecimiento.getText().trim());
                 cde.insertarEstablecimiento(cl);
-                JOptionPane.showMessageDialog(null, "Registrado correctamente", "Proyecto Vacunación",
-                        JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Registrado almacenado satifactoriamente", "Proyecto Vacunación",
+                                               JOptionPane.INFORMATION_MESSAGE);
                 
-                this.jTFNombre_Establecimiento.requestFocus();
-            } catch (SQLException e) {
-                JOptionPane.showMessageDialog(null, "Error al almacenar" + e);
+              
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(null, "Error al almacenar" + ex);
                 this.jTFNombre_Establecimiento.requestFocus();
             }
-
-        }
+         } 
     }
 
     private void guardar() throws SQLException {
@@ -131,11 +131,12 @@ public class jFFEstablecimiento extends javax.swing.JFrame {
     //metodo para actualicar un establecimiento
     private void actualizarEstablecimiento() {
         if (!validarTextField()) {
-            JOptionPane.showMessageDialog(null, "Ingrese el nombre del Establecimiento ", "Proyecto Vacunación",
-                    JOptionPane.INFORMATION_MESSAGE);
-            
+            JOptionPane.showMessageDialog(null, "tiene que ingresar el nombre del Establecimiento ", "Proyecto Vacunación",
+                                                 JOptionPane.INFORMATION_MESSAGE);
+               
             this.jTFNombre_Establecimiento.requestFocus();
-        } else {
+            
+               }else{
             try {
                 CDEstablecimiento cde = new CDEstablecimiento();
                 CLEstablecimiento cl = new CLEstablecimiento();
@@ -143,13 +144,13 @@ public class jFFEstablecimiento extends javax.swing.JFrame {
                 cl.setNombreEstablecimiento(this.jTFNombre_Establecimiento.getText().trim());
                 cde.actualizarEstablecimiento(cl);
 
-                JOptionPane.showMessageDialog(null, "Registrado actualizado", "Proyecto Vacunación",
+                JOptionPane.showMessageDialog(null, "Registro actualizado satisfactoriamente", "Proyecto Vacunación",
                         JOptionPane.INFORMATION_MESSAGE);
                 
-                this.jTFNombre_Establecimiento.requestFocus();
+                
 
-            } catch (SQLException e) {
-                JOptionPane.showMessageDialog(null, "Error al modificar almacenar" + e);
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(null, "Error al modificar el registro" + ex);
                 this.jTFNombre_Establecimiento.requestFocus();
             }
         }
@@ -227,19 +228,19 @@ public class jFFEstablecimiento extends javax.swing.JFrame {
         jBtnEditar = new javax.swing.JButton();
         jBtnLimpiar = new javax.swing.JButton();
         jBtnEliminar = new javax.swing.JButton();
-        jBtnAgregrar = new javax.swing.JButton();
-        jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTblEstablecimiento = new javax.swing.JTable();
+        jPanel4 = new javax.swing.JPanel();
+        jPanel2 = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setBackground(new java.awt.Color(153, 153, 153));
+        setBackground(new java.awt.Color(255, 255, 255));
 
-        jPanel1.setBackground(new java.awt.Color(51, 102, 255));
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 3, 48)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText("ESTABLECIMIENTO");
+        jLabel1.setFont(new java.awt.Font("Tahoma", 3, 24)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(0, 153, 153));
+        jLabel1.setText("GESTION DE ESTABLECIMIENTO");
 
         jLblXEstablecimiento.setFont(new java.awt.Font("Tahoma", 0, 48)); // NOI18N
         jLblXEstablecimiento.setForeground(new java.awt.Color(255, 0, 0));
@@ -255,29 +256,36 @@ public class jFFEstablecimiento extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(198, Short.MAX_VALUE)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 515, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(155, 155, 155)
+                .addGap(26, 26, 26)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 440, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLblXEstablecimiento, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLblXEstablecimiento, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 17, Short.MAX_VALUE))
+                    .addComponent(jLblXEstablecimiento, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(19, 19, 19))
         );
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true), "Establecimiento", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 3, 12))); // NOI18N
 
-        jLabel2.setFont(new java.awt.Font("Tahoma", 3, 12)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel2.setText("Nombre Establecimiento");
 
-        jLabel3.setFont(new java.awt.Font("Tahoma", 3, 12)); // NOI18N
+        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel3.setText("Codigo de Establecimiento");
+
+        jTFCod_Establecimiento.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTFCod_EstablecimientoActionPerformed(evt);
+            }
+        });
 
         jTFNombre_Establecimiento.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -327,44 +335,34 @@ public class jFFEstablecimiento extends javax.swing.JFrame {
             }
         });
 
-        jBtnAgregrar.setBackground(new java.awt.Color(255, 255, 255));
-        jBtnAgregrar.setFont(new java.awt.Font("Tahoma", 3, 12)); // NOI18N
-        jBtnAgregrar.setText("Agregar");
-        jBtnAgregrar.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        jBtnAgregrar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jBtnAgregrarActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(83, 83, 83)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(134, 134, 134)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel3Layout.createSequentialGroup()
                                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jTFNombre_Establecimiento))
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel3Layout.createSequentialGroup()
+                                .addGap(6, 6, 6)
                                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jTFCod_Establecimiento, javax.swing.GroupLayout.PREFERRED_SIZE, 333, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jTFCod_Establecimiento, javax.swing.GroupLayout.PREFERRED_SIZE, 417, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addContainerGap(217, Short.MAX_VALUE))
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(39, 39, 39)
-                        .addComponent(jBtnAgregrar, javax.swing.GroupLayout.PREFERRED_SIZE, 318, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jBtnLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jBtnLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 274, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 84, Short.MAX_VALUE)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jBtnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jBtnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jBtnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(33, 33, 33))
+                        .addComponent(jBtnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(68, 68, 68)
+                        .addComponent(jBtnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(118, 118, 118)
+                        .addComponent(jBtnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(149, 149, 149))))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -372,40 +370,18 @@ public class jFFEstablecimiento extends javax.swing.JFrame {
                 .addGap(29, 29, 29)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTFCod_Establecimiento, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jBtnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTFNombre_Establecimiento, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(41, 41, 41)
-                        .addComponent(jBtnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(43, 43, 43)
-                        .addComponent(jBtnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(30, 30, 30)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jBtnLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jBtnAgregrar, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(23, Short.MAX_VALUE))
-        );
-
-        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
-
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 34, Short.MAX_VALUE)
+                    .addComponent(jTFCod_Establecimiento, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTFNombre_Establecimiento, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(37, 37, 37)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jBtnLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jBtnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jBtnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jBtnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jTblEstablecimiento.setBackground(new java.awt.Color(204, 204, 204));
@@ -426,18 +402,48 @@ public class jFFEstablecimiento extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(jTblEstablecimiento);
 
+        jPanel4.setBackground(new java.awt.Color(0, 153, 153));
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 22, Short.MAX_VALUE)
+        );
+
+        jPanel2.setBackground(new java.awt.Color(0, 153, 153));
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 25, Short.MAX_VALUE)
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 891, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 891, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -445,11 +451,12 @@ public class jFFEstablecimiento extends javax.swing.JFrame {
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(30, 30, 30)
                 .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(18, 18, 18)
+                .addGap(28, 28, 28)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(204, 204, 204))
+                .addGap(36, 36, 36)
+                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         pack();
@@ -464,15 +471,11 @@ public class jFFEstablecimiento extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTFNombre_EstablecimientoActionPerformed
 
-    private void jBtnAgregrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnAgregrarActionPerformed
-
-    }//GEN-LAST:event_jBtnAgregrarActionPerformed
-
     private void jBtnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnGuardarActionPerformed
         try {
             guardar();
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Error al almacenar" + ex);
+            JOptionPane.showMessageDialog(null, "Error al guardar" + ex);
         }
     }//GEN-LAST:event_jBtnGuardarActionPerformed
 
@@ -485,7 +488,7 @@ public class jFFEstablecimiento extends javax.swing.JFrame {
         try {
             editar();
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Error al actualizar" + ex);
+            JOptionPane.showMessageDialog(null, "Error al editar" + ex);
         }
     }//GEN-LAST:event_jBtnEditarActionPerformed
 
@@ -502,6 +505,10 @@ public class jFFEstablecimiento extends javax.swing.JFrame {
 
         limpiarTextField();
     }//GEN-LAST:event_jBtnLimpiarActionPerformed
+
+    private void jTFCod_EstablecimientoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTFCod_EstablecimientoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTFCod_EstablecimientoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -543,7 +550,6 @@ public class jFFEstablecimiento extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jBtnAgregrar;
     private javax.swing.JButton jBtnEditar;
     private javax.swing.JButton jBtnEliminar;
     private javax.swing.JButton jBtnGuardar;
@@ -555,6 +561,7 @@ public class jFFEstablecimiento extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField jTFCod_Establecimiento;
     private javax.swing.JTextField jTFNombre_Establecimiento;
