@@ -35,11 +35,12 @@ public class CDEstablecimiento {
 
     // metodo para insertar Estableimiento en la tabla.
     public void insertarEstablecimiento(CLEstablecimiento cl) throws SQLException {
-        String sql = "{CALL insertarEstablecimiento(?)}";
-
+        String sql = "{ CALL insertarEstablecimiento(?,?)}";
+                       
         try {
             ps = cn.prepareCall(sql);
-            ps.setString(1, cl.getNombreEstablecimiento());
+             ps.setInt(1, cl.getCodEstablecimiento());
+            ps.setString(2, cl.getNombreEstablecimiento( ));
             ps.execute();
 
         } catch (SQLException e) {
@@ -50,7 +51,7 @@ public class CDEstablecimiento {
 
     //metodo para actualizar Establecimiento en la tabla
     public void actualizarEstablecimiento(CLEstablecimiento cl) throws SQLException {
-        String sql = "{CALL actualizarEstablecimiento(?)}";
+        String sql = "{CALL actualizarEstablecimiento(?,?)}";
 
         try {
             ps = cn.prepareCall(sql);

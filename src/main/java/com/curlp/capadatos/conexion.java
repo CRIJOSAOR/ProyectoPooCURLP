@@ -16,7 +16,7 @@ import java.sql.DriverManager;
 public class conexion {
     private static String url = "jdbc:mysql://localhost:3306/proyectopoocurlpbd?zeroDateTimeBehavior=CONVERT_TO_NULL";
     private static String user = "root" ;
-    private static String clave = "Alejandra*2001*"; 
+    private static String clave = "ANFAalejandra192000"; 
     
     
     public static Connection conectar() throws SQLException {
