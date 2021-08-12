@@ -130,7 +130,7 @@ public class CDProfesion {
             miLista = new ArrayList<>();
             miLista.add("--SELECCIONE--");
             while (rs.next()) {
-                miLista.add(rs.getString("Profesiones"));
+                miLista.add(rs.getString("Profesion"));
             }
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Error" + e.getMessage());

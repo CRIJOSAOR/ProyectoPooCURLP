@@ -243,7 +243,8 @@ public class JFFPaciente extends javax.swing.JFrame {
             paciente.setNombres(this.jTFnombres.getText().trim());
             paciente.setApellidos(this.jTFapellidos.getText().trim());
             paciente.setNumCelular(this.jTFnumCelular.getText().trim());
-            paciente.setFechaNacimiento(this.jTFFecha.getText().trim());
+            //paciente.setFechaNacimiento(this.jDCFechaNacimiento.getDateFormatString().trim());
+            paciente.setFechaNacimiento(this.jFTFfechaNacimiento.getText().trim());
             paciente.setLugarTrabajo(this.jTFlugarTrabajo.getText().trim());
             paciente.setDireccion(this.jTAdireccion.getText().trim());
             paciente.setIdSexo(idSexo);
@@ -277,7 +278,7 @@ public class JFFPaciente extends javax.swing.JFrame {
             paciente.setNombres(this.jTFnombres.getText().trim());
             paciente.setApellidos(this.jTFapellidos.getText().trim());
             paciente.setNumCelular(this.jTFnumCelular.getText().trim());
-            paciente.setFechaNacimiento(this.jTFFecha.getText().trim());
+            paciente.setFechaNacimiento(this.jFTFfechaNacimiento.getText().trim());
             paciente.setLugarTrabajo(this.jTFlugarTrabajo.getText().trim());
             paciente.setDireccion(this.jTAdireccion.getText().trim());
             paciente.setIdSexo(idSexo);
@@ -312,7 +313,7 @@ public class JFFPaciente extends javax.swing.JFrame {
         this.jTFnombres.setText(String.valueOf(this.jTBPacientes.getValueAt(this.jTBPacientes.getSelectedRow(), 1)));
         this.jTFapellidos.setText(String.valueOf(this.jTBPacientes.getValueAt(this.jTBPacientes.getSelectedRow(), 2)));
         this.jTFnumCelular.setText(String.valueOf(this.jTBPacientes.getValueAt(this.jTBPacientes.getSelectedRow(), 3)));
-        this.jTFFecha.setText(String.valueOf(this.jTBPacientes.getValueAt(this.jTBPacientes.getSelectedRow(), 4)));
+        this.jFTFfechaNacimiento.setText(String.valueOf(this.jTBPacientes.getValueAt(this.jTBPacientes.getSelectedRow(), 4)));
         this.jTFlugarTrabajo.setText(String.valueOf(this.jTBPacientes.getValueAt(this.jTBPacientes.getSelectedRow(), 5)));
         this.jTAdireccion.setText(String.valueOf(this.jTBPacientes.getValueAt(this.jTBPacientes.getSelectedRow(), 6)));
         if(String.valueOf(this.jTBPacientes.getValueAt(this.jTBPacientes.getSelectedRow(), 5)).length() != 0){
@@ -392,7 +393,7 @@ public class JFFPaciente extends javax.swing.JFrame {
         this.jCboProfesion.setSelectedIndex(0);
         this.jCBtrabaja.setSelected(false);
         this.jTAdireccion.setText("");
-        this.jTFFecha.setText("");
+        this.jFTFfechaNacimiento.setText("");
         
         // devolver los bordes a default
         
@@ -406,7 +407,7 @@ public class JFFPaciente extends javax.swing.JFrame {
         this.jCboProfesion.setBorder(this.border);
         this.jCBtrabaja.setBorder(this.border);
         this.jTAdireccion.setBorder(this.border);
-        this.jTFFecha.setBorder(this.border);
+        this.jFTFfechaNacimiento.setBorder(this.border);
         
     }
     
@@ -504,7 +505,6 @@ public class JFFPaciente extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jTFnombres = new javax.swing.JTextField();
-        jTFFecha = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTAdireccion = new javax.swing.JTextArea();
         jCBtrabaja = new javax.swing.JCheckBox();
@@ -516,6 +516,7 @@ public class JFFPaciente extends javax.swing.JFrame {
         jCboProfesion = new javax.swing.JComboBox<>();
         jTFnumCelular = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
+        jFTFfechaNacimiento = new javax.swing.JFormattedTextField();
         JPBotonesGestion = new javax.swing.JPanel();
         jBtnEditar = new javax.swing.JButton();
         jBtnGuardar = new javax.swing.JButton();
@@ -633,7 +634,6 @@ public class JFFPaciente extends javax.swing.JFrame {
         jLabel7.setText("Si es asi, especifique donde:");
         JPDatosPaciente.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 220, -1, -1));
         JPDatosPaciente.add(jTFnombres, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 60, 120, 30));
-        JPDatosPaciente.add(jTFFecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 100, 120, 30));
 
         jTAdireccion.setColumns(20);
         jTAdireccion.setRows(5);
@@ -675,6 +675,13 @@ public class JFFPaciente extends javax.swing.JFrame {
         jLabel11.setFont(new java.awt.Font("Lucida Grande", 0, 10)); // NOI18N
         jLabel11.setText("Fecha de ");
         JPDatosPaciente.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 100, -1, -1));
+
+        try {
+            jFTFfechaNacimiento.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("####-##-##")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+        JPDatosPaciente.add(jFTFfechaNacimiento, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 100, 130, 30));
 
         getContentPane().add(JPDatosPaciente, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 70, 420, 390));
 
@@ -723,15 +730,17 @@ public class JFFPaciente extends javax.swing.JFrame {
         JPBotonesGestionLayout.setHorizontalGroup(
             JPBotonesGestionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(JPBotonesGestionLayout.createSequentialGroup()
-                .addGap(36, 36, 36)
                 .addGroup(JPBotonesGestionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jBtnLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(JPBotonesGestionLayout.createSequentialGroup()
+                        .addGap(36, 36, 36)
                         .addComponent(jBtnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jBtnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jBtnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jBtnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(JPBotonesGestionLayout.createSequentialGroup()
+                        .addGap(20, 20, 20)
+                        .addComponent(jBtnLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(41, Short.MAX_VALUE))
         );
         JPBotonesGestionLayout.setVerticalGroup(
@@ -897,6 +906,7 @@ public class JFFPaciente extends javax.swing.JFrame {
     private javax.swing.JCheckBox jCBtrabaja;
     private javax.swing.JComboBox<String> jCboProfesion;
     private javax.swing.JComboBox<String> jCboSexo;
+    private javax.swing.JFormattedTextField jFTFfechaNacimiento;
     private javax.swing.JLabel jLBiconoNombre;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -917,7 +927,6 @@ public class JFFPaciente extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTextArea jTAdireccion;
     private javax.swing.JTable jTBPacientes;
-    private javax.swing.JTextField jTFFecha;
     private javax.swing.JTextField jTFapellidos;
     private javax.swing.JTextField jTFlugarTrabajo;
     private javax.swing.JTextField jTFnombres;
