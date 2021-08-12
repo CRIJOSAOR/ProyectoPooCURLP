@@ -18,7 +18,7 @@ import javax.swing.JOptionPane;
 
 /**
  *
- * @author usuario
+ * @author alejandraf
  */
 public class CDEstablecimiento {
 //declarar variables de conexion y de consullta
@@ -36,11 +36,11 @@ public class CDEstablecimiento {
     // metodo para insertar Estableimiento en la tabla.
     public void insertarEstablecimiento(CLEstablecimiento cl) throws SQLException {
         String sql = "{ CALL insertarEstablecimiento(?,?)}";
-                       
+
         try {
             ps = cn.prepareCall(sql);
-             ps.setInt(1, cl.getCodEstablecimiento());
-            ps.setString(2, cl.getNombreEstablecimiento( ));
+            ps.setInt(1, cl.getCodEstablecimiento());
+            ps.setString(2, cl.getNombreEstablecimiento());
             ps.execute();
 
         } catch (SQLException e) {
