@@ -51,8 +51,8 @@ public class CDProfesion {
 
         try {
             ps = cn.prepareCall(sql);
-            ps.setInt(1, cl.getIdProfesion());
-            ps.setString(2, cl.getProfesion());
+            ps.setInt(2, cl.getIdProfesion());
+            ps.setString(1, cl.getProfesion());
             ps.execute();
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Error" + e.getMessage());
