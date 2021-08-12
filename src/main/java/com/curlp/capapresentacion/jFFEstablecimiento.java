@@ -3,10 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.curlp.presentacion;
+package com.curlp.capapresentacion;
 
-import com.curlp.datos.CDEstablecimiento;
-import com.curlp.logica.CLEstablecimiento;
+import com.curlp.capadatos.CDEstablecimiento;
+import com.curlp.capalogica.CLEstablecimiento;
 
 import java.sql.SQLException;
 import java.util.List;

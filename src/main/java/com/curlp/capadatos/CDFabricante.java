@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.curlp.datos;
+package com.curlp.capadatos;
 
-import com.curlp.logica.CLFabricante;
+import com.curlp.capalogica.CLFabricante;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -26,7 +26,7 @@ public class CDFabricante {
     Statement st;
 
     public CDFabricante() throws SQLException{
-        this.cn = Conexion.conectar();
+        this.cn = conexion.conectar();
     }
 
     //Metodos para insertar un fabricante

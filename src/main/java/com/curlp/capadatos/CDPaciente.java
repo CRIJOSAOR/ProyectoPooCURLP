@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.curlp.datos;
+package com.curlp.capadatos;
 
-import com.curlp.logica.CLPaciente;
+import com.curlp.capalogica.CLPaciente;
 import java.util.List;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -26,7 +26,7 @@ public class CDPaciente {
     Statement st;
 
     public CDPaciente() throws SQLException {
-        this.cn = Conexion.conectar();
+        this.cn = conexion.conectar();
     }
     
     public void insertarPaciente(CLPaciente cl) throws SQLException {
