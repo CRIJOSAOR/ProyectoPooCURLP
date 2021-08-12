@@ -50,8 +50,8 @@ public class CDFabricante {
 
         try {
             ps = cn.prepareCall(sql);
-            ps.setInt(1, cl.getIdFabricante());
-            ps.setString(2, cl.getNombreFabricante());
+            ps.setInt(2, cl.getIdFabricante());
+            ps.setString(1, cl.getNombreFabricante());
             ps.execute();
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Error" + e.getMessage());
