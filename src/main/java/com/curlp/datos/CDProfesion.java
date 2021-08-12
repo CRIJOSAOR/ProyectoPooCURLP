@@ -31,7 +31,7 @@ public class CDProfesion {
         this.cn = Conexion.conectar();
     }
 
-    //Insertar una profesion en la tabla Profesion
+    // Insertar una profesion en la tabla Profesion
     public void insertarProfesiones(CLProfesiones cl) throws SQLException {
         String sql = "{CALL insertarProfesion(?)}";
 
@@ -45,7 +45,7 @@ public class CDProfesion {
         }
     }
 
-    //Metodo para actualizar la profesion
+    // Metodo para actualizar la profesion
     public void actualizarProfesiones(CLProfesiones cl) throws SQLException {
         String sql = "{CALL actualizarProfesion(?,?)}";
 
@@ -60,7 +60,7 @@ public class CDProfesion {
         }
     }
 
-    //Metodo para eliminar profesion
+    // Metodo para eliminar profesion
     public void eliminarProfesiones(CLProfesiones cl) throws SQLException {
         String sql = "{CALL eliminarProfesion(?)}";
 
@@ -73,7 +73,7 @@ public class CDProfesion {
         }
     }
 
-    //Metodo obtener el Id autoincrementado
+    // Metodo obtener el Id autoincrementado
     public int autoIncrementarIDProfesion() throws SQLException {
         int idProfesion = 0;
         String sql = "{CALL autoIncrementarProfesion()}";
@@ -94,7 +94,7 @@ public class CDProfesion {
         return idProfesion;
     }
 
-    //Metodo para mostrar las profesiones ingresadas
+    // Metodo para mostrar las profesiones ingresadas
     public List<CLProfesiones> obtenerListaProfesiones() throws SQLException {
 
         String sql = "{CALL mostrarProfesiones()}";
@@ -118,7 +118,7 @@ public class CDProfesion {
         return miLista;
     }
 
-    //metodo que nos permitira llenar el combo de profesiones
+    // metodo que nos permitira llenar el combo de profesiones
     public List<String> cragarComboProfesiones() throws SQLException {
 
         String sql = "{CALL mostrarProfesiones()}";
