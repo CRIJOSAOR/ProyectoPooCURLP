@@ -7,7 +7,9 @@ package com.curlp.capapresentacion;
 
 
 import com.curlp.capadatos.CDPaciente;
+import com.curlp.capadatos.CDProfesion;
 import com.curlp.capalogica.CLPaciente;
+import com.curlp.capalogica.CLProfesiones;
 import java.awt.Color;
 import java.sql.SQLException;
 import java.util.List;
@@ -33,6 +35,7 @@ public class JFFPaciente extends javax.swing.JFrame {
         initComponents();
         agregarIconos();
         llenarTabla();
+        llenarComboBoxProfesiones();
         this.setLocationRelativeTo(null);
         this.border = this.jTFnumIdentidad.getBorder();
     }
@@ -57,6 +60,55 @@ public class JFFPaciente extends javax.swing.JFrame {
         
     }
     
+    public void llenarComboBoxProfesiones() throws SQLException{
+        CDProfesion profesiones = new CDProfesion();
+        List<String> listaProfesiones = profesiones.cragarComboProfesiones();
+        
+        this.jCboProfesion.removeAllItems();
+        
+        for (String x: listaProfesiones){
+             this.jCboProfesion.addItem(x);
+        }
+    }
+    
+    public void guardar() throws SQLException{
+        try{
+                registrarPaciente();
+                llenarTabla();
+                limpiarCampos();
+
+        } catch (SQLException ex){
+                JOptionPane.showMessageDialog(null, "Error al eliminar");
+        }
+    }
+    
+    public void editar() throws SQLException{
+        try{
+                actualizarPaciente();
+                llenarTabla();
+                limpiarCampos();
+
+        } catch (SQLException ex){
+                JOptionPane.showMessageDialog(null, "Error al eliminar");
+        }
+    }
+    
+    public void eliminar() throws SQLException{
+        int respuesta = JOptionPane.showConfirmDialog(null,"Esta seguro de eliminar este registro?", "Confirmacion", JOptionPane.YES_NO_OPTION);
+        if(respuesta == JOptionPane.YES_OPTION){
+            try{
+                eliminarPaciente();
+                llenarTabla();
+                limpiarCampos();
+
+            } catch (SQLException ex){
+                JOptionPane.showMessageDialog(null, "Error al eliminar");
+            }
+        } else {
+            limpiarCampos();
+        }
+    }
+        
     /**
         +++++++++++++++++++++++ Metodos para ingreso de Paciente ++++++++++++++++++++++++++++++++++++
     
@@ -169,6 +221,8 @@ public class JFFPaciente extends javax.swing.JFrame {
         return verificador;
     }
     
+    // Metodos para insertar, actualizar, eliminar pacientes
+    
     public void registrarPaciente() throws SQLException{
         // instancias para el registro del paciente y clase paciente
         CDPaciente registro = new CDPaciente();  // registro sera quien inserte a la base de Datos
@@ -177,7 +231,7 @@ public class JFFPaciente extends javax.swing.JFrame {
         // Antes de todo se debe verificar que los campos cumplan con lo requerido
         if(this.verificarCampos()){
             // recuperar datos de los Combo Box
-            int idSexo = this.jCboSexo.getSelectedIndex();
+            int idSexo = this.getIdProfesion( this.jCboSexo.getItemAt(this.jCboSexo.getSelectedIndex()));
             int idProfesion = this.jCboProfesion.getSelectedIndex();
             
             // temporalmente se recoje la fecha de esta forma
@@ -185,13 +239,13 @@ public class JFFPaciente extends javax.swing.JFrame {
             
             // Siguiente paso es completar toda la informacion necesaria para la clase CLPaciente 
             
-            paciente.setNumIdentidad(this.jTFnumIdentidad.getText());
-            paciente.setNombres(this.jTFnombres.getText());
-            paciente.setApellidos(this.jTFapellidos.getText());
-            paciente.setNumCelular(this.jTFFecha.getText());
-            paciente.setFechaNacimiento(this.jTFFecha.getText());
-            paciente.setLugarTrabajo(this.jTFlugarTrabajo.getText());
-            paciente.setDireccion(this.jTAdireccion.getText());
+            paciente.setNumIdentidad(this.jTFnumIdentidad.getText().trim());
+            paciente.setNombres(this.jTFnombres.getText().trim());
+            paciente.setApellidos(this.jTFapellidos.getText().trim());
+            paciente.setNumCelular(this.jTFnumCelular.getText().trim());
+            paciente.setFechaNacimiento(this.jTFFecha.getText().trim());
+            paciente.setLugarTrabajo(this.jTFlugarTrabajo.getText().trim());
+            paciente.setDireccion(this.jTAdireccion.getText().trim());
             paciente.setIdSexo(idSexo);
             paciente.setIdProfesion(idProfesion);
             
@@ -203,6 +257,117 @@ public class JFFPaciente extends javax.swing.JFrame {
         
     }
     
+    public void actualizarPaciente() throws SQLException{
+        // instancias para el registro del paciente y clase paciente
+        CDPaciente registro = new CDPaciente();  // registro sera quien inserte a la base de Datos
+        CLPaciente paciente = new CLPaciente();  // paciente guardara la informacion que escribira el usuario
+        
+        // Antes de todo se debe verificar que los campos cumplan con lo requerido
+        if(this.verificarCampos()){
+            // recuperar datos de los Combo Box
+            int idSexo = this.jCboSexo.getSelectedIndex();
+            int idProfesion = this.getIdProfesion(this.jCboProfesion.getItemAt(this.jCboProfesion.getSelectedIndex()));
+            
+            // temporalmente se recoje la fecha de esta forma
+            
+            
+            // Siguiente paso es completar toda la informacion necesaria para la clase CLPaciente 
+            
+            paciente.setNumIdentidad(this.jTFnumIdentidad.getText().trim());
+            paciente.setNombres(this.jTFnombres.getText().trim());
+            paciente.setApellidos(this.jTFapellidos.getText().trim());
+            paciente.setNumCelular(this.jTFnumCelular.getText().trim());
+            paciente.setFechaNacimiento(this.jTFFecha.getText().trim());
+            paciente.setLugarTrabajo(this.jTFlugarTrabajo.getText().trim());
+            paciente.setDireccion(this.jTAdireccion.getText().trim());
+            paciente.setIdSexo(idSexo);
+            paciente.setIdProfesion(idProfesion);
+            
+            // siguiente linea inserta el objeto Paciente a la base de datos
+            
+            registro.actualizarPaciente(paciente);
+            //this.limpiarCampos();
+        }
+        
+    }
+    
+    
+    public void eliminarPaciente() throws SQLException {
+        try{
+            CDPaciente registro = new CDPaciente();  // registro sera quien inserte a la base de Datos
+            CLPaciente paciente = new CLPaciente(); 
+        
+            paciente.setNumIdentidad(this.jTFnumIdentidad.getText().trim());
+        
+            registro.eliminarPaciente(paciente);
+            
+        } catch (SQLException ex){
+                JOptionPane.showMessageDialog(null, "Error al eliminar");
+        }
+        
+    }
+    public void llenarCampos(String numIdentidad) {
+        
+        this.jTFnumIdentidad.setText(String.valueOf(this.jTBPacientes.getValueAt(this.jTBPacientes.getSelectedRow(), 0)));
+        this.jTFnombres.setText(String.valueOf(this.jTBPacientes.getValueAt(this.jTBPacientes.getSelectedRow(), 1)));
+        this.jTFapellidos.setText(String.valueOf(this.jTBPacientes.getValueAt(this.jTBPacientes.getSelectedRow(), 2)));
+        this.jTFnumCelular.setText(String.valueOf(this.jTBPacientes.getValueAt(this.jTBPacientes.getSelectedRow(), 3)));
+        this.jTFFecha.setText(String.valueOf(this.jTBPacientes.getValueAt(this.jTBPacientes.getSelectedRow(), 4)));
+        this.jTFlugarTrabajo.setText(String.valueOf(this.jTBPacientes.getValueAt(this.jTBPacientes.getSelectedRow(), 5)));
+        this.jTAdireccion.setText(String.valueOf(this.jTBPacientes.getValueAt(this.jTBPacientes.getSelectedRow(), 6)));
+        if(String.valueOf(this.jTBPacientes.getValueAt(this.jTBPacientes.getSelectedRow(), 5)).length() != 0){
+            this.jCBtrabaja.setSelected(true);
+            
+        } else {
+            this.jCBtrabaja.setSelected(false);
+        }
+        activarCampoLugarTrabajo();
+        
+        String sexo = String.valueOf(this.jTBPacientes.getValueAt(this.jTBPacientes.getSelectedRow(), 7)).trim();
+        if(sexo.charAt(0) == 'F'){
+            this.jCboSexo.setSelectedIndex(1);
+        } else {
+            this.jCboSexo.setSelectedIndex(2);
+        }
+         String profesion = String.valueOf(this.jTBPacientes.getValueAt(this.jTBPacientes.getSelectedRow(), 8));
+         int posicion = getSelecProfesion(profesion);
+         this.jCboProfesion.setSelectedIndex(posicion);
+        /*
+        
+        //String profesion = String.valueOf(this.jCboProfesion.getSelectedItem());
+        String profesion = String.valueOf(this.jTBPacientes.getValueAt(this.jTBPacientes.getSelectedRow(), 6));
+        this.jCboProfesion.setSelectedIndex(Integer.parseInt((String) ));
+        */
+        
+    }
+    public int getIdProfesion(String profesion) throws SQLException{
+        CDProfesion datos = new CDProfesion();
+        List<CLProfesiones> listaProfeciones = datos.obtenerListaProfesiones();
+        int index = 1;
+        for(int i = 0; i < listaProfeciones.size();i++){
+            String profesionDB;
+            profesionDB = listaProfeciones.get(i).getProfesion().trim();
+            
+            if(profesionDB.equals(profesion.trim())){
+                JOptionPane.showMessageDialog(null, "entro");
+                index = listaProfeciones.get(i).getIdProfesion();
+            }
+        } 
+        return index;
+    }
+    
+    public int getSelecProfesion(String profesion){
+        int index = 0;
+        
+       
+        for (int i = 1; i < this.jCboProfesion.getItemCount() ; i++){
+            
+            if(profesion.trim().equals(String.valueOf(this.jCboProfesion.getItemAt(i)).trim())) {
+                index = i ;    
+            }
+        }
+        return index;
+    }
     public void activarCampoLugarTrabajo(){
         if(this.jCBtrabaja.isSelected()){
             this.jTFlugarTrabajo.setEnabled(true);
@@ -214,6 +379,10 @@ public class JFFPaciente extends javax.swing.JFrame {
     }
     
     public void limpiarCampos(){
+        this.jTFnumIdentidad.requestFocus();
+        this.jTFnumIdentidad.setEditable(true);
+        activarBotones(true,false,false,true);
+        
         this.jTFnumIdentidad.setText("");
         this.jTFnombres.setText("");
         this.jTFapellidos.setText("");
@@ -259,39 +428,56 @@ public class JFFPaciente extends javax.swing.JFrame {
     private void llenarTabla() throws SQLException{
         
         // limpiar la tabla
-        this.limpiarTabla();
-        
-        //instanciamos un model 
-        modelo = (DefaultTableModel) this.jTBPacientes.getModel();
+        limpiarTabla();
         
         // instanciar una clase tipo CDPaciente para la conexion con la base de datos 
         CDPaciente registro = new CDPaciente();
         
         // recuperar todos los pacientes en forma de lista
-        
         List<CLPaciente> listaPacientes = registro.mostrarPacientes();
-        
-        // llenar cada fila con un ciclo
-        int cantidadRegistros = listaPacientes.size(); // se encuentra el tamanio de la lista
-        
-        for(int i = 0 ; i < cantidadRegistros ; i++){
-            
-            CLPaciente persona = (CLPaciente) listaPacientes.get(i); // se consigue el tamanio de la lista
-            Object[] fila = new Object[5];
+        // instanciamos un model 
+        modelo = (DefaultTableModel) this.jTBPacientes.getModel();
+      
+        // llenar cada fila con un ciclo      
+        listaPacientes.stream().map((CLPaciente persona) ->{
+            Object[] fila = new Object[9];
             fila[0] = persona.getNumIdentidad();
             fila[1] = persona.getNombres();
             fila[2] = persona.getApellidos();
             fila[3] = persona.getNumCelular();
-            fila[4] = persona.getDireccion();
+            fila[4] = persona.getFechaNacimiento();
+            fila[5] = persona.getLugarTrabajo();
+            fila[6] = persona.getDireccion();
+            fila[7] = persona.getSexo();
+            fila[8] = persona.getProfesion();
+            return fila;
+        }).forEachOrdered(modelo::addRow);    
+    }
+    
+    private void seleccionarFila() throws SQLException{
+        if(this.jTBPacientes.getSelectedRow() != -1){
             
-            // agregar al modal
-            modelo.addRow(fila);
-        // reasignar el modal a la jtabel
-        this.jTBPacientes.setModel(modelo);
+            String numIdentidad = String.valueOf(this.jTBPacientes.getValueAt(this.jTBPacientes.getSelectedRow(), 0));
+            llenarCampos(numIdentidad);
+            this.jTFnumIdentidad.setEditable(false);
+            this.jTFnombres.requestFocus();
+            activarBotones(false,true,true,true);
+            
+            // recuperar el id para buscar datos de paciente
+            
+            
         }
-        
-        
-        
+    }
+     /**
+        +++++++++++++++++++++++ Metodos para manipulacion de la tabla ++++++++++++++++++++++++++++++++++++
+    
+        */
+    private void activarBotones(boolean estadoGuardar, boolean estadoEditar, 
+                                boolean estadoEliminar, boolean estadoLimpiar){
+        this.jBtnGuardar.setEnabled(estadoGuardar);
+        this.jBtnEditar.setEnabled(estadoEditar);
+        this.jBtnEliminar.setEnabled(estadoEliminar);
+        this.jBtnLimpiar.setEnabled(estadoLimpiar);
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -367,7 +553,7 @@ public class JFFPaciente extends javax.swing.JFrame {
                 .addComponent(jLBiconoNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 468, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 558, Short.MAX_VALUE)
                 .addComponent(jBTNSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(19, 19, 19))
         );
@@ -386,7 +572,7 @@ public class JFFPaciente extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        getContentPane().add(jPTitulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 950, 60));
+        getContentPane().add(jPTitulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1040, 60));
 
         jPfranjaSuperior.setBackground(new java.awt.Color(0, 153, 153));
 
@@ -394,14 +580,14 @@ public class JFFPaciente extends javax.swing.JFrame {
         jPfranjaSuperior.setLayout(jPfranjaSuperiorLayout);
         jPfranjaSuperiorLayout.setHorizontalGroup(
             jPfranjaSuperiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 950, Short.MAX_VALUE)
+            .addGap(0, 1040, Short.MAX_VALUE)
         );
         jPfranjaSuperiorLayout.setVerticalGroup(
             jPfranjaSuperiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 10, Short.MAX_VALUE)
         );
 
-        getContentPane().add(jPfranjaSuperior, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 60, 950, 10));
+        getContentPane().add(jPfranjaSuperior, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 60, 1040, 10));
 
         jPFranjaInferior.setBackground(new java.awt.Color(0, 153, 153));
 
@@ -409,14 +595,14 @@ public class JFFPaciente extends javax.swing.JFrame {
         jPFranjaInferior.setLayout(jPFranjaInferiorLayout);
         jPFranjaInferiorLayout.setHorizontalGroup(
             jPFranjaInferiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 950, Short.MAX_VALUE)
+            .addGap(0, 1040, Short.MAX_VALUE)
         );
         jPFranjaInferiorLayout.setVerticalGroup(
             jPFranjaInferiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 20, Short.MAX_VALUE)
         );
 
-        getContentPane().add(jPFranjaInferior, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 560, 950, 20));
+        getContentPane().add(jPFranjaInferior, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 560, 1040, 20));
 
         JPDatosPaciente.setBackground(new java.awt.Color(255, 255, 255));
         JPDatosPaciente.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Datos de Paciente", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 0, 13), new java.awt.Color(51, 51, 51))); // NOI18N
@@ -478,6 +664,11 @@ public class JFFPaciente extends javax.swing.JFrame {
         JPDatosPaciente.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 270, -1, -1));
 
         jCboProfesion.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "--Seleccione", "Ingeniero" }));
+        jCboProfesion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCboProfesionActionPerformed(evt);
+            }
+        });
         JPDatosPaciente.add(jCboProfesion, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 180, 210, 30));
         JPDatosPaciente.add(jTFnumCelular, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 100, 120, 30));
 
@@ -490,13 +681,18 @@ public class JFFPaciente extends javax.swing.JFrame {
         JPBotonesGestion.setBackground(new java.awt.Color(255, 255, 255));
         JPBotonesGestion.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
+        jBtnEditar.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
+        jBtnEditar.setForeground(new java.awt.Color(0, 153, 153));
         jBtnEditar.setText("Editar");
+        jBtnEditar.setEnabled(false);
         jBtnEditar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jBtnEditarActionPerformed(evt);
             }
         });
 
+        jBtnGuardar.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
+        jBtnGuardar.setForeground(new java.awt.Color(0, 153, 153));
         jBtnGuardar.setText("Guardar");
         jBtnGuardar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -505,13 +701,16 @@ public class JFFPaciente extends javax.swing.JFrame {
         });
 
         jBtnEliminar.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
+        jBtnEliminar.setForeground(new java.awt.Color(0, 153, 153));
         jBtnEliminar.setText("Eliminar");
+        jBtnEliminar.setEnabled(false);
         jBtnEliminar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jBtnEliminarActionPerformed(evt);
             }
         });
 
+        jBtnLimpiar.setForeground(new java.awt.Color(51, 51, 51));
         jBtnLimpiar.setText("Limpiar");
         jBtnLimpiar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -557,10 +756,23 @@ public class JFFPaciente extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Identidad", "Nombres", "Apellidos", "Num Celular", "Direccion"
+                "Identidad", "Nombres", "Apellidos", "Num Celular", "Fecha de Nacimiento", "Lugar Trabajo", "Direccion", "Sexo", "Profesion"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, true, true, true, true
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jTBPacientes.setShowGrid(true);
+        jTBPacientes.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTBPacientesMouseClicked(evt);
+            }
+        });
         jScrollPane2.setViewportView(jTBPacientes);
 
         javax.swing.GroupLayout jPTableLayout = new javax.swing.GroupLayout(jPTable);
@@ -569,8 +781,8 @@ public class JFFPaciente extends javax.swing.JFrame {
             jPTableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPTableLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 517, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(615, 615, 615))
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 612, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(520, 520, 520))
         );
         jPTableLayout.setVerticalGroup(
             jPTableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -580,7 +792,7 @@ public class JFFPaciente extends javax.swing.JFrame {
                 .addGap(80, 80, 80))
         );
 
-        getContentPane().add(jPTable, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 70, 530, 490));
+        getContentPane().add(jPTable, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 70, 620, 490));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -595,25 +807,44 @@ public class JFFPaciente extends javax.swing.JFrame {
     }//GEN-LAST:event_jCBtrabajaActionPerformed
 
     private void jBtnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnEditarActionPerformed
-        // TODO add your handling code here:
+        try {
+            editar();
+        } catch (SQLException ex) {
+            Logger.getLogger(JFFPaciente.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jBtnEditarActionPerformed
 
     private void jBtnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnGuardarActionPerformed
         try {
-            registrarPaciente();
-            llenarTabla();
+            guardar();
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null,"No se registro el paciente");
         }
     }//GEN-LAST:event_jBtnGuardarActionPerformed
 
     private void jBtnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnEliminarActionPerformed
-        // TODO add your handling code here:
+        try {
+            eliminar();
+        } catch (SQLException ex) {
+            Logger.getLogger(JFFPaciente.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jBtnEliminarActionPerformed
 
     private void jBtnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnLimpiarActionPerformed
-        // TODO add your handling code here:
+        limpiarCampos();
     }//GEN-LAST:event_jBtnLimpiarActionPerformed
+
+    private void jTBPacientesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTBPacientesMouseClicked
+        try {
+            seleccionarFila();
+        } catch (SQLException ex) {
+            Logger.getLogger(JFFPaciente.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jTBPacientesMouseClicked
+
+    private void jCboProfesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCboProfesionActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jCboProfesionActionPerformed
 
     /**
      * @param args the command line arguments
