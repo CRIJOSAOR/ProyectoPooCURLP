@@ -28,6 +28,4 @@ public class CLFabricante {
     public void setNombreFabricante(String nombreFabricante) {
         this.nombreFabricante = nombreFabricante;
     }
-    
-    
 }
