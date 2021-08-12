@@ -10,9 +10,10 @@ package com.curlp.capalogica;
  * @author sanch
  */
 public class CLLoteVacuna {
+
     private String numLoteVacuna;
-     private String fechaFabricacion;
-      private String fechaVencimiento;
+    private String fechaFabricacion;
+    private String fechaVencimiento;
     private int idFbricante;
 
     public String getNumLoteVacuna() {
@@ -46,7 +47,5 @@ public class CLLoteVacuna {
     public void setIdFbricante(int idFbricante) {
         this.idFbricante = idFbricante;
     }
-    
-    
-    
+
 }
