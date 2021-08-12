@@ -93,20 +93,20 @@ public class JFFFabricante extends javax.swing.JFrame {
     // Metodo para insertar un fabricante en la tabla
     private void insertarFabricante() {
         if (!validarTextField()) {
-            JOptionPane.showMessageDialog(null, "Ingresar el nombre del Fabricante", "Proyecto Vacunación", JOptionPane.INFORMATION_MESSAGE);
-            this.JTFNombreFabricante.requestFocus();
-        } else {
             try {
                 CDFabricante cdp = new CDFabricante();
                 CLFabricante cl = new CLFabricante();
                 cl.setNombreFabricante(this.JTFNombreFabricante.getText().trim());
                 cdp.insertarFabricante(cl);
-                JOptionPane.showMessageDialog(null, "Registrado correctamente", "Proyecto Vacunación", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null,"Registrado correctamente","Proyecto Vacunación",JOptionPane.INFORMATION_MESSAGE);
                 this.JTFNombreFabricante.requestFocus();
             } catch (SQLException e) {
-                JOptionPane.showMessageDialog(null, "Error al almacenar" + e);
+                JOptionPane.showMessageDialog(null,"Error al almacenar" + e);
                 this.JTFNombreFabricante.requestFocus();
             }
+        } else {
+            JOptionPane.showMessageDialog(null,"Ingresar el nombre del fabricante","Proyecto Vacunación",JOptionPane.INFORMATION_MESSAGE);
+            this.JTFNombreFabricante.requestFocus();
         }
     }
 
@@ -122,21 +122,21 @@ public class JFFFabricante extends javax.swing.JFrame {
     // Metodo para editar un fabricante en la tabla
     private void editarFabricante() {
         if (!validarTextField()) {
-            JOptionPane.showMessageDialog(null, "Ingresar el nombre del Fabricante", "Proyecto Vacunación", JOptionPane.INFORMATION_MESSAGE);
-            this.JTFNombreFabricante.requestFocus();
-        } else {
             try {
                 CDFabricante cdp = new CDFabricante();
                 CLFabricante cl = new CLFabricante();
                 cl.setIdFabricante(Integer.parseInt(this.jTFIDFabricante.getText().trim()));
                 cl.setNombreFabricante(this.JTFNombreFabricante.getText().trim());
                 cdp.actualizarFabricante(cl);
-                JOptionPane.showMessageDialog(null, "editado correctamente", "Proyecto Vacunación", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null,"Registrado actualizado","Proyecto Vacunación",JOptionPane.INFORMATION_MESSAGE);
                 this.JTFNombreFabricante.requestFocus();
             } catch (SQLException e) {
-                JOptionPane.showMessageDialog(null, "Error al editar" + e);
+                JOptionPane.showMessageDialog(null,"Error al modificar" + e);
                 this.JTFNombreFabricante.requestFocus();
-            }
+            }  
+        } else {
+            JOptionPane.showMessageDialog(null,"Ingresar el nombre del fabricante","Proyecto Vacunación",JOptionPane.INFORMATION_MESSAGE);
+            this.JTFNombreFabricante.requestFocus();
         }
     }
 
@@ -160,20 +160,20 @@ public class JFFFabricante extends javax.swing.JFrame {
     // Metodo para eliminar
     private void eliminarFabricante() {
         if (!validarTextField()) {
-            JOptionPane.showMessageDialog(null, "Ingresar el nombre del Fabricante", "Proyecto Vacunación", JOptionPane.INFORMATION_MESSAGE);
-            this.JTFNombreFabricante.requestFocus();
-        } else {
             try {
                 CDFabricante cdp = new CDFabricante();
                 CLFabricante cl = new CLFabricante();
-                cl.setIdFabricante(Integer.parseInt(this.JTFNombreFabricante.getText().trim()));
+                cl.setIdFabricante(Integer.parseInt(this.jTFIDFabricante.getText().trim()));
                 cdp.eliminarFabricante(cl);
-                JOptionPane.showMessageDialog(null, "Registrado eliminado", "Proyecto Vacunación", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null,"Registrado eliminado","Proyecto Vacunación",JOptionPane.INFORMATION_MESSAGE);
                 this.JTFNombreFabricante.requestFocus();
             } catch (SQLException e) {
-                JOptionPane.showMessageDialog(null, "Error al eliminar" + e);
+                JOptionPane.showMessageDialog(null,"Error al eliminar" + e);
                 this.JTFNombreFabricante.requestFocus();
             }
+        } else {
+            JOptionPane.showMessageDialog(null,"Ingresar el nombre del fabricante","Proyecto Vacunación",JOptionPane.INFORMATION_MESSAGE);
+            this.JTFNombreFabricante.requestFocus();
         }
     }
 
