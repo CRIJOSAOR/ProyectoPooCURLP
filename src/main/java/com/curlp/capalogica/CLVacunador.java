@@ -48,7 +48,7 @@ public class CLVacunador {
         return numCelularV;
     }
 
-    public void setNumCelularV(String numCelular) {
+    public void setNumCelularV(String numCelularV) {
         this.numCelularV = numCelularV;
     }
 
