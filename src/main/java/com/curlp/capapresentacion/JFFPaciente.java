@@ -5,9 +5,9 @@
  */
 package com.curlp.capapresentacion;
 
-import com.curlp.presentacion.*;
-import com.curlp.datos.CDPaciente;
-import com.curlp.logica.CLPaciente;
+
+import com.curlp.capadatos.CDPaciente;
+import com.curlp.capalogica.CLPaciente;
 import java.awt.Color;
 import java.sql.SQLException;
 import java.util.List;
@@ -27,6 +27,7 @@ public class JFFPaciente extends javax.swing.JFrame {
 
     /**
      * Creates new form JFFPaciente
+     * @throws java.sql.SQLException
      */
     public JFFPaciente() throws SQLException {
         initComponents();
@@ -43,11 +44,11 @@ public class JFFPaciente extends javax.swing.JFrame {
 
     // metodo de clase que permite agregar iconos a los botones y labels del JFForm
     public final void  agregarIconos(){
-        ImageIcon iconobtn = new ImageIcon("src/main/java/com/curlp/imagenes/logout.png");
-        ImageIcon iconLogoTitulo = new ImageIcon("src/main/java/com/curlp/imagenes/user.png");
-        ImageIcon iconbtnGuardar = new ImageIcon("src/main/java/com/curlp/imagenes/save.png");
-        ImageIcon iconbtnEditar = new ImageIcon("src/main/java/com/curlp/imagenes/edit.png");
-        ImageIcon iconbtnEliminar = new ImageIcon("src/main/java/com/curlp/imagenes/delete.png");
+        ImageIcon iconobtn = new ImageIcon("src/main/java/com/curlp/capaimagenes/logout.png");
+        ImageIcon iconLogoTitulo = new ImageIcon("src/main/java/com/curlp/capaimagenes/user.png");
+        ImageIcon iconbtnGuardar = new ImageIcon("src/main/java/com/curlp/capaimagenes/save.png");
+        ImageIcon iconbtnEditar = new ImageIcon("src/main/java/com/curlp/capaimagenes/edit.png");
+        ImageIcon iconbtnEliminar = new ImageIcon("src/main/java/com/curlp/capaimagenes/delete.png");
         this.jBTNSalir.setIcon(iconobtn);
         this.jLBiconoNombre.setIcon(iconLogoTitulo);
         this.jBtnGuardar.setIcon(iconbtnGuardar);
