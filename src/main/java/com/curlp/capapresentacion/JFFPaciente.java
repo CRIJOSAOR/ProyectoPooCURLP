@@ -37,7 +37,7 @@ public class JFFPaciente extends javax.swing.JFrame {
         llenarTabla();
         llenarComboBoxProfesiones();
         this.setLocationRelativeTo(null);
-        this.border = this.jTFnumIdentidad.getBorder();
+        this.border = this.jTFnumIdentidadLast.getBorder();
     }
     /* se agrega miembro de clase tipo border para obtener el borde default. si hay errores el borde del componente sera rojo asi que:
        con el mienbro de clase border se puede establecer el borde default a todos los campos */
@@ -120,20 +120,20 @@ public class JFFPaciente extends javax.swing.JFrame {
         
         //-------------------------
         // verificacion de numero de identidad
-        String numIdentidad = this.jTFnumIdentidad.getText();
+        String numIdentidad = this.jTFnumIdentidadLast.getText();
         
         if(numIdentidad.length() == 15){ //se verifica si tiene el tamanio correcto de 15 elementos 
             //si el numero de identidad no tiene 15 elementos
             if(numIdentidad.charAt(4) != '-' && numIdentidad.charAt(9) != '-'){ //deben estar los guiones en la posicion correcta
                 verificador = false;
                 errors +=  "Debe Agregar el numero con los guiones ejemplo: 0801-2000-00011 \n";
-                this.jTFnumIdentidad.setBorder(BorderFactory.createLineBorder(Color.red));
+                this.jTFnumIdentidadLast.setBorder(BorderFactory.createLineBorder(Color.red));
             }
             
         } else {
             verificador = false;
             errors +=  "Debe ingresar correctamente el numero de identidad, ejemplo: 0801-2000-00011 \n";
-            this.jTFnumIdentidad.setBorder(BorderFactory.createLineBorder(Color.red));
+            this.jTFnumIdentidadLast.setBorder(BorderFactory.createLineBorder(Color.red));
         }
        
         //--------------------------
@@ -239,7 +239,7 @@ public class JFFPaciente extends javax.swing.JFrame {
             
             // Siguiente paso es completar toda la informacion necesaria para la clase CLPaciente 
             
-            paciente.setNumIdentidad(this.jTFnumIdentidad.getText().trim());
+            paciente.setNumIdentidad(this.jTFnumIdentidadLast.getText().trim());
             paciente.setNombres(this.jTFnombres.getText().trim());
             paciente.setApellidos(this.jTFapellidos.getText().trim());
             paciente.setNumCelular(this.jTFnumCelular.getText().trim());
@@ -274,7 +274,7 @@ public class JFFPaciente extends javax.swing.JFrame {
             
             // Siguiente paso es completar toda la informacion necesaria para la clase CLPaciente 
             
-            paciente.setNumIdentidad(this.jTFnumIdentidad.getText().trim());
+            paciente.setNumIdentidad(this.jTFnumIdentidadLast.getText().trim());
             paciente.setNombres(this.jTFnombres.getText().trim());
             paciente.setApellidos(this.jTFapellidos.getText().trim());
             paciente.setNumCelular(this.jTFnumCelular.getText().trim());
@@ -298,7 +298,7 @@ public class JFFPaciente extends javax.swing.JFrame {
             CDPaciente registro = new CDPaciente();  // registro sera quien inserte a la base de Datos
             CLPaciente paciente = new CLPaciente(); 
         
-            paciente.setNumIdentidad(this.jTFnumIdentidad.getText().trim());
+            paciente.setNumIdentidad(this.jTFnumIdentidadLast.getText().trim());
         
             registro.eliminarPaciente(paciente);
             
@@ -309,7 +309,7 @@ public class JFFPaciente extends javax.swing.JFrame {
     }
     public void llenarCampos(String numIdentidad) {
         
-        this.jTFnumIdentidad.setText(String.valueOf(this.jTBPacientes.getValueAt(this.jTBPacientes.getSelectedRow(), 0)));
+        this.jTFnumIdentidadLast.setText(String.valueOf(this.jTBPacientes.getValueAt(this.jTBPacientes.getSelectedRow(), 0)));
         this.jTFnombres.setText(String.valueOf(this.jTBPacientes.getValueAt(this.jTBPacientes.getSelectedRow(), 1)));
         this.jTFapellidos.setText(String.valueOf(this.jTBPacientes.getValueAt(this.jTBPacientes.getSelectedRow(), 2)));
         this.jTFnumCelular.setText(String.valueOf(this.jTBPacientes.getValueAt(this.jTBPacientes.getSelectedRow(), 3)));
@@ -380,11 +380,11 @@ public class JFFPaciente extends javax.swing.JFrame {
     }
     
     public void limpiarCampos(){
-        this.jTFnumIdentidad.requestFocus();
-        this.jTFnumIdentidad.setEditable(true);
+        this.jTFnumIdentidadLast.requestFocus();
+        this.jTFnumIdentidadLast.setEditable(true);
         activarBotones(true,false,false,true);
         
-        this.jTFnumIdentidad.setText("");
+        this.jTFnumIdentidadLast.setText("");
         this.jTFnombres.setText("");
         this.jTFapellidos.setText("");
         this.jTFnumCelular.setText("");
@@ -397,7 +397,7 @@ public class JFFPaciente extends javax.swing.JFrame {
         
         // devolver los bordes a default
         
-        this.jTFnumIdentidad.setBorder(this.border);
+        this.jTFnumIdentidadLast.setBorder(this.border);
         this.jTFnombres.setBorder(this.border);
         this.jTFnombres.setBorder(this.border);
         this.jTFapellidos.setBorder(this.border);
@@ -460,7 +460,7 @@ public class JFFPaciente extends javax.swing.JFrame {
             
             String numIdentidad = String.valueOf(this.jTBPacientes.getValueAt(this.jTBPacientes.getSelectedRow(), 0));
             llenarCampos(numIdentidad);
-            this.jTFnumIdentidad.setEditable(false);
+            this.jTFnumIdentidadLast.setEditable(false);
             this.jTFnombres.requestFocus();
             activarBotones(false,true,true,true);
             
@@ -500,7 +500,7 @@ public class JFFPaciente extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         jCboSexo = new javax.swing.JComboBox<>();
-        jTFnumIdentidad = new javax.swing.JTextField();
+        jTFnumIdentidadLast = new javax.swing.JTextField();
         jTFlugarTrabajo = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
@@ -517,6 +517,9 @@ public class JFFPaciente extends javax.swing.JFrame {
         jTFnumCelular = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
         jFTFfechaNacimiento = new javax.swing.JFormattedTextField();
+        jLabel12 = new javax.swing.JLabel();
+        jLabel13 = new javax.swing.JLabel();
+        jTFnumIdentidad = new javax.swing.JFormattedTextField();
         JPBotonesGestion = new javax.swing.JPanel();
         jBtnEditar = new javax.swing.JButton();
         jBtnGuardar = new javax.swing.JButton();
@@ -616,13 +619,13 @@ public class JFFPaciente extends javax.swing.JFrame {
         JPDatosPaciente.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 110, -1, -1));
 
         jLabel10.setText("Profesion:");
-        JPDatosPaciente.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 180, -1, -1));
+        JPDatosPaciente.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 190, -1, -1));
 
         jCboSexo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "--Seleccione", "Femenino", "Masculino" }));
-        JPDatosPaciente.add(jCboSexo, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 140, 210, 30));
+        JPDatosPaciente.add(jCboSexo, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 150, 210, 30));
 
-        jTFnumIdentidad.setToolTipText("");
-        JPDatosPaciente.add(jTFnumIdentidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 20, 230, 30));
+        jTFnumIdentidadLast.setToolTipText("");
+        JPDatosPaciente.add(jTFnumIdentidadLast, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 260, 230, 30));
 
         jTFlugarTrabajo.setEnabled(false);
         JPDatosPaciente.add(jTFlugarTrabajo, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 230, 190, 30));
@@ -631,8 +634,8 @@ public class JFFPaciente extends javax.swing.JFrame {
         JPDatosPaciente.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 70, -1, -1));
 
         jLabel7.setFont(new java.awt.Font("Lucida Grande", 0, 10)); // NOI18N
-        jLabel7.setText("Si es asi, especifique donde:");
-        JPDatosPaciente.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 220, -1, -1));
+        jLabel7.setText("ejemplo: 1996-12-26");
+        JPDatosPaciente.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 90, -1, -1));
         JPDatosPaciente.add(jTFnombres, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 60, 120, 30));
 
         jTAdireccion.setColumns(20);
@@ -658,7 +661,7 @@ public class JFFPaciente extends javax.swing.JFrame {
         JPDatosPaciente.add(jTFapellidos, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 60, 120, 30));
 
         jLabel9.setText("Sexo:");
-        JPDatosPaciente.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 140, -1, -1));
+        JPDatosPaciente.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 150, -1, -1));
 
         jLabel8.setText("Direccion de residencia:");
         JPDatosPaciente.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 270, -1, -1));
@@ -669,7 +672,7 @@ public class JFFPaciente extends javax.swing.JFrame {
                 jCboProfesionActionPerformed(evt);
             }
         });
-        JPDatosPaciente.add(jCboProfesion, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 180, 210, 30));
+        JPDatosPaciente.add(jCboProfesion, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 190, 210, 30));
         JPDatosPaciente.add(jTFnumCelular, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 100, 120, 30));
 
         jLabel11.setFont(new java.awt.Font("Lucida Grande", 0, 10)); // NOI18N
@@ -682,6 +685,21 @@ public class JFFPaciente extends javax.swing.JFrame {
             ex.printStackTrace();
         }
         JPDatosPaciente.add(jFTFfechaNacimiento, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 100, 130, 30));
+
+        jLabel12.setFont(new java.awt.Font("Lucida Grande", 0, 10)); // NOI18N
+        jLabel12.setText("Si es asi, especifique donde:");
+        JPDatosPaciente.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 220, -1, -1));
+
+        jLabel13.setFont(new java.awt.Font("Lucida Grande", 0, 10)); // NOI18N
+        jLabel13.setText("ejemplo: 0000-0000");
+        JPDatosPaciente.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 90, -1, -1));
+
+        try {
+            jTFnumIdentidad.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("####-####-#####")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+        JPDatosPaciente.add(jTFnumIdentidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 16, 230, 30));
 
         getContentPane().add(JPDatosPaciente, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 70, 420, 390));
 
@@ -911,6 +929,8 @@ public class JFFPaciente extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -931,6 +951,7 @@ public class JFFPaciente extends javax.swing.JFrame {
     private javax.swing.JTextField jTFlugarTrabajo;
     private javax.swing.JTextField jTFnombres;
     private javax.swing.JTextField jTFnumCelular;
-    private javax.swing.JTextField jTFnumIdentidad;
+    private javax.swing.JFormattedTextField jTFnumIdentidad;
+    private javax.swing.JTextField jTFnumIdentidadLast;
     // End of variables declaration//GEN-END:variables
 }
