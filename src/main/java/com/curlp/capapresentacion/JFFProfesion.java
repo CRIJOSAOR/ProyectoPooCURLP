@@ -420,9 +420,6 @@ public class JFFProfesion extends javax.swing.JFrame {
     // metodo para eliminar profesion
     private void eliminarProfesion() {
         if (!validarTextField()) {
-            JOptionPane.showMessageDialog(null,"Ingresar el nombre de la profesion","Proyecto Vacunación",JOptionPane.INFORMATION_MESSAGE);
-            this.jTFProfesion.requestFocus();
-        } else {
             try {
                 CDProfesion cdp = new CDProfesion();
                 CLProfesiones cl = new CLProfesiones();
@@ -434,6 +431,9 @@ public class JFFProfesion extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null,"Error al eliminar" + e);
                 this.jTFProfesion.requestFocus();
             }
+        } else {
+            JOptionPane.showMessageDialog(null,"Ingresar el nombre de la profesion","Proyecto Vacunación",JOptionPane.INFORMATION_MESSAGE);
+            this.jTFProfesion.requestFocus();
         }
     }
     
