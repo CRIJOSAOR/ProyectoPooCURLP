@@ -12,6 +12,7 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -27,6 +28,7 @@ public class jFFEstablecimiento extends javax.swing.JFrame {
         initComponents();
         poblarTablasEstablecimiento();
         encontrarCorrelativo();
+        this.jTFNombre_Establecimiento.requestFocus();
         this.setLocationRelativeTo(null);
 
     }
@@ -45,50 +47,171 @@ public class jFFEstablecimiento extends javax.swing.JFrame {
 
     private void poblarTablasEstablecimiento() throws SQLException {
         limpiarTabla();
-        
+
         CDEstablecimiento cdc = new CDEstablecimiento();
         List<CLEstablecimiento> miLista = cdc.obtenerListaEstablecimiento();
-         DefaultTableModel temp = (DefaultTableModel) this.jTblEstablecimiento.getModel();
-         
-         miLista.stream().map((CLEstablecimiento cl) -> {
-        Object[] fila = new Object[2];
-         fila[0] = cl.getCodEstablecimiento();    
-          fila[1] = cl.getNombreEstablecimiento();
-            return fila; 
-                  }).forEachOrdered(temp::addRow);
+        DefaultTableModel temp = (DefaultTableModel) this.jTblEstablecimiento.getModel();
+
+        miLista.stream().map((CLEstablecimiento cl) -> {
+            Object[] fila = new Object[2];
+            fila[0] = cl.getCodEstablecimiento();
+            fila[1] = cl.getNombreEstablecimiento();
+            return fila;
+        }).forEachOrdered(temp::addRow);
     }
-         // Metodo para crear el correlativo 
+    // Metodo para crear el correlativo 
+
     private void encontrarCorrelativo() throws SQLException {
         CDEstablecimiento cdp = new CDEstablecimiento();
         CLEstablecimiento cl = new CLEstablecimiento();
-        
+
         cl.setCodEstablecimiento(cdp.autoincrementarEstablecimiento());
         this.jTFCod_Establecimiento.setText(String.valueOf(cl.getCodEstablecimiento()));
-        
+
     }
+
     //metodo para habilitar y deshabilitar botones
-    private void habilitarBotones(boolean agregar,boolean editar , boolean eliminar, boolean limpiar) {
+    private void habilitarBotones(boolean agregar, boolean editar, boolean eliminar, boolean limpiar) {
         this.jBtnAgregrar.setEnabled(agregar);
-        this.jBtnEditar .setEnabled(editar);
+        this.jBtnEditar.setEnabled(editar);
         this.jBtnEliminar.setEnabled(eliminar);
         this.jBtnLimpiar.setEnabled(limpiar);
-    }    
-        
+    }
+
     //metodos para limpiar textFiled
     private void limpiarTextField() {
-        this.jTFCod_Establecimiento .setText("");
+        this.jTFCod_Establecimiento.setText("");
         this.jTFNombre_Establecimiento.setText("");
-    }  
+        this.jTFNombre_Establecimiento.requestFocus();
+
+    }
+
     // metodo para validar la TextField
     private boolean validarTextField() {
         boolean estado;
-        
-        estado = this.jTFNombre_Establecimiento .getText().equals("");
-        
-        return estado;
-    }   
 
-        @SuppressWarnings("unchecked")
+        estado = this.jTFNombre_Establecimiento.getText().equals("");
+
+        return estado;
+    }
+
+    private void insertarEstablecimiento() {
+        if (!validarTextField()) {
+            JOptionPane.showMessageDialog(null, "Ingrese el nombre del Establecimiento ", "Proyecto Vacunación",
+                    JOptionPane.INFORMATION_MESSAGE);
+            
+            this.jTFNombre_Establecimiento.requestFocus();
+        } else {
+            try {
+                CDEstablecimiento cde = new CDEstablecimiento();
+                CLEstablecimiento cl = new CLEstablecimiento();
+                cl.setNombreEstablecimiento(this.jTFNombre_Establecimiento.getText().trim());
+                cde.insertarEstablecimiento(cl);
+                JOptionPane.showMessageDialog(null, "Registrado correctamente", "Proyecto Vacunación",
+                        JOptionPane.INFORMATION_MESSAGE);
+                
+                this.jTFNombre_Establecimiento.requestFocus();
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, "Error al almacenar" + e);
+                this.jTFNombre_Establecimiento.requestFocus();
+            }
+
+        }
+    }
+
+    private void guardar() throws SQLException {
+        insertarEstablecimiento();
+        poblarTablasEstablecimiento();
+        habilitarBotones(true, false, false, true);
+        encontrarCorrelativo();
+        limpiarTextField();
+
+    }
+
+    //metodo para actualicar un establecimiento
+    private void actualizarEstablecimiento() {
+        if (!validarTextField()) {
+            JOptionPane.showMessageDialog(null, "Ingrese el nombre del Establecimiento ", "Proyecto Vacunación",
+                    JOptionPane.INFORMATION_MESSAGE);
+            
+            this.jTFNombre_Establecimiento.requestFocus();
+        } else {
+            try {
+                CDEstablecimiento cde = new CDEstablecimiento();
+                CLEstablecimiento cl = new CLEstablecimiento();
+                cl.setCodEstablecimiento(Integer.parseInt(this.jTFCod_Establecimiento.getText().trim()));
+                cl.setNombreEstablecimiento(this.jTFNombre_Establecimiento.getText().trim());
+                cde.actualizarEstablecimiento(cl);
+
+                JOptionPane.showMessageDialog(null, "Registrado actualizado", "Proyecto Vacunación",
+                        JOptionPane.INFORMATION_MESSAGE);
+                
+                this.jTFNombre_Establecimiento.requestFocus();
+
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, "Error al modificar almacenar" + e);
+                this.jTFNombre_Establecimiento.requestFocus();
+            }
+        }
+    }
+
+    //metodo para seleccionar los datos de la fila y modificarlos
+    private void filaSeleccionada() {
+        if (this.jTblEstablecimiento.getSelectedRow() != -1) {
+            this.jTFCod_Establecimiento.setText(String.valueOf(this.jTblEstablecimiento.getValueAt(this.jTblEstablecimiento.getSelectedRow(), 0)));
+            this.jTFNombre_Establecimiento.setText(String.valueOf(this.jTblEstablecimiento.getValueAt(this.jTblEstablecimiento.getSelectedRow(), 1)));
+
+        }
+    }
+
+    // metodo para llamar el metodo de actualizar registro de la base de datos
+    private void editar() throws SQLException {
+        actualizarEstablecimiento();
+        poblarTablasEstablecimiento();
+        habilitarBotones(true, false, false, true);
+        encontrarCorrelativo();
+        limpiarTextField();
+
+    }
+
+    //metodo para eliminar
+    public void eliminarEstablecimiento() {
+        try {
+            CDEstablecimiento cde = new CDEstablecimiento();
+            CLEstablecimiento cl = new CLEstablecimiento();
+            cl.setCodEstablecimiento(Integer.parseInt(this.jTFCod_Establecimiento.getText().trim()));
+            cde.eliminarEstablecimiento(cl);
+
+            JOptionPane.showMessageDialog(null, "Registrado eliminado", "Proyecto Vacunación", JOptionPane.INFORMATION_MESSAGE);
+            this.jTFNombre_Establecimiento.requestFocus();
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error al eliminar " + e);
+            this.jTFNombre_Establecimiento.requestFocus();
+        }
+    }
+
+    public void eliminar() throws SQLException {
+        int resp = JOptionPane.showConfirmDialog(null, "¿esta seguro de eliminar el registro?", "registro vacuna",
+                JOptionPane.YES_NO_CANCEL_OPTION);
+        if (resp == JOptionPane.YES_OPTION) {
+            try {
+                eliminarEstablecimiento();
+                poblarTablasEstablecimiento();
+                habilitarBotones(true, false, false, true);
+                encontrarCorrelativo();
+                limpiarTextField();
+
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(null, "Error " + ex);
+            }
+
+        } else {
+            limpiarTextField();
+        }
+    }
+
+    @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
@@ -132,16 +255,16 @@ public class jFFEstablecimiento extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(223, Short.MAX_VALUE)
+                .addContainerGap(198, Short.MAX_VALUE)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 515, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(87, 87, 87)
+                .addGap(155, 155, 155)
                 .addComponent(jLblXEstablecimiento, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(53, 53, 53))
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLblXEstablecimiento, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(0, 17, Short.MAX_VALUE))
@@ -151,10 +274,10 @@ public class jFFEstablecimiento extends javax.swing.JFrame {
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true), "Establecimiento", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 3, 12))); // NOI18N
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 3, 12)); // NOI18N
-        jLabel2.setText("NOMBRE ESTABLECIMIENTO");
+        jLabel2.setText("Nombre Establecimiento");
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 3, 12)); // NOI18N
-        jLabel3.setText("COD ESTABLECIMIENTO");
+        jLabel3.setText("Codigo de Establecimiento");
 
         jTFNombre_Establecimiento.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -166,21 +289,43 @@ public class jFFEstablecimiento extends javax.swing.JFrame {
         jBtnGuardar.setFont(new java.awt.Font("Tahoma", 3, 12)); // NOI18N
         jBtnGuardar.setText("Guardar");
         jBtnGuardar.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jBtnGuardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBtnGuardarActionPerformed(evt);
+            }
+        });
 
         jBtnEditar.setBackground(new java.awt.Color(255, 255, 255));
         jBtnEditar.setFont(new java.awt.Font("Tahoma", 3, 12)); // NOI18N
         jBtnEditar.setText("Editar");
         jBtnEditar.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jBtnEditar.setEnabled(false);
+        jBtnEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBtnEditarActionPerformed(evt);
+            }
+        });
 
         jBtnLimpiar.setBackground(new java.awt.Color(255, 255, 255));
         jBtnLimpiar.setFont(new java.awt.Font("Tahoma", 3, 12)); // NOI18N
         jBtnLimpiar.setText("Limpiar");
         jBtnLimpiar.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jBtnLimpiar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBtnLimpiarActionPerformed(evt);
+            }
+        });
 
         jBtnEliminar.setBackground(new java.awt.Color(255, 255, 255));
         jBtnEliminar.setFont(new java.awt.Font("Tahoma", 3, 12)); // NOI18N
         jBtnEliminar.setText("Eliminar");
         jBtnEliminar.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jBtnEliminar.setEnabled(false);
+        jBtnEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBtnEliminarActionPerformed(evt);
+            }
+        });
 
         jBtnAgregrar.setBackground(new java.awt.Color(255, 255, 255));
         jBtnAgregrar.setFont(new java.awt.Font("Tahoma", 3, 12)); // NOI18N
@@ -247,7 +392,7 @@ public class jFFEstablecimiento extends javax.swing.JFrame {
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jBtnLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jBtnAgregrar, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(23, Short.MAX_VALUE))
         );
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
@@ -274,6 +419,11 @@ public class jFFEstablecimiento extends javax.swing.JFrame {
                 "cod Establecimiento", "nombre Establecimiento"
             }
         ));
+        jTblEstablecimiento.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTblEstablecimientoMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTblEstablecimiento);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -283,12 +433,11 @@ public class jFFEstablecimiento extends javax.swing.JFrame {
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 891, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(33, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 891, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -296,9 +445,9 @@ public class jFFEstablecimiento extends javax.swing.JFrame {
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(30, 30, 30)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(204, 204, 204))
         );
@@ -316,8 +465,43 @@ public class jFFEstablecimiento extends javax.swing.JFrame {
     }//GEN-LAST:event_jTFNombre_EstablecimientoActionPerformed
 
     private void jBtnAgregrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnAgregrarActionPerformed
-       
+
     }//GEN-LAST:event_jBtnAgregrarActionPerformed
+
+    private void jBtnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnGuardarActionPerformed
+        try {
+            guardar();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al almacenar" + ex);
+        }
+    }//GEN-LAST:event_jBtnGuardarActionPerformed
+
+    private void jTblEstablecimientoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTblEstablecimientoMouseClicked
+        filaSeleccionada();
+        habilitarBotones(false, true, true, true);
+    }//GEN-LAST:event_jTblEstablecimientoMouseClicked
+
+    private void jBtnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnEditarActionPerformed
+        try {
+            editar();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al actualizar" + ex);
+        }
+    }//GEN-LAST:event_jBtnEditarActionPerformed
+
+    private void jBtnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnEliminarActionPerformed
+        try {
+            eliminar();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al eliminar" + ex);
+        }
+
+    }//GEN-LAST:event_jBtnEliminarActionPerformed
+
+    private void jBtnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnLimpiarActionPerformed
+
+        limpiarTextField();
+    }//GEN-LAST:event_jBtnLimpiarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -377,6 +561,4 @@ public class jFFEstablecimiento extends javax.swing.JFrame {
     private javax.swing.JTable jTblEstablecimiento;
     // End of variables declaration//GEN-END:variables
 
-    
-        
-    }
+}
