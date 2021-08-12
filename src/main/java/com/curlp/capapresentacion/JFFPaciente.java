@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.curlp.presentacion;
+package com.curlp.capapresentacion;
 
+import com.curlp.presentacion.*;
 import com.curlp.datos.CDPaciente;
 import com.curlp.logica.CLPaciente;
 import java.awt.Color;
@@ -638,6 +639,7 @@ public class JFFPaciente extends javax.swing.JFrame {
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(JFFPaciente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */

@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.curlp.datos;
+package com.curlp.capadatos;
 
-import com.curlp.logica.CLVacunador;
+import com.curlp.capalogica.CLVacunador;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -28,7 +28,7 @@ public class CDVacunador {
     Statement st;
 
     public CDVacunador() throws SQLException {
-        this.cn = Conexion.conectar();
+        this.cn = conexion.conectar();
     }
     
     //Registrar un vacunador en la tabla.
