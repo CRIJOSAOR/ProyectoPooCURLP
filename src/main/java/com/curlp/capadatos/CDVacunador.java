@@ -99,7 +99,7 @@ public class CDVacunador {
                 CLVacunador cl = new CLVacunador();
 
                 cl.setDniVacunador(rs.getString("dniVacunador"));
-                cl.setNombresV(rs.getString("nombres"));
+                cl.setNombresV(rs.getString("nombre"));
                 cl.setApellidosV(rs.getString("apellidos"));
                 cl.setDireccionV(rs.getString("direccion"));
                 cl.setNumCelularV(rs.getString("numCelular"));

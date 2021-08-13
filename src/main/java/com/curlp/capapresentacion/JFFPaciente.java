@@ -267,7 +267,7 @@ public class JFFPaciente extends javax.swing.JFrame {
         if(this.verificarCampos()){
             // recuperar datos de los Combo Box
             int idSexo = this.jCboSexo.getSelectedIndex();
-            int idProfesion = this.getIdProfesion(this.jCboProfesion.getItemAt(this.jCboProfesion.getSelectedIndex()));
+            int idProfesion = getIdProfesion(this.jCboProfesion.getItemAt(this.jCboProfesion.getSelectedIndex()));
             
             // temporalmente se recoje la fecha de esta forma
             
@@ -350,7 +350,6 @@ public class JFFPaciente extends javax.swing.JFrame {
             profesionDB = listaProfeciones.get(i).getProfesion().trim();
             
             if(profesionDB.equals(profesion.trim())){
-                JOptionPane.showMessageDialog(null, "entro");
                 index = listaProfeciones.get(i).getIdProfesion();
             }
         } 
@@ -740,18 +739,18 @@ public class JFFPaciente extends javax.swing.JFrame {
         JPBotonesGestionLayout.setHorizontalGroup(
             JPBotonesGestionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(JPBotonesGestionLayout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(JPBotonesGestionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(JPBotonesGestionLayout.createSequentialGroup()
-                        .addGap(36, 36, 36)
-                        .addComponent(jBtnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jBtnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jBtnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jBtnLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(41, 41, 41))
                     .addGroup(JPBotonesGestionLayout.createSequentialGroup()
-                        .addGap(20, 20, 20)
-                        .addComponent(jBtnLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(41, Short.MAX_VALUE))
+                        .addComponent(jBtnGuardar, javax.swing.GroupLayout.DEFAULT_SIZE, 125, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jBtnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jBtnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(27, 27, 27))))
         );
         JPBotonesGestionLayout.setVerticalGroup(
             JPBotonesGestionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
