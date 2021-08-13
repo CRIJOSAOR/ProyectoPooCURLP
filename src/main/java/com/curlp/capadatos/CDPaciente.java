@@ -37,7 +37,8 @@ public class CDPaciente {
             ps.setString(2, cl.getNombres());
             ps.setString(3, cl.getApellidos());
             ps.setString(4, cl.getNumCelular());
-            ps.setString(5, cl.getFechaNacimiento());
+            ps.setDate(5, cl.getFechaNacimiento());
+            //ps.setString(5, cl.getFechaNacimiento());
             ps.setString(6, cl.getLugarTrabajo());
             ps.setString(7, cl.getDireccion());
             ps.setInt(8, cl.getIdSexo());
@@ -57,7 +58,7 @@ public class CDPaciente {
             ps.setString(2, cl.getNombres());
             ps.setString(3, cl.getApellidos());
             ps.setString(4, cl.getNumCelular());
-            ps.setString(5, cl.getFechaNacimiento());
+            ps.setDate(5, cl.getFechaNacimiento());
             ps.setString(6, cl.getLugarTrabajo());
             ps.setString(7, cl.getDireccion());
             ps.setInt(8, cl.getIdSexo());
@@ -98,7 +99,7 @@ public class CDPaciente {
                 cl.setNombres(rs.getString("p.nombrePaciente"));
                 cl.setApellidos(rs.getString("p.apellidoPaciente"));
                 cl.setNumCelular(rs.getString("p.numCelular"));
-                cl.setFechaNacimiento(rs.getString("p.fechaNacimiento"));
+                cl.setFechaNacimiento(rs.getDate("p.fechaNacimiento"));
                 cl.setLugarTrabajo(rs.getString("p.lugarTrabajo"));
                 cl.setDireccion(rs.getString("p.direccionPaciente"));
                 cl.setSexo(rs.getString("s.sexo"));
@@ -129,7 +130,7 @@ public class CDPaciente {
             cl.setNombres(rs.getString("p.nombrePaciente"));
             cl.setApellidos(rs.getString("p.apellidoPaciente"));
             cl.setNumCelular(rs.getString("p.numCelular"));
-            cl.setFechaNacimiento(rs.getString("p.fechaNacimiento"));
+            cl.setFechaNacimiento(rs.getDate("p.fechaNacimiento"));
             cl.setLugarTrabajo(rs.getString("p.lugarTrabajo"));
             cl.setDireccion(rs.getString("p.direccionPaciente"));
             cl.setSexo(rs.getString("s.sexo"));
@@ -145,6 +146,40 @@ public class CDPaciente {
         
         return cl;
     }
+    
+    public List<CLPaciente> ObtenerListaPacientesPorNombre(String nombrePaciente) throws SQLException {
+        String sql = "CALL mostrarPacientePorNombre(?)";
+        List<CLPaciente> miLista = null;
+        
+        try{
+            ps = cn.prepareStatement(sql);
+            ps.setString(1, nombrePaciente);
+            rs = ps.executeQuery();
+            
+            miLista = new ArrayList<>();
+            
+            while(rs.next()){
+                CLPaciente cl = new CLPaciente();
+                cl.setNumIdentidad(rs.getString("p.dniPaciente"));
+                cl.setNombres(rs.getString("p.nombrePaciente"));
+                cl.setApellidos(rs.getString("p.apellidoPaciente"));
+                cl.setNumCelular(rs.getString("p.numCelular"));
+                cl.setFechaNacimiento(rs.getDate("p.fechaNacimiento"));
+                cl.setLugarTrabajo(rs.getString("p.lugarTrabajo"));
+                cl.setDireccion(rs.getString("p.direccionPaciente"));
+                cl.setSexo(rs.getString("s.sexo"));
+                cl.setProfesion(rs.getString("pr.profesion"));
+                
+                miLista.add(cl);
+                
+            }
+        } catch(SQLException e){
+            
+            JOptionPane.showMessageDialog(null,"Error al mostrar -- Vuelva a intentarlo","Error",JOptionPane.ERROR_MESSAGE);
+        }
+        
+        return miLista;
+    } 
     
     
 }

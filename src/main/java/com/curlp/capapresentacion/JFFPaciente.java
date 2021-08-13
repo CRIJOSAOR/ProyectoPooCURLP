@@ -8,10 +8,14 @@ package com.curlp.capapresentacion;
 
 import com.curlp.capadatos.CDPaciente;
 import com.curlp.capadatos.CDProfesion;
+import com.curlp.capadatos.CDSexo;
 import com.curlp.capalogica.CLPaciente;
 import com.curlp.capalogica.CLProfesiones;
 import java.awt.Color;
+import java.sql.Date;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -36,6 +40,7 @@ public class JFFPaciente extends javax.swing.JFrame {
         agregarIconos();
         llenarTabla();
         llenarComboBoxProfesiones();
+        
         this.setLocationRelativeTo(null);
         this.border = this.jTFnumIdentidad.getBorder();
     }
@@ -52,12 +57,13 @@ public class JFFPaciente extends javax.swing.JFrame {
         ImageIcon iconbtnGuardar = new ImageIcon("src/main/java/com/curlp/capaimagenes/save.png");
         ImageIcon iconbtnEditar = new ImageIcon("src/main/java/com/curlp/capaimagenes/edit.png");
         ImageIcon iconbtnEliminar = new ImageIcon("src/main/java/com/curlp/capaimagenes/delete.png");
+        ImageIcon iconImage = new ImageIcon("src/main/java/com/curlp/capaimagenes/image.jpg");
         this.jBTNSalir.setIcon(iconobtn);
         this.jLBiconoNombre.setIcon(iconLogoTitulo);
         this.jBtnGuardar.setIcon(iconbtnGuardar);
         this.jBtnEditar.setIcon(iconbtnEditar);
         this.jBtnEliminar.setIcon(iconbtnEliminar);
-        
+        this.jLimagenGrande.setIcon(iconImage);
     }
     
     public void llenarComboBoxProfesiones() throws SQLException{
@@ -68,6 +74,17 @@ public class JFFPaciente extends javax.swing.JFrame {
         
         for (String x: listaProfesiones){
              this.jCboProfesion.addItem(x);
+        }
+    }
+    
+    public void llenarComboBoxSexo() throws SQLException {
+        CDSexo cds = new CDSexo();
+        List<String> sexos = cds.cargarSexos();
+        
+        this.jCboSexo.removeAllItems();
+        
+        for (String x: sexos){
+             this.jCboSexo.addItem(x);
         }
     }
     
@@ -122,15 +139,8 @@ public class JFFPaciente extends javax.swing.JFrame {
         // verificacion de numero de identidad
         String numIdentidad = this.jTFnumIdentidad.getText();
         
-        if(numIdentidad.length() == 15){ //se verifica si tiene el tamanio correcto de 15 elementos 
+        if(numIdentidad.length() != 15){ //se verifica si tiene el tamanio correcto de 15 elementos 
             //si el numero de identidad no tiene 15 elementos
-            if(numIdentidad.charAt(4) != '-' && numIdentidad.charAt(9) != '-'){ //deben estar los guiones en la posicion correcta
-                verificador = false;
-                errors +=  "Debe Agregar el numero con los guiones ejemplo: 0801-2000-00011 \n";
-                this.jTFnumIdentidad.setBorder(BorderFactory.createLineBorder(Color.red));
-            }
-            
-        } else {
             verificador = false;
             errors +=  "Debe ingresar correctamente el numero de identidad, ejemplo: 0801-2000-00011 \n";
             this.jTFnumIdentidad.setBorder(BorderFactory.createLineBorder(Color.red));
@@ -154,26 +164,14 @@ public class JFFPaciente extends javax.swing.JFrame {
         }
         
         //--------------------------
-        // verificar que el numero de telefono este lleno, tenga todos los numeros y el guion
+        // verificar que el numero de telefono este lleno, tenga todos los numeros 
         
-        if(this.jTFnumCelular.getText().length() == 0){
-            verificador = false;
-            errors +=  "debe Ingresar el numero de telefono\n";
-            this.jTFnumCelular.setBorder(BorderFactory.createLineBorder(Color.red));
-            
-        }
         
-        if(this.jTFnumCelular.getText().length() == 9){
-            
-            if('-' != this.jTFnumCelular.getText().charAt(4)){
-                verificador = false;
-                errors +=  "elnumero de telefono debe llevar un guion\n";
-                this.jTFnumCelular.setBorder(BorderFactory.createLineBorder(Color.red));
-            }
-        } else {
+        if(this.jTFnumCelular.getText().length() != 9){
             verificador = false;
             errors +=  "El numero de telefono es incorrecto, debe ir asi: 0000-0000\n";
             this.jTFnumCelular.setBorder(BorderFactory.createLineBorder(Color.red));
+            
         }
         
         
@@ -231,20 +229,19 @@ public class JFFPaciente extends javax.swing.JFrame {
         // Antes de todo se debe verificar que los campos cumplan con lo requerido
         if(this.verificarCampos()){
             // recuperar datos de los Combo Box
-            int idSexo = this.getIdProfesion( this.jCboSexo.getItemAt(this.jCboSexo.getSelectedIndex()));
-            int idProfesion = this.jCboProfesion.getSelectedIndex();
+            int idProfesion = this.getIdProfesion( this.jCboProfesion.getItemAt(this.jCboProfesion.getSelectedIndex()));
+            int idSexo = this.jCboSexo.getSelectedIndex();
             
-            // temporalmente se recoje la fecha de esta forma
-            
+            // recoleccion de la fecha del jDateChooser
+            java.sql.Date fechaSql = new java.sql.Date(this.jDCFechaNacimiento.getDate().getTime());
             
             // Siguiente paso es completar toda la informacion necesaria para la clase CLPaciente 
             
-            paciente.setNumIdentidad(this.jTFnumIdentidad.getText().trim());
+            paciente.setNumIdentidad(String.valueOf(fechaSql));
             paciente.setNombres(this.jTFnombres.getText().trim());
             paciente.setApellidos(this.jTFapellidos.getText().trim());
             paciente.setNumCelular(this.jTFnumCelular.getText().trim());
-            //paciente.setFechaNacimiento(this.jDCFechaNacimiento.getDateFormatString().trim());
-            paciente.setFechaNacimiento(this.jFTFfechaNacimiento.getText().trim());
+            paciente.setFechaNacimiento(fechaSql);
             paciente.setLugarTrabajo(this.jTFlugarTrabajo.getText().trim());
             paciente.setDireccion(this.jTAdireccion.getText().trim());
             paciente.setIdSexo(idSexo);
@@ -253,7 +250,7 @@ public class JFFPaciente extends javax.swing.JFrame {
             // siguiente linea inserta el objeto Paciente a la base de datos
             
             registro.insertarPaciente(paciente);
-            //this.limpiarCampos();
+            limpiarCampos();
         }
         
     }
@@ -269,8 +266,8 @@ public class JFFPaciente extends javax.swing.JFrame {
             int idSexo = this.jCboSexo.getSelectedIndex();
             int idProfesion = getIdProfesion(this.jCboProfesion.getItemAt(this.jCboProfesion.getSelectedIndex()));
             
-            // temporalmente se recoje la fecha de esta forma
-            
+            // recoleccion de la fecha del jDateChooser
+            java.sql.Date fechaSql = new java.sql.Date(this.jDCFechaNacimiento.getDate().getTime());
             
             // Siguiente paso es completar toda la informacion necesaria para la clase CLPaciente 
             
@@ -278,7 +275,7 @@ public class JFFPaciente extends javax.swing.JFrame {
             paciente.setNombres(this.jTFnombres.getText().trim());
             paciente.setApellidos(this.jTFapellidos.getText().trim());
             paciente.setNumCelular(this.jTFnumCelular.getText().trim());
-            paciente.setFechaNacimiento(this.jFTFfechaNacimiento.getText().trim());
+            paciente.setFechaNacimiento(fechaSql);
             paciente.setLugarTrabajo(this.jTFlugarTrabajo.getText().trim());
             paciente.setDireccion(this.jTAdireccion.getText().trim());
             paciente.setIdSexo(idSexo);
@@ -287,7 +284,7 @@ public class JFFPaciente extends javax.swing.JFrame {
             // siguiente linea inserta el objeto Paciente a la base de datos
             
             registro.actualizarPaciente(paciente);
-            //this.limpiarCampos();
+            this.limpiarCampos();
         }
         
     }
@@ -307,13 +304,14 @@ public class JFFPaciente extends javax.swing.JFrame {
         }
         
     }
-    public void llenarCampos(String numIdentidad) {
+    public void llenarCampos(String numIdentidad) throws ParseException {
         
         this.jTFnumIdentidad.setText(String.valueOf(this.jTBPacientes.getValueAt(this.jTBPacientes.getSelectedRow(), 0)));
         this.jTFnombres.setText(String.valueOf(this.jTBPacientes.getValueAt(this.jTBPacientes.getSelectedRow(), 1)));
         this.jTFapellidos.setText(String.valueOf(this.jTBPacientes.getValueAt(this.jTBPacientes.getSelectedRow(), 2)));
         this.jTFnumCelular.setText(String.valueOf(this.jTBPacientes.getValueAt(this.jTBPacientes.getSelectedRow(), 3)));
-        this.jFTFfechaNacimiento.setText(String.valueOf(this.jTBPacientes.getValueAt(this.jTBPacientes.getSelectedRow(), 4)));
+        //Date fechaParseada = (Date) new SimpleDateFormat("dd/MM/yyyy").parse((String) this.jTBPacientes.getValueAt(this.jTBPacientes.getSelectedRow(), 4));
+        //this.jDCFechaNacimiento.setDate(fechaParseada);
         this.jTFlugarTrabajo.setText(String.valueOf(this.jTBPacientes.getValueAt(this.jTBPacientes.getSelectedRow(), 5)));
         this.jTAdireccion.setText(String.valueOf(this.jTBPacientes.getValueAt(this.jTBPacientes.getSelectedRow(), 6)));
         if(String.valueOf(this.jTBPacientes.getValueAt(this.jTBPacientes.getSelectedRow(), 5)).length() != 0){
@@ -392,7 +390,7 @@ public class JFFPaciente extends javax.swing.JFrame {
         this.jCboProfesion.setSelectedIndex(0);
         this.jCBtrabaja.setSelected(false);
         this.jTAdireccion.setText("");
-        this.jFTFfechaNacimiento.setText("");
+        
         
         // devolver los bordes a default
         
@@ -406,7 +404,7 @@ public class JFFPaciente extends javax.swing.JFrame {
         this.jCboProfesion.setBorder(this.border);
         this.jCBtrabaja.setBorder(this.border);
         this.jTAdireccion.setBorder(this.border);
-        this.jFTFfechaNacimiento.setBorder(this.border);
+        
         
     }
     
@@ -445,7 +443,8 @@ public class JFFPaciente extends javax.swing.JFrame {
             fila[1] = persona.getNombres();
             fila[2] = persona.getApellidos();
             fila[3] = persona.getNumCelular();
-            fila[4] = persona.getFechaNacimiento();
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+            fila[4] = (String) sdf.format(persona.getFechaNacimiento());
             fila[5] = persona.getLugarTrabajo();
             fila[6] = persona.getDireccion();
             fila[7] = persona.getSexo();
@@ -454,7 +453,36 @@ public class JFFPaciente extends javax.swing.JFrame {
         }).forEachOrdered(modelo::addRow);    
     }
     
-    private void seleccionarFila() throws SQLException{
+    private void llenarTablarPorNombre(String nombreCliente) throws SQLException {
+        limpiarTabla();
+        // instanciar una clase tipo CDPaciente para la conexion con la base de datos 
+        CDPaciente registro = new CDPaciente();
+        
+        // recuperar todos los pacientes en forma de lista
+        List<CLPaciente> listaPacientes = registro.ObtenerListaPacientesPorNombre(nombreCliente);
+        // instanciamos un model 
+        modelo = (DefaultTableModel) this.jTBPacientes.getModel();
+      
+        // llenar cada fila con un ciclo      
+        listaPacientes.stream().map((CLPaciente persona) ->{
+            Object[] fila = new Object[9];
+            fila[0] = persona.getNumIdentidad();
+            fila[1] = persona.getNombres();
+            fila[2] = persona.getApellidos();
+            fila[3] = persona.getNumCelular();
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+            fila[4] = (String) sdf.format(persona.getFechaNacimiento());
+            fila[5] = persona.getLugarTrabajo();
+            fila[6] = persona.getDireccion();
+            fila[7] = persona.getSexo();
+            fila[8] = persona.getProfesion();
+            return fila;
+        }).forEachOrdered(modelo::addRow);
+        
+        
+    }
+    
+    private void seleccionarFila() throws SQLException, ParseException{
         if(this.jTBPacientes.getSelectedRow() != -1){
             
             String numIdentidad = String.valueOf(this.jTBPacientes.getValueAt(this.jTBPacientes.getSelectedRow(), 0));
@@ -494,15 +522,14 @@ public class JFFPaciente extends javax.swing.JFrame {
         jLBiconoNombre = new javax.swing.JLabel();
         jPfranjaSuperior = new javax.swing.JPanel();
         jPFranjaInferior = new javax.swing.JPanel();
-        JPDatosPaciente = new javax.swing.JPanel();
+        jTabbedPane1 = new javax.swing.JTabbedPane();
+        jPgestionar = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         jCboSexo = new javax.swing.JComboBox<>();
-        jTFnumIdentidad = new javax.swing.JTextField();
         jTFlugarTrabajo = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
         jTFnombres = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTAdireccion = new javax.swing.JTextArea();
@@ -513,19 +540,24 @@ public class JFFPaciente extends javax.swing.JFrame {
         jLabel9 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jCboProfesion = new javax.swing.JComboBox<>();
-        jTFnumCelular = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
-        jFTFfechaNacimiento = new javax.swing.JFormattedTextField();
         jLabel12 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
-        JPBotonesGestion = new javax.swing.JPanel();
         jBtnEditar = new javax.swing.JButton();
         jBtnGuardar = new javax.swing.JButton();
         jBtnEliminar = new javax.swing.JButton();
         jBtnLimpiar = new javax.swing.JButton();
-        jPTable = new javax.swing.JPanel();
+        jLimagenGrande = new javax.swing.JLabel();
+        jTFnumIdentidad = new javax.swing.JFormattedTextField();
+        jTFnumCelular = new javax.swing.JFormattedTextField();
+        jDCFechaNacimiento = new com.toedter.calendar.JDateChooser();
+        jPMostrarPacientes = new javax.swing.JPanel();
+        jTFBusqueda = new javax.swing.JTextField();
+        jBtnMostrarTodos = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTBPacientes = new javax.swing.JTable();
+        jLabel14 = new javax.swing.JLabel();
+        jLabel15 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
@@ -606,41 +638,33 @@ public class JFFPaciente extends javax.swing.JFrame {
 
         getContentPane().add(jPFranjaInferior, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 560, 1040, 20));
 
-        JPDatosPaciente.setBackground(new java.awt.Color(255, 255, 255));
-        JPDatosPaciente.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Datos de Paciente", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Lucida Grande", 0, 13), new java.awt.Color(51, 51, 51))); // NOI18N
-        JPDatosPaciente.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        jPgestionar.setBackground(new java.awt.Color(255, 255, 255));
+        jPgestionar.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel4.setText("Apellido:");
-        JPDatosPaciente.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 70, -1, -1));
+        jPgestionar.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 80, -1, -1));
 
         jLabel5.setText("Celular:");
-        JPDatosPaciente.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 110, -1, -1));
+        jPgestionar.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 120, -1, -1));
 
         jLabel10.setText("Profesion:");
-        JPDatosPaciente.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 190, -1, -1));
+        jPgestionar.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 170, -1, -1));
 
         jCboSexo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "--Seleccione", "Femenino", "Masculino" }));
-        JPDatosPaciente.add(jCboSexo, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 150, 210, 30));
-
-        jTFnumIdentidad.setToolTipText("");
-        JPDatosPaciente.add(jTFnumIdentidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 20, 230, 30));
+        jPgestionar.add(jCboSexo, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 170, 210, 30));
 
         jTFlugarTrabajo.setEnabled(false);
-        JPDatosPaciente.add(jTFlugarTrabajo, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 230, 190, 30));
+        jPgestionar.add(jTFlugarTrabajo, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 220, 190, 30));
 
         jLabel3.setText("Nombre:");
-        JPDatosPaciente.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 70, -1, -1));
-
-        jLabel7.setFont(new java.awt.Font("Lucida Grande", 0, 10)); // NOI18N
-        jLabel7.setText("ejemplo: 1996-12-26");
-        JPDatosPaciente.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 90, -1, -1));
-        JPDatosPaciente.add(jTFnombres, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 60, 120, 30));
+        jPgestionar.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 80, -1, -1));
+        jPgestionar.add(jTFnombres, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 70, 190, 30));
 
         jTAdireccion.setColumns(20);
         jTAdireccion.setRows(5);
         jScrollPane1.setViewportView(jTAdireccion);
 
-        JPDatosPaciente.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 290, 370, 90));
+        jPgestionar.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 270, 510, 90));
 
         jCBtrabaja.setText("Trabaja?");
         jCBtrabaja.addActionListener(new java.awt.event.ActionListener() {
@@ -648,21 +672,21 @@ public class JFFPaciente extends javax.swing.JFrame {
                 jCBtrabajaActionPerformed(evt);
             }
         });
-        JPDatosPaciente.add(jCBtrabaja, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 230, 100, 30));
+        jPgestionar.add(jCBtrabaja, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 220, 100, 30));
 
         jLabel2.setText("Numero de Identidad:");
-        JPDatosPaciente.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 30, -1, -1));
+        jPgestionar.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 40, -1, -1));
 
         jLabel6.setFont(new java.awt.Font("Lucida Grande", 0, 10)); // NOI18N
         jLabel6.setText("nacimiento:");
-        JPDatosPaciente.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 110, -1, -1));
-        JPDatosPaciente.add(jTFapellidos, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 60, 120, 30));
+        jPgestionar.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 120, -1, -1));
+        jPgestionar.add(jTFapellidos, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 70, 180, 30));
 
         jLabel9.setText("Sexo:");
-        JPDatosPaciente.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 150, -1, -1));
+        jPgestionar.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 170, -1, -1));
 
         jLabel8.setText("Direccion de residencia:");
-        JPDatosPaciente.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 270, -1, -1));
+        jPgestionar.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 250, -1, -1));
 
         jCboProfesion.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "--Seleccione", "Ingeniero" }));
         jCboProfesion.addActionListener(new java.awt.event.ActionListener() {
@@ -670,32 +694,19 @@ public class JFFPaciente extends javax.swing.JFrame {
                 jCboProfesionActionPerformed(evt);
             }
         });
-        JPDatosPaciente.add(jCboProfesion, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 190, 210, 30));
-        JPDatosPaciente.add(jTFnumCelular, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 100, 120, 30));
+        jPgestionar.add(jCboProfesion, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 170, 210, 30));
 
         jLabel11.setFont(new java.awt.Font("Lucida Grande", 0, 10)); // NOI18N
         jLabel11.setText("Fecha de ");
-        JPDatosPaciente.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 100, -1, -1));
-
-        try {
-            jFTFfechaNacimiento.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("####-##-##")));
-        } catch (java.text.ParseException ex) {
-            ex.printStackTrace();
-        }
-        JPDatosPaciente.add(jFTFfechaNacimiento, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 100, 130, 30));
+        jPgestionar.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 110, -1, -1));
 
         jLabel12.setFont(new java.awt.Font("Lucida Grande", 0, 10)); // NOI18N
         jLabel12.setText("Si es asi, especifique donde:");
-        JPDatosPaciente.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 220, -1, -1));
+        jPgestionar.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 210, -1, -1));
 
         jLabel13.setFont(new java.awt.Font("Lucida Grande", 0, 10)); // NOI18N
         jLabel13.setText("ejemplo: 0000-0000");
-        JPDatosPaciente.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 90, -1, -1));
-
-        getContentPane().add(JPDatosPaciente, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 70, 420, 390));
-
-        JPBotonesGestion.setBackground(new java.awt.Color(255, 255, 255));
-        JPBotonesGestion.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jPgestionar.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 100, -1, -1));
 
         jBtnEditar.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
         jBtnEditar.setForeground(new java.awt.Color(0, 153, 153));
@@ -706,6 +717,7 @@ public class JFFPaciente extends javax.swing.JFrame {
                 jBtnEditarActionPerformed(evt);
             }
         });
+        jPgestionar.add(jBtnEditar, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 370, 140, 40));
 
         jBtnGuardar.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
         jBtnGuardar.setForeground(new java.awt.Color(0, 153, 153));
@@ -715,6 +727,7 @@ public class JFFPaciente extends javax.swing.JFrame {
                 jBtnGuardarActionPerformed(evt);
             }
         });
+        jPgestionar.add(jBtnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 370, 140, 40));
 
         jBtnEliminar.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
         jBtnEliminar.setForeground(new java.awt.Color(0, 153, 153));
@@ -725,6 +738,7 @@ public class JFFPaciente extends javax.swing.JFrame {
                 jBtnEliminarActionPerformed(evt);
             }
         });
+        jPgestionar.add(jBtnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 370, 140, 40));
 
         jBtnLimpiar.setForeground(new java.awt.Color(51, 51, 51));
         jBtnLimpiar.setText("Limpiar");
@@ -733,41 +747,49 @@ public class JFFPaciente extends javax.swing.JFrame {
                 jBtnLimpiarActionPerformed(evt);
             }
         });
+        jPgestionar.add(jBtnLimpiar, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 370, 110, 40));
+        jPgestionar.add(jLimagenGrande, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 10, 370, 400));
 
-        javax.swing.GroupLayout JPBotonesGestionLayout = new javax.swing.GroupLayout(JPBotonesGestion);
-        JPBotonesGestion.setLayout(JPBotonesGestionLayout);
-        JPBotonesGestionLayout.setHorizontalGroup(
-            JPBotonesGestionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(JPBotonesGestionLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(JPBotonesGestionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(JPBotonesGestionLayout.createSequentialGroup()
-                        .addComponent(jBtnLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(41, 41, 41))
-                    .addGroup(JPBotonesGestionLayout.createSequentialGroup()
-                        .addComponent(jBtnGuardar, javax.swing.GroupLayout.DEFAULT_SIZE, 125, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jBtnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jBtnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(27, 27, 27))))
-        );
-        JPBotonesGestionLayout.setVerticalGroup(
-            JPBotonesGestionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(JPBotonesGestionLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(JPBotonesGestionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jBtnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jBtnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jBtnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jBtnLimpiar)
-                .addContainerGap(10, Short.MAX_VALUE))
-        );
+        try {
+            jTFnumIdentidad.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("####-####-#####")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+        jTFnumIdentidad.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTFnumIdentidadActionPerformed(evt);
+            }
+        });
+        jPgestionar.add(jTFnumIdentidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 30, 230, 30));
 
-        getContentPane().add(JPBotonesGestion, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 460, 420, 100));
+        try {
+            jTFnumCelular.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("####-####")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+        jPgestionar.add(jTFnumCelular, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 110, 170, 30));
 
-        jPTable.setBackground(new java.awt.Color(255, 255, 255));
+        jDCFechaNacimiento.setDateFormatString("dd/MM/yyyy");
+        jPgestionar.add(jDCFechaNacimiento, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 110, 200, -1));
+
+        jTabbedPane1.addTab("Gestionar", jPgestionar);
+
+        jPMostrarPacientes.setBackground(new java.awt.Color(255, 255, 255));
+
+        jTFBusqueda.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTFBusquedaKeyReleased(evt);
+            }
+        });
+
+        jBtnMostrarTodos.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
+        jBtnMostrarTodos.setForeground(new java.awt.Color(0, 153, 153));
+        jBtnMostrarTodos.setText("Mostrar Todos");
+        jBtnMostrarTodos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBtnMostrarTodosActionPerformed(evt);
+            }
+        });
 
         jTBPacientes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -793,24 +815,46 @@ public class JFFPaciente extends javax.swing.JFrame {
         });
         jScrollPane2.setViewportView(jTBPacientes);
 
-        javax.swing.GroupLayout jPTableLayout = new javax.swing.GroupLayout(jPTable);
-        jPTable.setLayout(jPTableLayout);
-        jPTableLayout.setHorizontalGroup(
-            jPTableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPTableLayout.createSequentialGroup()
+        jLabel14.setText("Buscar por Nombre:");
+
+        jLabel15.setText("ó");
+
+        javax.swing.GroupLayout jPMostrarPacientesLayout = new javax.swing.GroupLayout(jPMostrarPacientes);
+        jPMostrarPacientes.setLayout(jPMostrarPacientesLayout);
+        jPMostrarPacientesLayout.setHorizontalGroup(
+            jPMostrarPacientesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPMostrarPacientesLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 612, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(520, 520, 520))
+                .addComponent(jLabel14)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jTFBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, 434, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel15)
+                .addGap(21, 21, 21)
+                .addComponent(jBtnMostrarTodos, javax.swing.GroupLayout.PREFERRED_SIZE, 278, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPMostrarPacientesLayout.createSequentialGroup()
+                .addContainerGap(16, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 997, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
-        jPTableLayout.setVerticalGroup(
-            jPTableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPTableLayout.createSequentialGroup()
+        jPMostrarPacientesLayout.setVerticalGroup(
+            jPMostrarPacientesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPMostrarPacientesLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 482, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(80, 80, 80))
+                .addGroup(jPMostrarPacientesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jTFBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jBtnMostrarTodos, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel14)
+                    .addComponent(jLabel15))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 367, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(131, 131, 131))
         );
 
-        getContentPane().add(jPTable, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 70, 620, 490));
+        jTabbedPane1.addTab("Historal de Registros", jPMostrarPacientes);
+
+        getContentPane().add(jTabbedPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 80, 1040, 470));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -821,8 +865,11 @@ public class JFFPaciente extends javax.swing.JFrame {
 
     private void jCBtrabajaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCBtrabajaActionPerformed
         activarCampoLugarTrabajo();
-
     }//GEN-LAST:event_jCBtrabajaActionPerformed
+
+    private void jCboProfesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCboProfesionActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jCboProfesionActionPerformed
 
     private void jBtnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnEditarActionPerformed
         try {
@@ -852,17 +899,39 @@ public class JFFPaciente extends javax.swing.JFrame {
         limpiarCampos();
     }//GEN-LAST:event_jBtnLimpiarActionPerformed
 
+    private void jTFnumIdentidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTFnumIdentidadActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTFnumIdentidadActionPerformed
+
+    private void jBtnMostrarTodosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnMostrarTodosActionPerformed
+        try{
+            this.llenarTabla();
+            this.jTFBusqueda.setText("");
+        } catch(SQLException ex){
+            JOptionPane.showMessageDialog(null,"Error: " + ex.getMessage());
+        }
+    }//GEN-LAST:event_jBtnMostrarTodosActionPerformed
+
     private void jTBPacientesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTBPacientesMouseClicked
         try {
             seleccionarFila();
         } catch (SQLException ex) {
             Logger.getLogger(JFFPaciente.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ParseException ex) {
+            Logger.getLogger(JFFPaciente.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jTBPacientesMouseClicked
 
-    private void jCboProfesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCboProfesionActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jCboProfesionActionPerformed
+    private void jTFBusquedaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTFBusquedaKeyReleased
+        String Busqueda;
+        Busqueda = this.jTFBusqueda.getText();
+        
+        try{
+            this.llenarTablarPorNombre(Busqueda);
+        } catch (SQLException ex){
+            JOptionPane.showMessageDialog(null,"Error: " + ex.getMessage());
+        }
+    }//GEN-LAST:event_jTFBusquedaKeyReleased
 
     /**
      * @param args the command line arguments
@@ -891,6 +960,12 @@ public class JFFPaciente extends javax.swing.JFrame {
         }
         //</editor-fold>
         //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -905,43 +980,47 @@ public class JFFPaciente extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPanel JPBotonesGestion;
-    private javax.swing.JPanel JPDatosPaciente;
     private javax.swing.JButton jBTNSalir;
     private javax.swing.JButton jBtnEditar;
     private javax.swing.JButton jBtnEliminar;
     private javax.swing.JButton jBtnGuardar;
     private javax.swing.JButton jBtnLimpiar;
+    private javax.swing.JButton jBtnMostrarTodos;
     private javax.swing.JCheckBox jCBtrabaja;
     private javax.swing.JComboBox<String> jCboProfesion;
     private javax.swing.JComboBox<String> jCboSexo;
-    private javax.swing.JFormattedTextField jFTFfechaNacimiento;
+    private com.toedter.calendar.JDateChooser jDCFechaNacimiento;
     private javax.swing.JLabel jLBiconoNombre;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JLabel jLimagenGrande;
     private javax.swing.JPanel jPFranjaInferior;
-    private javax.swing.JPanel jPTable;
+    private javax.swing.JPanel jPMostrarPacientes;
     private javax.swing.JPanel jPTitulo;
     private javax.swing.JPanel jPfranjaSuperior;
+    private javax.swing.JPanel jPgestionar;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTextArea jTAdireccion;
     private javax.swing.JTable jTBPacientes;
+    private javax.swing.JTextField jTFBusqueda;
     private javax.swing.JTextField jTFapellidos;
     private javax.swing.JTextField jTFlugarTrabajo;
     private javax.swing.JTextField jTFnombres;
-    private javax.swing.JTextField jTFnumCelular;
-    private javax.swing.JTextField jTFnumIdentidad;
+    private javax.swing.JFormattedTextField jTFnumCelular;
+    private javax.swing.JFormattedTextField jTFnumIdentidad;
+    private javax.swing.JTabbedPane jTabbedPane1;
     // End of variables declaration//GEN-END:variables
 }

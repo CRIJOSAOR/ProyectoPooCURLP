@@ -5,6 +5,8 @@
  */
 package com.curlp.capalogica;
 
+import java.sql.Date;
+
 /**
  *
  * @author davidmendoza
@@ -14,7 +16,7 @@ public class CLPaciente {
     private String nombres;
     private String Apellidos;
     private String numCelular;
-    private String fechaNacimiento;
+    private Date fechaNacimiento;
     private String lugarTrabajo;
     private String direccion;
     private int idSexo;
@@ -55,11 +57,11 @@ public class CLPaciente {
         this.numCelular = numCelular;
     }
 
-    public String getFechaNacimiento() {
+    public Date getFechaNacimiento() {
         return fechaNacimiento;
     }
 
-    public void setFechaNacimiento(String fechaNacimiento) {
+    public void setFechaNacimiento(Date fechaNacimiento) {
         this.fechaNacimiento = fechaNacimiento;
     }
 
