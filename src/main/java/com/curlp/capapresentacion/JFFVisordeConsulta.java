@@ -5,6 +5,16 @@
  */
 package com.curlp.capapresentacion;
 
+import com.curlp.capadatos.CDPaciente;
+import com.curlp.capadatos.CDProfesion;
+import com.curlp.capalogica.CLPaciente;
+import com.curlp.capalogica.CLProfesiones;
+import java.sql.SQLException;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author Luis
@@ -14,10 +24,36 @@ public class JFFVisordeConsulta extends javax.swing.JFrame {
     /**
      * Creates new form JFFVisordeConsulta
      */
-    public JFFVisordeConsulta() {
+    public JFFVisordeConsulta() throws SQLException {
         initComponents();
+        llenarTabla();
     }
-
+    DefaultTableModel modelo;
+    private void llenarTabla() throws SQLException{
+        
+        // instanciar una clase tipo CDPaciente para la conexion con la base de datos 
+        CDPaciente registro = new CDPaciente();
+        
+        // recuperar todos los pacientes en forma de lista
+        List<CLPaciente> listaPacientes = registro.mostrarPacientes();
+        // instanciamos un model 
+        modelo = (DefaultTableModel) this.jTBPacientes.getModel();
+      
+        // llenar cada fila con un ciclo      
+        listaPacientes.stream().map((CLPaciente persona) ->{
+            Object[] fila = new Object[9];
+            fila[0] = persona.getNumIdentidad();
+            fila[1] = persona.getNombres();
+            fila[2] = persona.getApellidos();
+            fila[3] = persona.getNumCelular();
+            fila[4] = persona.getFechaNacimiento();
+            fila[5] = persona.getLugarTrabajo();
+            fila[6] = persona.getDireccion();
+            fila[7] = persona.getSexo();
+            fila[8] = persona.getProfesion();
+            return fila;
+        }).forEachOrdered(modelo::addRow);    
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -28,98 +64,93 @@ public class JFFVisordeConsulta extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        JTblVacunadores = new javax.swing.JTable();
-        jBtnMostrar = new javax.swing.JButton();
+        jTBPacientes = new javax.swing.JTable();
+        jPfranjaSuperior = new javax.swing.JPanel();
+        jPfranjaSuperior1 = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jPanel1.setBackground(new java.awt.Color(102, 255, 255));
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 48)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(0, 153, 153));
+        jLabel1.setText("X");
+        jLabel1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jLabel1MousePressed(evt);
+            }
+        });
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(990, 0, 40, -1));
 
-        jLabel1.setFont(new java.awt.Font("Times New Roman", 3, 18)); // NOI18N
-        jLabel1.setText("VISOR DE CONSULTA");
+        jLabel3.setFont(new java.awt.Font("Tahoma", 3, 24)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(0, 153, 153));
+        jLabel3.setText("Visor de Consulta");
+        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 20, 280, -1));
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(111, 111, 111)
-                .addComponent(jLabel1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(24, Short.MAX_VALUE)
-                .addComponent(jLabel1)
-                .addContainerGap())
-        );
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1040, 60));
 
-        JTblVacunadores.setModel(new javax.swing.table.DefaultTableModel(
+        jTBPacientes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "DNI", "Nombres", "Apellidos", "Dirección", "Número celular", "Estado"
+                "Identidad", "Nombres", "Apellidos", "Num Celular", "Fecha de Nacimiento", "Lugar Trabajo", "Direccion", "Sexo", "Profesion"
             }
-        ));
-        jScrollPane2.setViewportView(JTblVacunadores);
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, true, true, true, true
+            };
 
-        jBtnMostrar.setBackground(new java.awt.Color(255, 255, 255));
-        jBtnMostrar.setFont(new java.awt.Font("Times New Roman", 3, 14)); // NOI18N
-        jBtnMostrar.setText("Mostrar");
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jTBPacientes.setShowGrid(true);
+        jScrollPane2.setViewportView(jTBPacientes);
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(162, Short.MAX_VALUE)
-                .addComponent(jBtnMostrar, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(161, 161, 161))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                .addContainerGap())
+        getContentPane().add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 80, 1040, 242));
+
+        jPfranjaSuperior.setBackground(new java.awt.Color(0, 153, 153));
+
+        javax.swing.GroupLayout jPfranjaSuperiorLayout = new javax.swing.GroupLayout(jPfranjaSuperior);
+        jPfranjaSuperior.setLayout(jPfranjaSuperiorLayout);
+        jPfranjaSuperiorLayout.setHorizontalGroup(
+            jPfranjaSuperiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 1040, Short.MAX_VALUE)
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jBtnMostrar, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(32, Short.MAX_VALUE))
+        jPfranjaSuperiorLayout.setVerticalGroup(
+            jPfranjaSuperiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 10, Short.MAX_VALUE)
         );
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        getContentPane().add(jPfranjaSuperior, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 340, 1040, 10));
+
+        jPfranjaSuperior1.setBackground(new java.awt.Color(0, 153, 153));
+
+        javax.swing.GroupLayout jPfranjaSuperior1Layout = new javax.swing.GroupLayout(jPfranjaSuperior1);
+        jPfranjaSuperior1.setLayout(jPfranjaSuperior1Layout);
+        jPfranjaSuperior1Layout.setHorizontalGroup(
+            jPfranjaSuperior1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 1040, Short.MAX_VALUE)
         );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+        jPfranjaSuperior1Layout.setVerticalGroup(
+            jPfranjaSuperior1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 10, Short.MAX_VALUE)
         );
+
+        getContentPane().add(jPfranjaSuperior1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 60, 1040, 10));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jLabel1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MousePressed
+        this.dispose();
+    }//GEN-LAST:event_jLabel1MousePressed
 
     /**
      * @param args the command line arguments
@@ -151,17 +182,22 @@ public class JFFVisordeConsulta extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new JFFVisordeConsulta().setVisible(true);
+                try {
+                    new JFFVisordeConsulta().setVisible(true);
+                } catch (SQLException ex) {
+                    Logger.getLogger(JFFVisordeConsulta.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTable JTblVacunadores;
-    private javax.swing.JButton jBtnMostrar;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPfranjaSuperior;
+    private javax.swing.JPanel jPfranjaSuperior1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTable jTBPacientes;
     // End of variables declaration//GEN-END:variables
 }
