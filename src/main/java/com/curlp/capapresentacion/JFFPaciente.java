@@ -70,7 +70,7 @@ public class JFFPaciente extends javax.swing.JFrame {
             
             // Siguiente paso es completar toda la informacion necesaria para la clase CLPaciente 
             
-            paciente.setNumIdentidad(String.valueOf(fechaSql));
+            paciente.setNumIdentidad(this.jTFnumIdentidad.getText().trim());
             paciente.setNombres(this.jTFnombres.getText().trim());
             paciente.setApellidos(this.jTFapellidos.getText().trim());
             paciente.setNumCelular(this.jTFnumCelular.getText().trim());
