@@ -826,11 +826,6 @@ public class JFFPaciente extends javax.swing.JFrame {
         });
         jTBPacientes.setComponentPopupMenu(jPMOpciones);
         jTBPacientes.setShowGrid(true);
-        jTBPacientes.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jTBPacientesMouseClicked(evt);
-            }
-        });
         jScrollPane2.setViewportView(jTBPacientes);
 
         jLabel14.setText("Buscar por Nombre:");
@@ -929,10 +924,6 @@ public class JFFPaciente extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null,"Error: " + ex.getMessage());
         }
     }//GEN-LAST:event_jBtnMostrarTodosActionPerformed
-
-    private void jTBPacientesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTBPacientesMouseClicked
-        
-    }//GEN-LAST:event_jTBPacientesMouseClicked
 
     private void jTFBusquedaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTFBusquedaKeyReleased
         String Busqueda;
