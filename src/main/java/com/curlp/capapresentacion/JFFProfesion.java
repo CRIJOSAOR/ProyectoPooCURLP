@@ -105,6 +105,11 @@ public class JFFProfesion extends javax.swing.JFrame {
         jBtnLimpiarProfesion.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jBtnLimpiarProfesion.setForeground(new java.awt.Color(0, 153, 153));
         jBtnLimpiarProfesion.setText("Limpiar");
+        jBtnLimpiarProfesion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBtnLimpiarProfesionActionPerformed(evt);
+            }
+        });
 
         jBtnActualizarProfesion.setBackground(new java.awt.Color(204, 204, 204));
         jBtnActualizarProfesion.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
@@ -294,6 +299,10 @@ public class JFFProfesion extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jBtnEliminarProfesionActionPerformed
 
+    private void jBtnLimpiarProfesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnLimpiarProfesionActionPerformed
+        limpiarTextField();
+    }//GEN-LAST:event_jBtnLimpiarProfesionActionPerformed
+
     // metodo para limpiar los datos de la tabla
     private void limpiarTablaProfesion() {
         DefaultTableModel dtm = (DefaultTableModel) this.jTbProfesion.getModel();
@@ -339,8 +348,8 @@ public class JFFProfesion extends javax.swing.JFrame {
     
     //metodos para limpiar textFiled
     private void limpiarTextField() {
-        this.jTFIdProfesion.setText("");
-        this.jTFProfesion.setText("");
+        this.jTFIdProfesion.setText(" ");
+        this.jTFProfesion.setText(" ");
     }
     
     // metodo para validar la TextField
