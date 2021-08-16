@@ -30,16 +30,16 @@ public class CDLoteVacuna {
 
     // Metodo insertar lote vacuna en la tabla
     public void insertarLoteVacuna(CLLoteVacuna cl) throws SQLException {
-        String sql = "CALL insertarLoteVacuna(?,?,?,?)";
+        String sql = "{CALL insertarLoteVacuna(?,?,?,?)}";
         try {
 
             ps = cn.prepareCall(sql);
             ps.setString(1, cl.getNumLoteVacuna());
-            ps.setString(2, cl.getFechaFabricacion());
-            ps.setString(3, cl.getFechaVencimiento());
+            ps.setDate(2, cl.getFechaFabricacion());
+            ps.setDate(3, cl.getFechaVencimiento());
             ps.setInt(4, cl.getIdFbricante());
             ps.execute();
-
+            JOptionPane.showMessageDialog(null, "Registrado con Exito");
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Error" + e.getMessage());
         }
@@ -47,13 +47,13 @@ public class CDLoteVacuna {
 
     // Metodo para actualizar la profesion
     public void actualizarloteVacuna(CLLoteVacuna cl) throws SQLException {
-        String sql = "CALL actualizarloteVacuna(?,?,?,?)";
+        String sql = "{CALL actualizarloteVacuna(?,?,?,?)}";
         try {
 
             ps = cn.prepareCall(sql);
             ps.setString(1, cl.getNumLoteVacuna());
-            ps.setString(2, cl.getFechaFabricacion());
-            ps.setString(3, cl.getFechaVencimiento());
+            ps.setDate(2, cl.getFechaFabricacion());
+            ps.setDate(3, cl.getFechaVencimiento());
             ps.setInt(4, cl.getIdFbricante());
             ps.execute();
 
@@ -64,7 +64,7 @@ public class CDLoteVacuna {
 
     // Metodo para elimiar un lote vacuna 
     public void eliminarLoteVacuna(CLLoteVacuna cl) throws SQLException {
-        String sql = "CALL eliminarLoteVacuna(?)";
+        String sql = "{CALL eliminarLoteVacuna(?)}";
         try {
 
             ps = cn.prepareCall(sql);
@@ -80,14 +80,12 @@ public class CDLoteVacuna {
     public int autoIncrementarLoteVacuna(CLLoteVacuna cl) throws SQLException {
         int idFabricante = 0;
 
-        String sql = "CALL autoIncrementarLoteVacuna()";
+        String sql = "{CALL autoIncrementarLoteVacuna()}";
         try {
             st = cn.createStatement();
             rs = st.executeQuery(sql);
             rs.next();
-
             idFabricante = rs.getInt("idFabricante");
-
             if (idFabricante == 0) {
                 idFabricante = 1;
             }
@@ -110,10 +108,11 @@ public class CDLoteVacuna {
             miLista = new ArrayList<>();
             while (rs.next()) {
                 CLLoteVacuna cl = new CLLoteVacuna();
-                cl.setNumLoteVacuna(rs.getNString("lv.numLoteVacuna"));
-                cl.setFechaFabricacion(rs.getNString("lv.fechaFabricacion"));
-                cl.setFechaVencimiento(rs.getNString("lv.fechaVencimiento"));
-                cl.setIdFbricante(rs.getInt(" f.idFabricante"));
+                cl.setNumLoteVacuna(rs.getString("lv.numLoteVacuna"));
+                cl.setFechaFabricacion(rs.getDate("lv.fechaFabricacion"));
+                cl.setFechaVencimiento(rs.getDate("lv.fechaVencimiento"));
+                cl.setIdFbricante(rs.getInt("lv.idFabricante"));
+                cl.setNombreFabricante(rs.getString("f.nombreFabricante"));
 
                 miLista.add(cl);
             }
@@ -124,7 +123,7 @@ public class CDLoteVacuna {
     }
 
     // METODO QUE PERMITE LLENAR EL COMBO DE loteVACUNA
-      public List<String> cargarComboLoteVacuna() throws SQLException {
+    public List<String> cargarComboLoteVacuna() throws SQLException {
 
         String sql = "{CALL mostrarLoteVacuna()}";
 
@@ -137,6 +136,7 @@ public class CDLoteVacuna {
             miLista.add("--Seleccione--");
             while (rs.next()) {
                 miLista.add(rs.getString("numLoteVacuna"));
+                miLista.add(rs.getString("fechaFabricacion"));
             }
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Error" + e.getMessage());

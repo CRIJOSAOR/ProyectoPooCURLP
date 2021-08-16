@@ -27,6 +27,8 @@ public class JFFLoteVacuna extends javax.swing.JFrame {
     public JFFLoteVacuna() throws SQLException {
         initComponents();
         this.poblarTablaLoteVacuna();
+        encontrarCorrelativo();
+        this.jTFNumLote.requestFocus();
         this.setLocationRelativeTo(null);
     }
 
@@ -47,11 +49,12 @@ public class JFFLoteVacuna extends javax.swing.JFrame {
         DefaultTableModel temp = (DefaultTableModel) this.jTblLoteVacuna.getModel();
 
         miLista.stream().map((CLLoteVacuna cl) -> {
-            Object[] fila = new Object[2];
+            Object[] fila = new Object[5];
             fila[0] = cl.getNumLoteVacuna();
             fila[1] = cl.getFechaFabricacion();
             fila[2] = cl.getFechaVencimiento();
             fila[3] = cl.getIdFbricante();
+            fila[4] = cl.getNombreFabricante();
             return fila;
         }).forEachOrdered(temp::addRow);
     }
@@ -73,130 +76,143 @@ public class JFFLoteVacuna extends javax.swing.JFrame {
         this.jBtnLimpiar.setEnabled(limpiar);
     }
 
-    //metodos para limpiar textFiled
+    // metodos para limpiar textFiled
     private void limpiarTextField() {
         this.jTFNumLote.setText("");
         this.jTFIdFabricante.setText("");
+        this.jDCFechaFabricacion.setCalendar(null);
+        this.jDCFechaVencimietno.setCalendar(null);
+        this.jTFNumLote.requestFocus();
+
     }
     // metodo para validar la TextField
 
     private boolean validarTextField() {
         boolean estado;
-
         estado = this.jTFNumLote.getText().equals("");
-
         return estado;
     }
-    // metodo de insertar profesion Double.parseDouble(this.jTFMonto.getText());
+    // metodo de insertar un nuevo lote
 
     private void insertarLoteVacuna() {
         if (!validarTextField()) {
-            JOptionPane.showMessageDialog(null, "Tiene que ingresar el numero de lote de vacunas", "Proyecto Vacunación", JOptionPane.INFORMATION_MESSAGE);
-            this.jTFNumLote.requestFocus();
-        } else {
+
             try {
+                java.sql.Date fechaFabricacion = new java.sql.Date(this.jDCFechaFabricacion.getDate().getTime());
+                java.sql.Date fechaVencimietno = new java.sql.Date(this.jDCFechaVencimietno.getDate().getTime());
                 CDLoteVacuna cdlv = new CDLoteVacuna();
                 CLLoteVacuna cl = new CLLoteVacuna();
                 cl.setNumLoteVacuna(this.jTFNumLote.getText().trim());
-                cl.setFechaFabricacion(this.jDCFechaFabricacion.getDateFormatString().trim());
-                cl.setFechaVencimiento(this.jDCFechaVencimiento.getDateFormatString().trim());
+                cl.setFechaFabricacion(fechaFabricacion);
+                cl.setFechaVencimiento(fechaVencimietno);
                 cl.setIdFbricante(Integer.parseInt(this.jTFIdFabricante.getText().trim()));
                 cdlv.insertarLoteVacuna(cl);
                 JOptionPane.showMessageDialog(null, "Registrado correctamente", "Proyecto Vacunación", JOptionPane.INFORMATION_MESSAGE);
                 this.jTFNumLote.requestFocus();
             } catch (SQLException e) {
-                JOptionPane.showMessageDialog(null, "Error al almacenar" + e);
+                JOptionPane.showMessageDialog(null, "Error al almacenar el nuevo lote" + e);
                 this.jTFNumLote.requestFocus();
             }
+
+        } else {
+            JOptionPane.showMessageDialog(null, "Tiene que ingresar el numero de lote de vacunas", "Proyecto Vacunación", JOptionPane.INFORMATION_MESSAGE);
+            this.jTFNumLote.requestFocus();
         }
     }
-    
-        //Metodo para llamar el metodo para insertar loteVacuna
+
+    //Metodo para llamar el metodo para insertar loteVacuna
     private void insertar() throws SQLException {
         insertarLoteVacuna();
         poblarTablaLoteVacuna();
-        habilitarBotones(true,false,false,false);
+        habilitarBotones(true, false, false, true);
         limpiarTextField();
         encontrarCorrelativo();
     }
-    // Metodo para llamar el metodo para actualizar profesion
+
+    // Metodo para llamar el metodo para actualizar un lote
     private void actualizarLoteVacuna() {
         if (!validarTextField()) {
-            JOptionPane.showMessageDialog(null,"Ingresar el nombre de la profesion","Proyecto Vacunación",JOptionPane.INFORMATION_MESSAGE);
-            this.jTFNumLote.requestFocus();
-        } else {
+
             try {
+                java.sql.Date fechaFabricacion = new java.sql.Date(this.jDCFechaFabricacion.getDate().getTime());
+                java.sql.Date fechaVencimietno = new java.sql.Date(this.jDCFechaVencimietno.getDate().getTime());
                 CDLoteVacuna cdlv = new CDLoteVacuna();
                 CLLoteVacuna cl = new CLLoteVacuna();
                 cl.setNumLoteVacuna(this.jTFNumLote.getText().trim());
-                cl.setFechaFabricacion(this.jDCFechaFabricacion.getDateFormatString().trim());
-                cl.setFechaVencimiento(this.jDCFechaVencimiento.getDateFormatString().trim());
+                 cl.setFechaFabricacion(fechaFabricacion);
+                cl.setFechaVencimiento(fechaVencimietno);
                 cl.setIdFbricante(Integer.parseInt(this.jTFIdFabricante.getText().trim()));
                 cdlv.actualizarloteVacuna(cl);
-                JOptionPane.showMessageDialog(null,"Registrado actualizado","Proyecto Vacunación",JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Registrado actualizado", "Proyecto Vacunación", JOptionPane.INFORMATION_MESSAGE);
                 this.jTFNumLote.requestFocus();
             } catch (SQLException e) {
-                JOptionPane.showMessageDialog(null,"Error al modificar" + e);
+                JOptionPane.showMessageDialog(null, "Error al modificar" + e);
                 this.jTFNumLote.requestFocus();
             }
+        } else {
+            JOptionPane.showMessageDialog(null, "Ingresar los nuevos datos del lote", "Proyecto Vacunación", JOptionPane.INFORMATION_MESSAGE);
+            this.jTFNumLote.requestFocus();
         }
     }
-       // metodo para seleccionar los datos de la fila y asi modificarlos
+    // metodo para seleccionar los datos de la fila y asi modificarlos
+
     private void filaSeleccionada() {
         if (this.jTblLoteVacuna.getSelectedRow() != -1) {
-            this.jTFNumLote.setText(String .valueOf(this.jTblLoteVacuna.getValueAt(this.jTblLoteVacuna.getSelectedRow(),0)));
-            this.jTFIdFabricante.setText(String .valueOf(this.jTblLoteVacuna.getValueAt(this.jTblLoteVacuna.getSelectedRow(),3)));
+            this.jTFNumLote.setText(String.valueOf(this.jTblLoteVacuna.getValueAt(this.jTblLoteVacuna.getSelectedRow(), 0)));
+         //   this.jDCFechaFabricacion.setDate(String.valueOf(this.jTblLoteVacuna.getValueAt(this.jTblLoteVacuna.getSelectedRow(), 1)));
+           // this.jDCFechaVencimietno.setText(String.valueOf(this.jTblLoteVacuna.getValueAt(this.jTblLoteVacuna.getSelectedRow(), 2)));
+            this.jTFIdFabricante.setText(String.valueOf(this.jTblLoteVacuna.getValueAt(this.jTblLoteVacuna.getSelectedRow(), 3)));
 //this.jDCFechaFabricacion.getDate(this.jTblLoteVacuna.getValueAt(this.jTblLoteVacuna.getSelectedRow(),0)));
-             
-          }
+
+        }
     }
-    
+
     //metodo actualizar el registro loteVacuna
     private void editar() throws SQLException {
         actualizarLoteVacuna();
         this.poblarTablaLoteVacuna();
-        habilitarBotones(true,false,false,false);
+        habilitarBotones(true, false, false, false);
         limpiarTextField();
         encontrarCorrelativo();
     }
-      // metodo para eliminar profesion
+    // metodo para eliminar lote
+
     private void eliminarLoteVacuna() {
         if (!validarTextField()) {
-            JOptionPane.showMessageDialog(null,"Ingresar el nombre de la profesion","Proyecto Vacunación",JOptionPane.INFORMATION_MESSAGE);
-            this.jTFNumLote.requestFocus();
-        } else {
             try {
                 CDLoteVacuna cdlv = new CDLoteVacuna();
                 CLLoteVacuna cl = new CLLoteVacuna();
                 cl.setNumLoteVacuna((this.jTFNumLote.getText().trim()));
                 cdlv.eliminarLoteVacuna(cl);
-                JOptionPane.showMessageDialog(null,"Registrado eliminado","Proyecto Vacunación",JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Registrado eliminado", "Proyecto Vacunación", JOptionPane.INFORMATION_MESSAGE);
                 this.jTFNumLote.requestFocus();
             } catch (SQLException e) {
-                JOptionPane.showMessageDialog(null,"Error al eliminar" + e);
+                JOptionPane.showMessageDialog(null, "Error al eliminar" + e);
                 this.jTFNumLote.requestFocus();
             }
+        } else {
+            JOptionPane.showMessageDialog(null, "Ingresar el numero de lote", "Proyecto Vacunación", JOptionPane.INFORMATION_MESSAGE);
+            this.jTFNumLote.requestFocus();
         }
     }
-    
+
     // metodo llamar eliminar 
     private void eliminar() throws SQLException {
-        int resp = JOptionPane.showConfirmDialog(null, "Seguro que desea eliminar el registro","Proyecto Vacunacion",JOptionPane.YES_NO_OPTION);
+        int resp = JOptionPane.showConfirmDialog(null, "Seguro que desea eliminar este lote", "Proyecto Vacunacion", JOptionPane.YES_NO_OPTION);
         if (resp == JOptionPane.YES_OPTION) {
             try {
                 eliminarLoteVacuna();
                 poblarTablaLoteVacuna();
-                habilitarBotones(true,false,false,false);
+                habilitarBotones(true, false, false, false);
                 limpiarTextField();
                 encontrarCorrelativo();
             } catch (SQLException ex) {
-                JOptionPane.showMessageDialog(null,"Error: " + ex);
+                JOptionPane.showMessageDialog(null, "Error: " + ex);
             }
         } else {
             limpiarTextField();
         }
-    } 
-    
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -219,12 +235,12 @@ public class JFFLoteVacuna extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jTFIdFabricante = new javax.swing.JTextField();
-        jDCFechaFabricacion = new com.toedter.calendar.JDateChooser();
-        jDCFechaVencimiento = new com.toedter.calendar.JDateChooser();
         jBtnGuardar = new javax.swing.JButton();
         jBtnEditar = new javax.swing.JButton();
         jBtnEliminar = new javax.swing.JButton();
         jBtnLimpiar = new javax.swing.JButton();
+        jDCFechaVencimietno = new com.toedter.calendar.JDateChooser();
+        jDCFechaFabricacion = new com.toedter.calendar.JDateChooser();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTblLoteVacuna = new javax.swing.JTable();
@@ -274,8 +290,6 @@ public class JFFLoteVacuna extends javax.swing.JFrame {
         jLabel6.setText("ID Fabricante:");
         jPanel2.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 140, -1, -1));
         jPanel2.add(jTFIdFabricante, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 130, 206, 28));
-        jPanel2.add(jDCFechaFabricacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 90, 140, -1));
-        jPanel2.add(jDCFechaVencimiento, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 90, 150, -1));
 
         jBtnGuardar.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jBtnGuardar.setForeground(new java.awt.Color(0, 153, 153));
@@ -319,6 +333,12 @@ public class JFFLoteVacuna extends javax.swing.JFrame {
         });
         jPanel2.add(jBtnLimpiar, new org.netbeans.lib.awtextra.AbsoluteConstraints(413, 150, 110, -1));
 
+        jDCFechaVencimietno.setDateFormatString("dd/MM/yyyy");
+        jPanel2.add(jDCFechaVencimietno, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 90, 180, -1));
+
+        jDCFechaFabricacion.setDateFormatString("dd/MM/yyyy");
+        jPanel2.add(jDCFechaFabricacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, 180, -1));
+
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
         jPanel3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 153, 153)));
         jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -328,7 +348,7 @@ public class JFFLoteVacuna extends javax.swing.JFrame {
 
             },
             new String [] {
-                "# Lote de vacuna", "Fecha de fabricacion", "Fecha de vencimiento", "ID fabricante"
+                "# Lote de vacuna", "Fecha de fabricacion", "Fecha de vencimiento", "ID fabricante", "Fabricante"
             }
         ));
         jTblLoteVacuna.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -380,31 +400,31 @@ public class JFFLoteVacuna extends javax.swing.JFrame {
     }//GEN-LAST:event_jTblLoteVacunaMouseClicked
 
     private void jBtnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnEditarActionPerformed
-         try {
+        try {
             editar();
         } catch (SQLException ex) {
-            Logger.getLogger(null,"Error al actualizar" + ex);
+            Logger.getLogger(null, "Error al actualizar" + ex);
         }
     }//GEN-LAST:event_jBtnEditarActionPerformed
 
     private void jBtnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnGuardarActionPerformed
-            try {
+        try {
             insertar();
         } catch (SQLException e) {
-             JOptionPane.showMessageDialog(null,"Error al almacenar" + e);
+            JOptionPane.showMessageDialog(null, "Error al almacenar" + e);
         }
     }//GEN-LAST:event_jBtnGuardarActionPerformed
 
     private void jBtnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnEliminarActionPerformed
-       try {
+        try {
             eliminar();
         } catch (SQLException ex) {
-            Logger.getLogger(null,"Error al ELIMINAR" + ex);
+            Logger.getLogger(null, "Error al ELIMINAR" + ex);
         }
     }//GEN-LAST:event_jBtnEliminarActionPerformed
 
     private void jBtnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnLimpiarActionPerformed
-        this.limpiarTextField(); 
+        this.limpiarTextField();
     }//GEN-LAST:event_jBtnLimpiarActionPerformed
 
     /**
@@ -454,7 +474,7 @@ public class JFFLoteVacuna extends javax.swing.JFrame {
     private javax.swing.JButton jBtnLimpiar;
     private com.toedter.calendar.JCalendar jCalendar1;
     private com.toedter.calendar.JDateChooser jDCFechaFabricacion;
-    private com.toedter.calendar.JDateChooser jDCFechaVencimiento;
+    private com.toedter.calendar.JDateChooser jDCFechaVencimietno;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

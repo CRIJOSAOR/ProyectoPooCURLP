@@ -5,6 +5,8 @@
  */
 package com.curlp.capalogica;
 
+import java.sql.Date;
+
 /**
  *
  * @author sanch
@@ -12,9 +14,18 @@ package com.curlp.capalogica;
 public class CLLoteVacuna {
 
     private String numLoteVacuna;
-    private String fechaFabricacion;
-    private String fechaVencimiento;
+    private Date fechaFabricacion;
+    private Date fechaVencimiento;
     private int idFbricante;
+    private String nombreFabricante;
+
+    public String getNombreFabricante() {
+        return nombreFabricante;
+    }
+
+    public void setNombreFabricante(String nombreFabricante) {
+        this.nombreFabricante = nombreFabricante;
+    }
 
     public String getNumLoteVacuna() {
         return numLoteVacuna;
@@ -24,21 +35,25 @@ public class CLLoteVacuna {
         this.numLoteVacuna = numLoteVacuna;
     }
 
-    public String getFechaFabricacion() {
+    public Date getFechaFabricacion() {
         return fechaFabricacion;
     }
 
-    public void setFechaFabricacion(String fechaFabricacion) {
+    public void setFechaFabricacion(Date fechaFabricacion) {
         this.fechaFabricacion = fechaFabricacion;
     }
 
-    public String getFechaVencimiento() {
+    public Date getFechaVencimiento() {
         return fechaVencimiento;
     }
 
-    public void setFechaVencimiento(String fechaVencimiento) {
+    public void setFechaVencimiento(Date fechaVencimiento) {
         this.fechaVencimiento = fechaVencimiento;
     }
+
+
+
+ 
 
     public int getIdFbricante() {
         return idFbricante;
