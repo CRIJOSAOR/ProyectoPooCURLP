@@ -35,6 +35,7 @@ public class JFFLoteVacuna extends javax.swing.JFrame {
         this.jTFNumLote.requestFocus();
         this.setLocationRelativeTo(null);
     }
+    
 
     // Metodo para limpiar los datos de la tabla
     private void limpiarTabla() {
