@@ -299,7 +299,7 @@ public class JFFProfesion extends javax.swing.JFrame {
         try {
             eliminar();
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Error al eliminar" +  ex);
+            JOptionPane.showMessageDialog(null, "Error al eliminar" + ex);
         }
     }//GEN-LAST:event_jBtnEliminarProfesionActionPerformed
 
@@ -307,7 +307,7 @@ public class JFFProfesion extends javax.swing.JFrame {
         try {
             limpiar();
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Error al limpiar" +  ex);
+            JOptionPane.showMessageDialog(null, "Error al limpiar" + ex);
         }
     }//GEN-LAST:event_jBtnLimpiarProfesionActionPerformed
 
@@ -373,6 +373,9 @@ public class JFFProfesion extends javax.swing.JFrame {
     // Metodo de insertar profesion
     private void insertarProfesion() {
         if (!validarTextField()) {
+            JOptionPane.showMessageDialog(null, "Ingresar el nombre de la profesion", "Proyecto Vacunación", JOptionPane.INFORMATION_MESSAGE);
+            this.jTFProfesion.requestFocus();
+        } else {
             try {
                 CDProfesion cdp = new CDProfesion();
                 CLProfesiones cl = new CLProfesiones();
@@ -384,9 +387,6 @@ public class JFFProfesion extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "Error al almacenar" + e);
                 this.jTFProfesion.requestFocus();
             }
-        } else {
-            JOptionPane.showMessageDialog(null, "Ingresar el nombre de la profesion", "Proyecto Vacunación", JOptionPane.INFORMATION_MESSAGE);
-            this.jTFProfesion.requestFocus();
         }
     }
 
@@ -474,11 +474,13 @@ public class JFFProfesion extends javax.swing.JFrame {
             limpiarTextField();
         }
     }
+
     // Metodo de boton limpiar casillas TextField
     private void limpiar() throws SQLException {
         limpiarTextField();
         habilitarBotones(true, false, false, true);
         encontrarCorrelativo();
+        this.jTFProfesion.requestFocus();
     }
 
     // Agregar iconos a los botones
