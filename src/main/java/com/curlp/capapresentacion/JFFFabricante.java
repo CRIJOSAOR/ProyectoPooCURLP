@@ -241,6 +241,7 @@ public class JFFFabricante extends javax.swing.JFrame {
         jLabel4.setText("NOMBRE FABRICANTE");
 
         jBtnAgregar.setFont(new java.awt.Font("Trebuchet MS", 1, 11)); // NOI18N
+        jBtnAgregar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/curlp/capaimagenes/save.png"))); // NOI18N
         jBtnAgregar.setText("AGREGAR");
         jBtnAgregar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -249,6 +250,7 @@ public class JFFFabricante extends javax.swing.JFrame {
         });
 
         jBtnEditar.setFont(new java.awt.Font("Trebuchet MS", 1, 11)); // NOI18N
+        jBtnEditar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/curlp/capaimagenes/edit.png"))); // NOI18N
         jBtnEditar.setText("EDITAR");
         jBtnEditar.setEnabled(false);
         jBtnEditar.addActionListener(new java.awt.event.ActionListener() {
@@ -258,6 +260,7 @@ public class JFFFabricante extends javax.swing.JFrame {
         });
 
         jBtnEliminar.setFont(new java.awt.Font("Trebuchet MS", 1, 11)); // NOI18N
+        jBtnEliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/curlp/capaimagenes/delete.png"))); // NOI18N
         jBtnEliminar.setText("ELIMINAR");
         jBtnEliminar.setEnabled(false);
         jBtnEliminar.addActionListener(new java.awt.event.ActionListener() {
@@ -267,6 +270,7 @@ public class JFFFabricante extends javax.swing.JFrame {
         });
 
         jBtnLimpiar.setFont(new java.awt.Font("Trebuchet MS", 1, 11)); // NOI18N
+        jBtnLimpiar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/curlp/capaimagenes/Limpiar.png"))); // NOI18N
         jBtnLimpiar.setText("LIMPIAR");
         jBtnLimpiar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -312,7 +316,7 @@ public class JFFFabricante extends javax.swing.JFrame {
                 .addComponent(jBtnEliminar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jBtnLimpiar)
-                .addContainerGap(44, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jPanel2.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 360, 290));
@@ -362,6 +366,7 @@ public class JFFFabricante extends javax.swing.JFrame {
         jPTitulo.setBackground(new java.awt.Color(255, 255, 255));
 
         jBTNSalir.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jBTNSalir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/curlp/capaimagenes/logout.png"))); // NOI18N
         jBTNSalir.setText("Salir");
         jBTNSalir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
