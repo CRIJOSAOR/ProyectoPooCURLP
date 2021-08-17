@@ -21,6 +21,7 @@ public class jFFVisorLoteVacuna extends javax.swing.JFrame {
     public jFFVisorLoteVacuna() throws SQLException {
         initComponents();
         poblarTablaLoteVacuna();
+        this.setLocationRelativeTo(null);
     }
      private void limpiarTabla() {
         DefaultTableModel dtm = (DefaultTableModel) this.jTblLoteVacuna.getModel();
@@ -80,6 +81,7 @@ public class jFFVisorLoteVacuna extends javax.swing.JFrame {
         jScrollPane1.setViewportView(jTblLoteVacuna);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setUndecorated(true);
 
         jPfranjaSuperior1.setBackground(new java.awt.Color(0, 153, 153));
         jPfranjaSuperior1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
