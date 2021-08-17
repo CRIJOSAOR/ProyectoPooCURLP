@@ -183,11 +183,12 @@ public class JFFProfesion extends javax.swing.JFrame {
                     .addComponent(jTFProfesion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE, false)
-                    .addComponent(jBtnEliminarProfesion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jBtnLimpiarProfesion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jBtnActualizarProfesion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jBtnAgregarProfesion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jBtnEliminarProfesion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jBtnLimpiarProfesion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jBtnAgregarProfesion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addGap(29, 29, 29))
         );
 
@@ -290,7 +291,7 @@ public class JFFProfesion extends javax.swing.JFrame {
         try {
             actualizar();
         } catch (SQLException ex) {
-            Logger.getLogger(null, "Error al actualizar" + ex);
+            JOptionPane.showMessageDialog(null, "Error al actualizar" + ex);
         }
     }//GEN-LAST:event_jBtnActualizarProfesionActionPerformed
 
@@ -298,12 +299,18 @@ public class JFFProfesion extends javax.swing.JFrame {
         try {
             eliminar();
         } catch (SQLException ex) {
-            Logger.getLogger(null, "Error al actualizar" + ex);
+            JOptionPane.showMessageDialog(null, "Error al eliminar" +  ex);
         }
     }//GEN-LAST:event_jBtnEliminarProfesionActionPerformed
 
     private void jBtnLimpiarProfesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnLimpiarProfesionActionPerformed
         limpiarTextField();
+        habilitarBotones(true, false, false, true);
+        try {
+            encontrarCorrelativo();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al limpiar" +  ex);
+        }
     }//GEN-LAST:event_jBtnLimpiarProfesionActionPerformed
 
     // Metodo para limpiar los datos de la tabla
