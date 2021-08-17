@@ -304,10 +304,8 @@ public class JFFProfesion extends javax.swing.JFrame {
     }//GEN-LAST:event_jBtnEliminarProfesionActionPerformed
 
     private void jBtnLimpiarProfesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnLimpiarProfesionActionPerformed
-        limpiarTextField();
-        habilitarBotones(true, false, false, true);
         try {
-            encontrarCorrelativo();
+            limpiar();
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error al limpiar" +  ex);
         }
@@ -475,6 +473,12 @@ public class JFFProfesion extends javax.swing.JFrame {
         } else {
             limpiarTextField();
         }
+    }
+    // Metodo de boton limpiar casillas TextField
+    private void limpiar() throws SQLException {
+        limpiarTextField();
+        habilitarBotones(true, false, false, true);
+        encontrarCorrelativo();
     }
 
     // Agregar iconos a los botones
