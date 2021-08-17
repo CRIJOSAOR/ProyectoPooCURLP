@@ -5,14 +5,17 @@
  */
 package com.curlp.capapresentacion;
 
+import com.curlp.capadatos.CDFabricante;
 import javax.swing.table.DefaultTableModel;
 import com.curlp.capapresentacion.*;
 import com.curlp.capadatos.CDLoteVacuna;
+import com.curlp.capalogica.CLFabricante;
 import com.curlp.capalogica.CLLoteVacuna;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 /**
@@ -26,8 +29,10 @@ public class JFFLoteVacuna extends javax.swing.JFrame {
      */
     public JFFLoteVacuna() throws SQLException {
         initComponents();
+        agregarIconos();
         this.poblarTablaLoteVacuna();
-        encontrarCorrelativo();
+        llenarComboBoxFabricantes();
+        // encontrarCorrelativo();
         this.jTFNumLote.requestFocus();
         this.setLocationRelativeTo(null);
     }
@@ -60,14 +65,16 @@ public class JFFLoteVacuna extends javax.swing.JFrame {
     }
     // Metodo para crear el correlativo 
 
-    private void encontrarCorrelativo() throws SQLException {
-        CDLoteVacuna cdlv = new CDLoteVacuna();
-        CLLoteVacuna cl = new CLLoteVacuna();
-
-        cl.setIdFbricante(cdlv.autoIncrementarLoteVacuna(cl));
-        this.jTFIdFabricante.setText(String.valueOf(cl.getIdFbricante()));
-    }
-
+    // private void encontrarCorrelativo() throws SQLException {
+//        CDLoteVacuna cdlv = new CDLoteVacuna();
+//        CLLoteVacuna cl = new CLLoteVacuna();
+//int idFabricante = this.getIdFabricante(this.jCboFabricantes.getItemAt(this.jCboFabricantes.getSelectedIndex()));
+//        cl.setIdFbricante(cdlv.autoIncrementarLoteVacuna(cl));
+    //String profesion = String.valueOf(this.jTblLoteVacuna.getValueAt(this.jTblLoteVacuna.getSelectedRow(), 3));
+    //      int posicion = getSelecFabricante(profesion);
+    // int idFabricante = getIdFabricante(this.jCboFabricantes.getItemAt(this.jCboFabricantes.getSelectedIndex()));
+//this.jTFIdFabricante.setText(String.valueOf(idFabricante));
+    //}
     // metodo para habilitar y deshabilitar botones
     private void habilitarBotones(boolean agregar, boolean editar, boolean eliminar, boolean limpiar) {
         this.jBtnGuardar.setEnabled(agregar);
@@ -96,8 +103,9 @@ public class JFFLoteVacuna extends javax.swing.JFrame {
 
     private void insertarLoteVacuna() {
         if (!validarTextField()) {
-
-            try {
+            // recuperar datos de los Combo Box
+             try {
+               // int idFabricante = this.getIdFabricante(this.jCboFabricantes.getItemAt(this.jCboFabricantes.getSelectedIndex()));
                 java.sql.Date fechaFabricacion = new java.sql.Date(this.jDCFechaFabricacion.getDate().getTime());
                 java.sql.Date fechaVencimietno = new java.sql.Date(this.jDCFechaVencimietno.getDate().getTime());
                 CDLoteVacuna cdlv = new CDLoteVacuna();
@@ -105,7 +113,7 @@ public class JFFLoteVacuna extends javax.swing.JFrame {
                 cl.setNumLoteVacuna(this.jTFNumLote.getText().trim());
                 cl.setFechaFabricacion(fechaFabricacion);
                 cl.setFechaVencimiento(fechaVencimietno);
-                cl.setIdFbricante(Integer.parseInt(this.jTFIdFabricante.getText().trim()));
+                cl.setIdFbricante(Integer.parseInt(jTFIdFabricante.getText()));
                 cdlv.insertarLoteVacuna(cl);
                 JOptionPane.showMessageDialog(null, "Registrado correctamente", "Proyecto Vacunación", JOptionPane.INFORMATION_MESSAGE);
                 this.jTFNumLote.requestFocus();
@@ -126,20 +134,19 @@ public class JFFLoteVacuna extends javax.swing.JFrame {
         poblarTablaLoteVacuna();
         habilitarBotones(true, false, false, true);
         limpiarTextField();
-        encontrarCorrelativo();
+        //encontrarCorrelativo();
     }
 
     // Metodo para llamar el metodo para actualizar un lote
     private void actualizarLoteVacuna() {
         if (!validarTextField()) {
-
             try {
                 java.sql.Date fechaFabricacion = new java.sql.Date(this.jDCFechaFabricacion.getDate().getTime());
                 java.sql.Date fechaVencimietno = new java.sql.Date(this.jDCFechaVencimietno.getDate().getTime());
                 CDLoteVacuna cdlv = new CDLoteVacuna();
                 CLLoteVacuna cl = new CLLoteVacuna();
                 cl.setNumLoteVacuna(this.jTFNumLote.getText().trim());
-                 cl.setFechaFabricacion(fechaFabricacion);
+                cl.setFechaFabricacion(fechaFabricacion);
                 cl.setFechaVencimiento(fechaVencimietno);
                 cl.setIdFbricante(Integer.parseInt(this.jTFIdFabricante.getText().trim()));
                 cdlv.actualizarloteVacuna(cl);
@@ -159,8 +166,8 @@ public class JFFLoteVacuna extends javax.swing.JFrame {
     private void filaSeleccionada() {
         if (this.jTblLoteVacuna.getSelectedRow() != -1) {
             this.jTFNumLote.setText(String.valueOf(this.jTblLoteVacuna.getValueAt(this.jTblLoteVacuna.getSelectedRow(), 0)));
-         //   this.jDCFechaFabricacion.setDate(String.valueOf(this.jTblLoteVacuna.getValueAt(this.jTblLoteVacuna.getSelectedRow(), 1)));
-           // this.jDCFechaVencimietno.setText(String.valueOf(this.jTblLoteVacuna.getValueAt(this.jTblLoteVacuna.getSelectedRow(), 2)));
+            //   this.jDCFechaFabricacion.setDate(String.valueOf(this.jTblLoteVacuna.getValueAt(this.jTblLoteVacuna.getSelectedRow(), 1)));
+            // this.jDCFechaVencimietno.setText(String.valueOf(this.jTblLoteVacuna.getValueAt(this.jTblLoteVacuna.getSelectedRow(), 2)));
             this.jTFIdFabricante.setText(String.valueOf(this.jTblLoteVacuna.getValueAt(this.jTblLoteVacuna.getSelectedRow(), 3)));
 //this.jDCFechaFabricacion.getDate(this.jTblLoteVacuna.getValueAt(this.jTblLoteVacuna.getSelectedRow(),0)));
 
@@ -173,7 +180,7 @@ public class JFFLoteVacuna extends javax.swing.JFrame {
         this.poblarTablaLoteVacuna();
         habilitarBotones(true, false, false, false);
         limpiarTextField();
-        encontrarCorrelativo();
+        //  encontrarCorrelativo();
     }
     // metodo para eliminar lote
 
@@ -205,13 +212,81 @@ public class JFFLoteVacuna extends javax.swing.JFrame {
                 poblarTablaLoteVacuna();
                 habilitarBotones(true, false, false, false);
                 limpiarTextField();
-                encontrarCorrelativo();
+                //    encontrarCorrelativo();
             } catch (SQLException ex) {
                 JOptionPane.showMessageDialog(null, "Error: " + ex);
             }
         } else {
             limpiarTextField();
         }
+    }
+
+    // metodo de clase que permite agregar iconos a los botones y labels del JFForm
+    public final void agregarIconos() {
+        ImageIcon iconobtn = new ImageIcon("src/main/java/com/curlp/capaimagenes/logout.png");
+        ImageIcon iconLogoTitulo = new ImageIcon("src/main/java/com/curlp/capaimagenes/user.png");
+        ImageIcon iconbtnGuardar = new ImageIcon("src/main/java/com/curlp/capaimagenes/save.png");
+        ImageIcon iconbtnEditar = new ImageIcon("src/main/java/com/curlp/capaimagenes/edit.png");
+        ImageIcon iconbtnEliminar = new ImageIcon("src/main/java/com/curlp/capaimagenes/delete.png");
+        ImageIcon iconImage = new ImageIcon("src/main/java/com/curlp/capaimagenes/image.jpg");
+        ImageIcon iconLimpiar = new ImageIcon("src/main/java/com/curlp/capaimagenes/Limpiar.png");
+        ImageIcon iconUser = new ImageIcon("src/main/java/com/curlp/capaimagenes/user.png");
+
+        this.jBtnGuardar.setIcon(iconbtnGuardar);
+        this.jBtnEditar.setIcon(iconbtnEditar);
+        this.jBtnEliminar.setIcon(iconbtnEliminar);
+        this.jBtnLimpiar.setIcon(iconLimpiar);
+        this.jLabel1.setIcon(iconobtn);
+        this.jLbUser.setIcon(iconUser);
+    }
+
+    /**
+     * +++++++++++++++++++++++ Metodos para llenar los ComboBox
+     * ++++++++++++++++++++++++++++++++++++
+     *
+     */
+    public void llenarComboBoxFabricantes() throws SQLException {
+        CDFabricante fabricantes = new CDFabricante();
+        List<String> listaFabricantes = fabricantes.cargarComboFabricante();
+        this.jCboFabricantes.removeAllItems();
+        for (String x : listaFabricantes) {
+            this.jCboFabricantes.addItem(x);
+        }
+    }
+
+    public int getIdFabricante(String fabricante) throws SQLException {
+        CDFabricante datos = new CDFabricante();
+        List<CLFabricante> listaFabricante = datos.obtenerListaFabricantes();
+        int index = 1;
+        for (int i = 0; i < listaFabricante.size(); i++) {
+            String fabricanteDB;
+            fabricanteDB = listaFabricante.get(i).getNombreFabricante().trim();
+            if (fabricanteDB.equals(fabricante.trim())) {
+                index = listaFabricante.get(i).getIdFabricante();
+            }
+        }
+        return index;
+    }
+
+    // Metodo para mostrar el id del fabricante segun la seleccion nombre del fabricante
+    public void mostrarIdFabricante() throws SQLException {
+        CDFabricante datos1 = new CDFabricante();
+        int position = this.jCboFabricantes.getSelectedIndex();
+        if (position > 0) {
+            int idFabricante = datos1.obtenerIdFabricante(this.jCboFabricantes.getItemAt(position));
+            this.jTFIdFabricante.setText(String.valueOf(idFabricante));
+        }
+    }
+
+    public int getSelecFabricante(String profesion) {
+        int index = 0;
+        for (int i = 1; i < this.jCboFabricantes.getItemCount(); i++) {
+
+            if (profesion.trim().equals(String.valueOf(this.jCboFabricantes.getItemAt(i)).trim())) {
+                index = i;
+            }
+        }
+        return index;
     }
 
     /**
@@ -228,6 +303,7 @@ public class JFFLoteVacuna extends javax.swing.JFrame {
         jPfranjaSuperior = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
+        jLbUser = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jTFNumLote = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
@@ -241,6 +317,7 @@ public class JFFLoteVacuna extends javax.swing.JFrame {
         jBtnLimpiar = new javax.swing.JButton();
         jDCFechaVencimietno = new com.toedter.calendar.JDateChooser();
         jDCFechaFabricacion = new com.toedter.calendar.JDateChooser();
+        jCboFabricantes = new javax.swing.JComboBox<>();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTblLoteVacuna = new javax.swing.JTable();
@@ -259,19 +336,19 @@ public class JFFLoteVacuna extends javax.swing.JFrame {
         jLabel1.setBackground(new java.awt.Color(0, 153, 153));
         jLabel1.setFont(new java.awt.Font("Tahoma", 3, 48)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(0, 153, 153));
-        jLabel1.setText("X");
         jLabel1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 jLabel1MousePressed(evt);
             }
         });
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 0, 50, -1));
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 0, 50, 50));
 
         jLabel2.setBackground(new java.awt.Color(0, 153, 153));
         jLabel2.setFont(new java.awt.Font("Tahoma", 3, 24)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(0, 153, 153));
         jLabel2.setText("Gestión de lotes de vacunas");
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 350, 30));
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 10, 350, 30));
+        jPanel1.add(jLbUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 10, 40, 40));
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Registrar un lote de vacuna"));
@@ -289,6 +366,8 @@ public class JFFLoteVacuna extends javax.swing.JFrame {
 
         jLabel6.setText("ID Fabricante:");
         jPanel2.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 140, -1, -1));
+
+        jTFIdFabricante.setEditable(false);
         jPanel2.add(jTFIdFabricante, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 130, 206, 28));
 
         jBtnGuardar.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
@@ -338,6 +417,14 @@ public class JFFLoteVacuna extends javax.swing.JFrame {
 
         jDCFechaFabricacion.setDateFormatString("dd/MM/yyyy");
         jPanel2.add(jDCFechaFabricacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, 180, -1));
+
+        jCboFabricantes.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "--Seleccione", " " }));
+        jCboFabricantes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCboFabricantesActionPerformed(evt);
+            }
+        });
+        jPanel2.add(jCboFabricantes, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 170, 210, -1));
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
         jPanel3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 153, 153)));
@@ -427,6 +514,14 @@ public class JFFLoteVacuna extends javax.swing.JFrame {
         this.limpiarTextField();
     }//GEN-LAST:event_jBtnLimpiarActionPerformed
 
+    private void jCboFabricantesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCboFabricantesActionPerformed
+        try {
+            mostrarIdFabricante();
+        } catch (SQLException ex) {
+            Logger.getLogger(JFFLoteVacuna.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jCboFabricantesActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -473,6 +568,7 @@ public class JFFLoteVacuna extends javax.swing.JFrame {
     private javax.swing.JButton jBtnGuardar;
     private javax.swing.JButton jBtnLimpiar;
     private com.toedter.calendar.JCalendar jCalendar1;
+    private javax.swing.JComboBox<String> jCboFabricantes;
     private com.toedter.calendar.JDateChooser jDCFechaFabricacion;
     private com.toedter.calendar.JDateChooser jDCFechaVencimietno;
     private javax.swing.JLabel jLabel1;
@@ -481,6 +577,7 @@ public class JFFLoteVacuna extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLbUser;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;

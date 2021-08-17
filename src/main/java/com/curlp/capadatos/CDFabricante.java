@@ -141,13 +141,34 @@ public class CDFabricante {
             rs = st.executeQuery(sql);
 
             miLista = new ArrayList<>();
-            miLista.add("--Selecione--");
+            miLista.add("--Seleccione --");
             while (rs.next()) {
                 miLista.add(rs.getString("nombreFabricante"));
+                
+              
+                
             }
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Error" + e.getMessage());
         }
         return miLista;
     }
+    
+    public int obtenerIdFabricante(String nombreFabricante){
+        int idFabricante = 0;
+        String sql = "{CALL obtenerIdFabricante(?)}";
+
+        try {
+            ps = cn.prepareStatement(sql);
+            ps.setString(1, nombreFabricante);
+            rs = ps.executeQuery();
+            rs.next();
+            idFabricante = rs.getInt("idFabricante");
+            
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error" + e.getMessage());
+        }
+        return idFabricante;        
+    }
+    
 }

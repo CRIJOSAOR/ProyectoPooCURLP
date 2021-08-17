@@ -136,7 +136,6 @@ public class CDLoteVacuna {
             miLista.add("--Seleccione--");
             while (rs.next()) {
                 miLista.add(rs.getString("numLoteVacuna"));
-                miLista.add(rs.getString("fechaFabricacion"));
             }
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Error" + e.getMessage());
