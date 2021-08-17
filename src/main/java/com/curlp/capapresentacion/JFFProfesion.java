@@ -31,7 +31,7 @@ public class JFFProfesion extends javax.swing.JFrame {
         encontrarCorrelativo();
         this.jTFProfesion.requestFocus();
         this.setLocationRelativeTo(null);
-        
+
     }
 
     /**
@@ -276,21 +276,21 @@ public class JFFProfesion extends javax.swing.JFrame {
         try {
             insertar();
         } catch (SQLException e) {
-             JOptionPane.showMessageDialog(null,"Error al almacenar" + e);
+            JOptionPane.showMessageDialog(null, "Error al almacenar" + e);
         }
     }//GEN-LAST:event_jBtnAgregarProfesionActionPerformed
 
     private void jTbProfesionMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTbProfesionMouseClicked
         filaSeleccionada();
-        habilitarBotones(false,true,true,true);
-        
+        habilitarBotones(false, true, true, true);
+
     }//GEN-LAST:event_jTbProfesionMouseClicked
 
     private void jBtnActualizarProfesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnActualizarProfesionActionPerformed
         try {
             actualizar();
         } catch (SQLException ex) {
-            Logger.getLogger(null,"Error al actualizar" + ex);
+            Logger.getLogger(null, "Error al actualizar" + ex);
         }
     }//GEN-LAST:event_jBtnActualizarProfesionActionPerformed
 
@@ -298,7 +298,7 @@ public class JFFProfesion extends javax.swing.JFrame {
         try {
             eliminar();
         } catch (SQLException ex) {
-            Logger.getLogger(null,"Error al actualizar" + ex);
+            Logger.getLogger(null, "Error al actualizar" + ex);
         }
     }//GEN-LAST:event_jBtnEliminarProfesionActionPerformed
 
@@ -306,65 +306,66 @@ public class JFFProfesion extends javax.swing.JFrame {
         limpiarTextField();
     }//GEN-LAST:event_jBtnLimpiarProfesionActionPerformed
 
-    // metodo para limpiar los datos de la tabla
+    // Metodo para limpiar los datos de la tabla
     private void limpiarTablaProfesion() {
         DefaultTableModel dtm = (DefaultTableModel) this.jTbProfesion.getModel();
-        
+
         while (dtm.getRowCount() > 0) {
             dtm.removeRow(0);
         }
     }
-    
-    //metodo para poblar de datos la tabla
+
+    // Metodo para poblar de datos la tabla
     private void poblarTablaProfesion() throws SQLException {
-        
+
         limpiarTablaProfesion();
-        
+
         CDProfesion cdp = new CDProfesion();
         List<CLProfesiones> miLista = cdp.obtenerListaProfesiones();
         DefaultTableModel temp = (DefaultTableModel) this.jTbProfesion.getModel();
-        
+
         miLista.stream().map((CLProfesiones cl) -> {
             Object[] fila = new Object[2];
             fila[0] = cl.getIdProfesion();
             fila[1] = cl.getProfesion();
             return fila;
-    }).forEachOrdered(temp::addRow);
+        }).forEachOrdered(temp::addRow);
     }
+
     // Metodo para crear el correlativo 
     private void encontrarCorrelativo() throws SQLException {
         CDProfesion cdp = new CDProfesion();
         CLProfesiones cl = new CLProfesiones();
-        
+
         cl.setIdProfesion(cdp.autoIncrementarIDProfesion());
         this.jTFIdProfesion.setText(String.valueOf(cl.getIdProfesion()));
-        
+
     }
-    
+
     //metodo para habilitar y deshabilitar botones
-    private void habilitarBotones(boolean agregar,boolean actualizar, boolean eliminar, boolean limpiar) {
+    private void habilitarBotones(boolean agregar, boolean actualizar, boolean eliminar, boolean limpiar) {
         this.jBtnAgregarProfesion.setEnabled(agregar);
         this.jBtnActualizarProfesion.setEnabled(actualizar);
         this.jBtnEliminarProfesion.setEnabled(eliminar);
         this.jBtnLimpiarProfesion.setEnabled(limpiar);
     }
-    
-    //metodos para limpiar textFiled
+
+    // Metodos para limpiar textFiled
     private void limpiarTextField() {
         this.jTFIdProfesion.setText(" ");
         this.jTFProfesion.setText(" ");
     }
-    
-    // metodo para validar la TextField
+
+    // Metodo para validar la TextField
     private boolean validarTextField() {
         boolean estado;
-        
+
         estado = this.jTFProfesion.getText().equals("");
-        
+
         return estado;
     }
-    
-    // metodo de insertar profesion
+
+    // Metodo de insertar profesion
     private void insertarProfesion() {
         if (!validarTextField()) {
             try {
@@ -372,27 +373,28 @@ public class JFFProfesion extends javax.swing.JFrame {
                 CLProfesiones cl = new CLProfesiones();
                 cl.setProfesion(this.jTFProfesion.getText().trim());
                 cdp.insertarProfesiones(cl);
-                JOptionPane.showMessageDialog(null,"Registrado correctamente","Proyecto Vacunación",JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Registrado correctamente", "Proyecto Vacunación", JOptionPane.INFORMATION_MESSAGE);
                 this.jTFProfesion.requestFocus();
             } catch (SQLException e) {
-                JOptionPane.showMessageDialog(null,"Error al almacenar" + e);
+                JOptionPane.showMessageDialog(null, "Error al almacenar" + e);
                 this.jTFProfesion.requestFocus();
             }
         } else {
-            JOptionPane.showMessageDialog(null,"Ingresar el nombre de la profesion","Proyecto Vacunación",JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Ingresar el nombre de la profesion", "Proyecto Vacunación", JOptionPane.INFORMATION_MESSAGE);
             this.jTFProfesion.requestFocus();
         }
     }
-    
-    //Metodo para llamar el metodo para insertar profesion
+
+    // Metodo para llamar el metodo para insertar profesion
     private void insertar() throws SQLException {
         insertarProfesion();
         poblarTablaProfesion();
-        habilitarBotones(true,false,false,false);
+        habilitarBotones(true, false, false, false);
         limpiarTextField();
         encontrarCorrelativo();
     }
-    //Metodo para llamar el metodo para actualizar profesion
+
+    // Metodo para llamar el metodo para actualizar profesion
     private void actualizarProfesion() {
         if (!validarTextField()) {
             try {
@@ -401,36 +403,36 @@ public class JFFProfesion extends javax.swing.JFrame {
                 cl.setIdProfesion(Integer.parseInt(this.jTFIdProfesion.getText().trim()));
                 cl.setProfesion(this.jTFProfesion.getText().trim());
                 cdp.actualizarProfesiones(cl);
-                JOptionPane.showMessageDialog(null,"Registrado actualizado","Proyecto Vacunación",JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Registrado actualizado", "Proyecto Vacunación", JOptionPane.INFORMATION_MESSAGE);
                 this.jTFProfesion.requestFocus();
             } catch (SQLException e) {
-                JOptionPane.showMessageDialog(null,"Error al modificar" + e);
+                JOptionPane.showMessageDialog(null, "Error al modificar" + e);
                 this.jTFProfesion.requestFocus();
-            }  
+            }
         } else {
-            JOptionPane.showMessageDialog(null,"Ingresar el nombre de la profesion","Proyecto Vacunación",JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Ingresar el nombre de la profesion", "Proyecto Vacunación", JOptionPane.INFORMATION_MESSAGE);
             this.jTFProfesion.requestFocus();
         }
     }
-    
-    // metodo para seleccionar los datos de la fila 
+
+    // Metodo para seleccionar los datos de la fila 
     private void filaSeleccionada() {
         if (this.jTbProfesion.getSelectedRow() != -1) {
-            this.jTFIdProfesion.setText(String.valueOf(this.jTbProfesion.getValueAt(this.jTbProfesion.getSelectedRow(),0)));
-            this.jTFProfesion.setText(String.valueOf(this.jTbProfesion.getValueAt(this.jTbProfesion.getSelectedRow(),1)));
+            this.jTFIdProfesion.setText(String.valueOf(this.jTbProfesion.getValueAt(this.jTbProfesion.getSelectedRow(), 0)));
+            this.jTFProfesion.setText(String.valueOf(this.jTbProfesion.getValueAt(this.jTbProfesion.getSelectedRow(), 1)));
         }
     }
-    
+
     //metodo actualizar el registro
     private void actualizar() throws SQLException {
         actualizarProfesion();
         poblarTablaProfesion();
-        habilitarBotones(true,false,false,true);
+        habilitarBotones(true, false, false, true);
         limpiarTextField();
         encontrarCorrelativo();
     }
-    
-    // metodo para eliminar profesion
+
+    // Metodo para eliminar profesion
     private void eliminarProfesion() {
         if (!validarTextField()) {
             try {
@@ -438,38 +440,38 @@ public class JFFProfesion extends javax.swing.JFrame {
                 CLProfesiones cl = new CLProfesiones();
                 cl.setIdProfesion(Integer.parseInt(this.jTFIdProfesion.getText().trim()));
                 cdp.eliminarProfesiones(cl);
-                JOptionPane.showMessageDialog(null,"Registrado eliminado","Proyecto Vacunación",JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Registrado eliminado", "Proyecto Vacunación", JOptionPane.INFORMATION_MESSAGE);
                 this.jTFProfesion.requestFocus();
             } catch (SQLException e) {
-                JOptionPane.showMessageDialog(null,"Error al eliminar" + e);
+                JOptionPane.showMessageDialog(null, "Error al eliminar" + e);
                 this.jTFProfesion.requestFocus();
             }
         } else {
-            JOptionPane.showMessageDialog(null,"Ingresar el nombre de la profesion","Proyecto Vacunación",JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Ingresar el nombre de la profesion", "Proyecto Vacunación", JOptionPane.INFORMATION_MESSAGE);
             this.jTFProfesion.requestFocus();
         }
     }
-    
-    // metodo llamar eliminar 
+
+    // Metodo llamar eliminar 
     private void eliminar() throws SQLException {
-        int resp = JOptionPane.showConfirmDialog(null, "Seguro que desea eliminar el registro","Proyecto Vacunacion",JOptionPane.YES_NO_OPTION);
+        int resp = JOptionPane.showConfirmDialog(null, "Seguro que desea eliminar el registro", "Proyecto Vacunacion", JOptionPane.YES_NO_OPTION);
         if (resp == JOptionPane.YES_OPTION) {
             try {
                 eliminarProfesion();
                 poblarTablaProfesion();
-                habilitarBotones(true,false,false,false);
+                habilitarBotones(true, false, false, false);
                 limpiarTextField();
                 encontrarCorrelativo();
             } catch (SQLException ex) {
-                JOptionPane.showMessageDialog(null,"Error: " + ex);
+                JOptionPane.showMessageDialog(null, "Error: " + ex);
             }
         } else {
             limpiarTextField();
         }
-    } 
-    
+    }
+
     // Agregar iconos a los botones
-    public final void  agregarIconos(){
+    public final void agregarIconos() {
         ImageIcon iconbtnGuardar = new ImageIcon("src/main/java/com/curlp/capaimagenes/save.png");
         ImageIcon iconbtnEditar = new ImageIcon("src/main/java/com/curlp/capaimagenes/edit.png");
         ImageIcon iconbtnEliminar = new ImageIcon("src/main/java/com/curlp/capaimagenes/delete.png");
@@ -479,7 +481,7 @@ public class JFFProfesion extends javax.swing.JFrame {
         this.jBtnEliminarProfesion.setIcon(iconbtnEliminar);
         this.jBtnLimpiarProfesion.setIcon(iconbtnLimpiar);
     }
-    
+
     /**
      * @param args the command line arguments
      */
