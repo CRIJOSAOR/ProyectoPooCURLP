@@ -583,7 +583,7 @@ public class JFFPaciente extends javax.swing.JFrame {
         jLabel14 = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
 
-        jMIEditar.setText("Editar Datos");
+        jMIEditar.setText("Seleccionar");
         jMIEditar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMIEditarActionPerformed(evt);
