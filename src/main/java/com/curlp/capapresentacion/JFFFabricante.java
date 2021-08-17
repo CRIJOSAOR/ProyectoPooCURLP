@@ -12,6 +12,7 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -28,11 +29,25 @@ public class JFFFabricante extends javax.swing.JFrame {
         initComponents();
         poblarTablaFabricante();
         encontrarCorrelativo();
+         agregarIconos();
         this.JTFNombreFabricante.requestFocus();
         this.setLocationRelativeTo(null);
 
     }
-
+    
+    public final void  agregarIconos(){
+        ImageIcon iconobtn = new ImageIcon("src/main/java/com/curlp/capaimagenes/logout.png");
+        ImageIcon iconLogoTitulo = new ImageIcon("src/main/java/com/curlp/capaimagenes/user.png");
+        ImageIcon iconbtnGuardar = new ImageIcon("src/main/java/com/curlp/capaimagenes/save.png");
+        ImageIcon iconbtnEditar = new ImageIcon("src/main/java/com/curlp/capaimagenes/edit.png");
+        ImageIcon iconbtnEliminar = new ImageIcon("src/main/java/com/curlp/capaimagenes/delete.png");
+        ImageIcon iconImage = new ImageIcon("src/main/java/com/curlp/capaimagenes/image.jpg");
+        this.jBTNSalir.setIcon(iconobtn);
+        this.jLBiconoNombre.setIcon(iconLogoTitulo);
+        this.jBtnAgregar.setIcon(iconbtnGuardar);
+        this.jBtnEditar.setIcon(iconbtnEditar);
+        this.jBtnEliminar.setIcon(iconbtnEliminar);
+    }
     // Metodo para limpiar los datos de la tabla
     private void limpiatTablaFabricante() {
         DefaultTableModel dtm = (DefaultTableModel) this.jTblFabricante.getModel();
@@ -241,7 +256,6 @@ public class JFFFabricante extends javax.swing.JFrame {
         jLabel4.setText("NOMBRE FABRICANTE");
 
         jBtnAgregar.setFont(new java.awt.Font("Trebuchet MS", 1, 11)); // NOI18N
-        jBtnAgregar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/curlp/capaimagenes/save.png"))); // NOI18N
         jBtnAgregar.setText("AGREGAR");
         jBtnAgregar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -250,7 +264,6 @@ public class JFFFabricante extends javax.swing.JFrame {
         });
 
         jBtnEditar.setFont(new java.awt.Font("Trebuchet MS", 1, 11)); // NOI18N
-        jBtnEditar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/curlp/capaimagenes/edit.png"))); // NOI18N
         jBtnEditar.setText("EDITAR");
         jBtnEditar.setEnabled(false);
         jBtnEditar.addActionListener(new java.awt.event.ActionListener() {
@@ -260,7 +273,6 @@ public class JFFFabricante extends javax.swing.JFrame {
         });
 
         jBtnEliminar.setFont(new java.awt.Font("Trebuchet MS", 1, 11)); // NOI18N
-        jBtnEliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/curlp/capaimagenes/delete.png"))); // NOI18N
         jBtnEliminar.setText("ELIMINAR");
         jBtnEliminar.setEnabled(false);
         jBtnEliminar.addActionListener(new java.awt.event.ActionListener() {
@@ -270,7 +282,6 @@ public class JFFFabricante extends javax.swing.JFrame {
         });
 
         jBtnLimpiar.setFont(new java.awt.Font("Trebuchet MS", 1, 11)); // NOI18N
-        jBtnLimpiar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/curlp/capaimagenes/Limpiar.png"))); // NOI18N
         jBtnLimpiar.setText("LIMPIAR");
         jBtnLimpiar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -366,7 +377,6 @@ public class JFFFabricante extends javax.swing.JFrame {
         jPTitulo.setBackground(new java.awt.Color(255, 255, 255));
 
         jBTNSalir.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jBTNSalir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/curlp/capaimagenes/logout.png"))); // NOI18N
         jBTNSalir.setText("Salir");
         jBTNSalir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
