@@ -137,4 +137,22 @@ public class CDProfesion {
         }
         return miLista;
     }
+    
+    public int obtenerIdProfesion(String nombreProfesion){
+        int idProfesion = 0;
+        String sql = "{CALL obtenerIdProfesion(?)}";
+
+        try {
+            ps = cn.prepareStatement(sql);
+            ps.setString(1, nombreProfesion);
+            rs = ps.executeQuery();
+            rs.next();
+            idProfesion = rs.getInt("idProfesion");
+            
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error" + e.getMessage());
+        }
+        return idProfesion;        
+    }
 }
+
