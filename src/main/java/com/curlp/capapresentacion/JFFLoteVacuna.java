@@ -12,6 +12,9 @@ import com.curlp.capadatos.CDLoteVacuna;
 import com.curlp.capalogica.CLFabricante;
 import com.curlp.capalogica.CLLoteVacuna;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -84,6 +87,7 @@ public class JFFLoteVacuna extends javax.swing.JFrame {
         estado = this.jTFNumLote.getText().equals("");
         return estado;
     }
+
     // Metodo de insertar un nuevo lote
     private void insertarLoteVacuna() {
         if (!validarTextField()) {
@@ -110,6 +114,7 @@ public class JFFLoteVacuna extends javax.swing.JFrame {
             this.jTFNumLote.requestFocus();
         }
     }
+
     //Metodo para llamar el metodo para insertar loteVacuna
     private void insertar() throws SQLException {
         insertarLoteVacuna();
@@ -142,14 +147,19 @@ public class JFFLoteVacuna extends javax.swing.JFrame {
             this.jTFNumLote.requestFocus();
         }
     }
+
     // Metodo para seleccionar los datos de la fila y asi modificarlos
-    private void filaSeleccionada() {
+    private void filaSeleccionada() throws ParseException {
         if (this.jTblLoteVacuna.getSelectedRow() != -1) {
             this.jTFNumLote.setText(String.valueOf(this.jTblLoteVacuna.getValueAt(this.jTblLoteVacuna.getSelectedRow(), 0)));
+//            Date fechaParseada = (Date) new SimpleDateFormat("dd/MM/yyyy").parse((String)this.jTblLoteVacuna.getValueAt(this.jTblLoteVacuna.getSelectedRow(), 1));
+//            this.jDCFechaFabricacion.setDate(fechaParseada);
+//            Date fechaParseada1 = (Date) new SimpleDateFormat("dd/MM/yyyy").parse((String)this.jTblLoteVacuna.getValueAt(this.jTblLoteVacuna.getSelectedRow(), 2));
+//            this.jDCFechaVencimietno.setDate(fechaParseada);
             this.jTFIdFabricante.setText(String.valueOf(this.jTblLoteVacuna.getValueAt(this.jTblLoteVacuna.getSelectedRow(), 3)));
-
         }
     }
+
     // Metodo actualizar el registro loteVacuna
     private void editar() throws SQLException {
         actualizarLoteVacuna();
@@ -157,6 +167,7 @@ public class JFFLoteVacuna extends javax.swing.JFrame {
         habilitarBotones(true, false, false, false);
         limpiarTextField();
     }
+
     // Metodo para eliminar lote
     private void eliminarLoteVacuna() {
         if (!validarTextField()) {
@@ -176,6 +187,7 @@ public class JFFLoteVacuna extends javax.swing.JFrame {
             this.jTFNumLote.requestFocus();
         }
     }
+
     // Metodo llamar eliminar 
     private void eliminar() throws SQLException {
         int resp = JOptionPane.showConfirmDialog(null, "Seguro que desea eliminar este lote", "Proyecto Vacunacion", JOptionPane.YES_NO_OPTION);
@@ -192,7 +204,7 @@ public class JFFLoteVacuna extends javax.swing.JFrame {
             limpiarTextField();
         }
     }
-    
+
     // Metodo de clase que permite agregar iconos a los botones y labels del JFForm
     public final void agregarIconos() {
         ImageIcon iconobtn = new ImageIcon("src/main/java/com/curlp/capaimagenes/logout.png");
@@ -218,6 +230,7 @@ public class JFFLoteVacuna extends javax.swing.JFrame {
             this.jCboFabricantes.addItem(x);
         }
     }
+
     // Metodo para mostrar el id del fabricante segun la seleccion nombre del fabricante
     public void mostrarIdFabricante() throws SQLException {
         CDFabricante datos1 = new CDFabricante();
@@ -421,8 +434,13 @@ public class JFFLoteVacuna extends javax.swing.JFrame {
     }//GEN-LAST:event_jLabel1MousePressed
 
     private void jTblLoteVacunaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTblLoteVacunaMouseClicked
-        filaSeleccionada();
-        habilitarBotones(false, true, true, true);
+        try {
+            filaSeleccionada();
+            habilitarBotones(false, true, true, true);
+        } catch (ParseException ex) {
+            Logger.getLogger(JFFLoteVacuna.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
     }//GEN-LAST:event_jTblLoteVacunaMouseClicked
 
     private void jBtnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnEditarActionPerformed
