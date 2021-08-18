@@ -3,19 +3,18 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-//este es el coreecto s
+//este es el coreecto saa
 package com.curlp.capapresentacion;
 
 import com.curlp.capadatos.CDEstablecimiento;
 import com.curlp.capalogica.CLEstablecimiento;
-
 import java.sql.SQLException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-
+import javax.swing.ImageIcon;
 /**
  *
  * @author usuario
@@ -28,6 +27,7 @@ public class jFFEstablecimiento extends javax.swing.JFrame {
     public jFFEstablecimiento() throws SQLException {
         initComponents();
         poblarTablasEstablecimiento();
+        agregarIconos();
         //encontrarCorrelativo();
         //this.jTFNombre_Establecimiento.requestFocus();
         this.setLocationRelativeTo(null);
@@ -152,7 +152,7 @@ public class jFFEstablecimiento extends javax.swing.JFrame {
                 cl.setNombreEstablecimiento(this.jTFNombre_Establecimiento.getText().trim());
                 cde.actualizarEstablecimiento(cl);
 
-                JOptionPane.showMessageDialog(null, "Registro actualizado satisfactoriamente", "Proyecto Vacunación",
+                JOptionPane.showMessageDialog(null, "Registro actualizado satisfactoriamente ", "Proyecto Vacunación",
                         JOptionPane.INFORMATION_MESSAGE);
                 
                 
@@ -192,7 +192,7 @@ public class jFFEstablecimiento extends javax.swing.JFrame {
             cl.setCodEstablecimiento(Integer.parseInt(this.jTFCod_Establecimiento.getText().trim()));
             cde.eliminarEstablecimiento(cl);
 
-            JOptionPane.showMessageDialog(null, "Registrado eliminado", "Proyecto Vacunación", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Registro eliminado correctamente", "Proyecto Vacunación", JOptionPane.INFORMATION_MESSAGE);
             this.jTFNombre_Establecimiento.requestFocus();
 
         } catch (SQLException e) {
@@ -220,7 +220,16 @@ public class jFFEstablecimiento extends javax.swing.JFrame {
             limpiarTextField();
         }
     }
-
+public final void agregarIconos() {
+        ImageIcon iconbtnGuardar = new ImageIcon("src/main/java/com/curlp/capaimagenes/save.png");
+        ImageIcon iconbtnEditar = new ImageIcon("src/main/java/com/curlp/capaimagenes/edit.png");
+        ImageIcon iconbtnEliminar = new ImageIcon("src/main/java/com/curlp/capaimagenes/delete.png");
+        ImageIcon iconbtnLimpiar = new ImageIcon("src/main/java/com/curlp/capaimagenes/Limpiar.png");
+        this.jBtnGuardar.setIcon(iconbtnGuardar);
+        this.jBtnEditar.setIcon(iconbtnEditar);
+        this.jBtnEliminar.setIcon(iconbtnEliminar);
+        this.jBtnLimpiar .setIcon(iconbtnLimpiar);
+    }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -289,6 +298,7 @@ public class jFFEstablecimiento extends javax.swing.JFrame {
 
         jBtnGuardar.setBackground(new java.awt.Color(255, 255, 255));
         jBtnGuardar.setFont(new java.awt.Font("Tahoma", 3, 12)); // NOI18N
+        jBtnGuardar.setForeground(new java.awt.Color(0, 153, 153));
         jBtnGuardar.setText("Guardar");
         jBtnGuardar.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jBtnGuardar.addActionListener(new java.awt.event.ActionListener() {
@@ -299,6 +309,7 @@ public class jFFEstablecimiento extends javax.swing.JFrame {
 
         jBtnEditar.setBackground(new java.awt.Color(255, 255, 255));
         jBtnEditar.setFont(new java.awt.Font("Tahoma", 3, 12)); // NOI18N
+        jBtnEditar.setForeground(new java.awt.Color(0, 153, 153));
         jBtnEditar.setText("Editar");
         jBtnEditar.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jBtnEditar.setEnabled(false);
@@ -310,6 +321,7 @@ public class jFFEstablecimiento extends javax.swing.JFrame {
 
         jBtnLimpiar.setBackground(new java.awt.Color(255, 255, 255));
         jBtnLimpiar.setFont(new java.awt.Font("Tahoma", 3, 12)); // NOI18N
+        jBtnLimpiar.setForeground(new java.awt.Color(0, 153, 153));
         jBtnLimpiar.setText("Limpiar");
         jBtnLimpiar.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jBtnLimpiar.addActionListener(new java.awt.event.ActionListener() {
@@ -320,6 +332,7 @@ public class jFFEstablecimiento extends javax.swing.JFrame {
 
         jBtnEliminar.setBackground(new java.awt.Color(255, 255, 255));
         jBtnEliminar.setFont(new java.awt.Font("Tahoma", 3, 12)); // NOI18N
+        jBtnEliminar.setForeground(new java.awt.Color(0, 153, 153));
         jBtnEliminar.setText("Eliminar");
         jBtnEliminar.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jBtnEliminar.setEnabled(false);
@@ -375,7 +388,7 @@ public class jFFEstablecimiento extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jLblXEstablecimiento.setFont(new java.awt.Font("Tahoma", 0, 48)); // NOI18N
+        jLblXEstablecimiento.setFont(new java.awt.Font("Tahoma", 3, 48)); // NOI18N
         jLblXEstablecimiento.setForeground(new java.awt.Color(0, 153, 153));
         jLblXEstablecimiento.setText("x");
         jLblXEstablecimiento.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -389,36 +402,34 @@ public class jFFEstablecimiento extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(26, 26, 26)
+                        .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addContainerGap())
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 440, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLblXEstablecimiento, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addContainerGap())
+                        .addGap(206, 206, 206)
+                        .addComponent(jLblXEstablecimiento, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE))))
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jLblXEstablecimiento, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLblXEstablecimiento, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(30, 30, 30)
                 .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jTblEstablecimiento.setBackground(new java.awt.Color(204, 204, 204));
+        jTblEstablecimiento.setBackground(new java.awt.Color(204, 255, 204));
         jTblEstablecimiento.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true));
-        jTblEstablecimiento.setForeground(new java.awt.Color(0, 48, 177));
+        jTblEstablecimiento.setFont(new java.awt.Font("Tahoma", 3, 11)); // NOI18N
         jTblEstablecimiento.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
