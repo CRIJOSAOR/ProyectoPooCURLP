@@ -127,7 +127,7 @@ public class CDVacunador {
             miListaV.add("--Seleccione--");
 
             while (rs.next()) {
-                miListaV.add(rs.getString("nombres"));
+                miListaV.add(rs.getString("nombre"));
                
             }
         } catch (SQLException e) {
