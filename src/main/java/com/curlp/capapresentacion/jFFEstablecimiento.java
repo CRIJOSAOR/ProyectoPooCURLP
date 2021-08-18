@@ -40,7 +40,7 @@ public class jFFEstablecimiento extends javax.swing.JFrame {
         }
 
     }
-    
+
     // metodo para poblar datos
     private void poblarTablasEstablecimiento() throws SQLException {
         limpiarTabla();
@@ -56,7 +56,7 @@ public class jFFEstablecimiento extends javax.swing.JFrame {
             return fila;
         }).forEachOrdered(temp::addRow);
     }
-    
+
     // Metodo para crear el correlativo 
     private void encontrarCorrelativo() throws SQLException {
         CDEstablecimiento cde = new CDEstablecimiento();
@@ -95,7 +95,8 @@ public class jFFEstablecimiento extends javax.swing.JFrame {
 
         return estado;
     }
-     // metodo para insertar establecimiento
+    // metodo para insertar establecimiento
+
     private void insertarEstablecimiento() {
         if (!validarTextField()) {
             JOptionPane.showMessageDialog(null, "Tiene que ingresar el nombre del Establecimiento", "COVA System",
@@ -120,7 +121,8 @@ public class jFFEstablecimiento extends javax.swing.JFrame {
             }
         }
     }
-     // metodo para guardar establecimiento
+    // metodo para guardar establecimiento
+
     private void guardar() throws SQLException {
         insertarEstablecimiento();
         poblarTablasEstablecimiento();
@@ -192,7 +194,7 @@ public class jFFEstablecimiento extends javax.swing.JFrame {
             this.jTFNombre_Establecimiento.requestFocus();
         }
     }
-    
+
     // metodo para eliminar establecimientos
     public void eliminar() throws SQLException {
         int resp = JOptionPane.showConfirmDialog(null, "¿Esta seguro de eliminar el registro?", "COVA System",
@@ -213,7 +215,7 @@ public class jFFEstablecimiento extends javax.swing.JFrame {
             limpiarTextField();
         }
     }
-    
+
     // metodo para agregar iconos
     public final void agregarIconos() {
         ImageIcon iconbtnGuardar = new ImageIcon("src/main/java/com/curlp/capaimagenes/save.png");
