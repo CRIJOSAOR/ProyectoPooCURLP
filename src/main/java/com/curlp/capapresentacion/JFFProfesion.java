@@ -26,6 +26,7 @@ public class JFFProfesion extends javax.swing.JFrame {
      */
     public JFFProfesion() throws SQLException {
         initComponents();
+        agregarIconos();
         poblarTablaProfesion();
         encontrarCorrelativo();
         this.jTFProfesion.requestFocus();
@@ -33,7 +34,7 @@ public class JFFProfesion extends javax.swing.JFrame {
 
     }
     
-    // Metodo para limpiar los datos de la tabla
+    // Método para limpiar los datos de la tabla
     private void limpiatTablaProfesion() {
         DefaultTableModel dtm = (DefaultTableModel) this.jTbProfesion.getModel();
         while (dtm.getRowCount() > 0) {
@@ -41,7 +42,7 @@ public class JFFProfesion extends javax.swing.JFrame {
         }
     }
 
-    // Metodo para poblar de datos la tabla
+    // Método para poblar de datos la tabla profesion
     private void poblarTablaProfesion() throws SQLException {
         limpiatTablaProfesion();
 
@@ -57,7 +58,7 @@ public class JFFProfesion extends javax.swing.JFrame {
         }).forEachOrdered(temp::addRow);
     }
 
-    // Metodo para encontrar el correlativo de el fabricante
+    // Método para encontrar el correlativo de profesión
     private void encontrarCorrelativo() throws SQLException {
         CDProfesion cdp = new CDProfesion();
         CLProfesiones cl = new CLProfesiones();
@@ -66,7 +67,7 @@ public class JFFProfesion extends javax.swing.JFrame {
         this.jTFIdProfesion.setText(String.valueOf(cl.getIdProfesion()));
     }
 
-    //metodo para habilitar y deshabilitar botones
+    // Método para habilitar y deshabilitar botones
     private void habilitarBotones(boolean agregar, boolean actualizar, boolean eliminar, boolean limpiar) {
         this.jBtnAgregarProfesion.setEnabled(agregar);
         this.jBtnActualizarProfesion.setEnabled(actualizar);
@@ -74,14 +75,14 @@ public class JFFProfesion extends javax.swing.JFrame {
         this.jBtnLimpiarProfesion.setEnabled(limpiar);
     }
 
-    //metodos para limpiar textFiled
+    // Métodos para limpiar textFiled
     private void limpiarTextField() {
         this.jTFIdProfesion.setText("");
         this.jTFProfesion.setText("");
         this.jTFProfesion.requestFocus();
     }
 
-    // metodo para validar la TextField
+    // Método para validar la TextField
     private boolean validarTextField() {
         boolean estado;
 
@@ -90,7 +91,7 @@ public class JFFProfesion extends javax.swing.JFrame {
         return estado;
     }
 
-    // Metodo para insertar un fabricante en la tabla
+    // Método para insertar una profesión en la tabla
     private void insertarProfesion() {
         if (!validarTextField()) {
             try {
@@ -98,28 +99,28 @@ public class JFFProfesion extends javax.swing.JFrame {
                 CLProfesiones cl = new CLProfesiones();
                 cl.setProfesion(this.jTFProfesion.getText().trim());
                 cdp.insertarProfesiones(cl);
-                JOptionPane.showMessageDialog(null, "Registrado correctamente", "Proyecto Vacunación", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Registrado correctamente", "COVA System", JOptionPane.INFORMATION_MESSAGE);
                 this.jTFProfesion.requestFocus();
             } catch (SQLException e) {
                 JOptionPane.showMessageDialog(null, "Error al almacenar" + e);
                 this.jTFProfesion.requestFocus();
             }
         } else {
-            JOptionPane.showMessageDialog(null, "Ingresar el nombre del fabricante", "Proyecto Vacunación", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Ingresar la profesión", "COVA System", JOptionPane.INFORMATION_MESSAGE);
             this.jTFProfesion.requestFocus();
         }
     }
 
-    // Metodo para llamar el metodo de insertar ciudad
+    // Metodo para llamar el metodo de insertar profesión
     private void insertar() throws SQLException {
         insertarProfesion();
+        habilitarBotones(true, false, false, true);
         poblarTablaProfesion();
-        habilitarBotones(true, false, false, false);
         limpiarTextField();
         encontrarCorrelativo();
     }
 
-    // Metodo para editar un fabricante en la tabla
+    // Método para editar una profesión en la tabla
     private void editarProfesion() {
         if (!validarTextField()) {
             try {
@@ -128,19 +129,19 @@ public class JFFProfesion extends javax.swing.JFrame {
                 cl.setIdProfesion(Integer.parseInt(this.jTFIdProfesion.getText().trim()));
                 cl.setProfesion(this.jTFProfesion.getText().trim());
                 cdp.actualizarProfesiones(cl);
-                JOptionPane.showMessageDialog(null, "Registrado actualizado", "Proyecto Vacunación", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Registro actualizado", "COVA System", JOptionPane.INFORMATION_MESSAGE);
                 this.jTFProfesion.requestFocus();
             } catch (SQLException e) {
                 JOptionPane.showMessageDialog(null, "Error al modificar" + e);
                 this.jTFProfesion.requestFocus();
             }
         } else {
-            JOptionPane.showMessageDialog(null, "Ingresar el nombre del fabricante", "Proyecto Vacunación", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Ingresar la profesión ", "COVA System", JOptionPane.INFORMATION_MESSAGE);
             this.jTFProfesion.requestFocus();
         }
     }
 
-    // metodo para seleccionar los datos de la fila 
+    // Método para seleccionar los datos de la fila 
     private void filaSeleccionada() {
         if (this.jTbProfesion.getSelectedRow() != -1) {
             this.jTFIdProfesion.setText(String.valueOf(this.jTbProfesion.getValueAt(this.jTbProfesion.getSelectedRow(), 0)));
@@ -148,7 +149,7 @@ public class JFFProfesion extends javax.swing.JFrame {
         }
     }
 
-    // Metodo para llamar el metodo de actualizar la tabla 
+    // Método para llamar el metodo de actualizar la tabla 
     private void editar() throws SQLException {
         editarProfesion();
         poblarTablaProfesion();
@@ -157,7 +158,7 @@ public class JFFProfesion extends javax.swing.JFrame {
         encontrarCorrelativo();
     }
 
-    // Metodo para eliminar
+    // Método para eliminar una profesión
     private void eliminarProfesion() {
         if (!validarTextField()) {
             try {
@@ -165,21 +166,21 @@ public class JFFProfesion extends javax.swing.JFrame {
                 CLProfesiones cl = new CLProfesiones();
                 cl.setIdProfesion(Integer.parseInt(this.jTFIdProfesion.getText().trim()));
                 cdp.eliminarProfesiones(cl);
-                JOptionPane.showMessageDialog(null, "Registrado eliminado", "Proyecto Vacunación", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Registrado eliminado", "COVA System", JOptionPane.INFORMATION_MESSAGE);
                 this.jTFProfesion.requestFocus();
             } catch (SQLException e) {
                 JOptionPane.showMessageDialog(null, "Error al eliminar" + e);
                 this.jTFProfesion.requestFocus();
             }
         } else {
-            JOptionPane.showMessageDialog(null, "Ingresar el nombre del fabricante", "Proyecto Vacunación", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Ingresar la profesión ", "COVA System", JOptionPane.INFORMATION_MESSAGE);
             this.jTFProfesion.requestFocus();
         }
     }
 
     // Metodo para eliminar el metodo de actualizar la tabla 
     private void eliminar() throws SQLException {
-        int resp = JOptionPane.showConfirmDialog(null, "Seguro que desea eliminar el registro", "Proyecto Vacunacion", JOptionPane.YES_NO_OPTION);
+        int resp = JOptionPane.showConfirmDialog(null, "Seguro que desea eliminar el registro", "COVA System", JOptionPane.YES_NO_OPTION);
         if (resp == JOptionPane.YES_OPTION) {
             try {
                 eliminarProfesion();
@@ -194,6 +195,21 @@ public class JFFProfesion extends javax.swing.JFrame {
             limpiarTextField();
         }
     }
+    
+    // metodo de clase que permite agregar iconos a los botones y labels del JFForm
+    public final void  agregarIconos(){
+        ImageIcon iconbtnGuardar = new ImageIcon("src/main/java/com/curlp/capaimagenes/save.png");
+        ImageIcon iconbtnActualizar = new ImageIcon("src/main/java/com/curlp/capaimagenes/edit.png");
+        ImageIcon iconbtnLimpiar = new ImageIcon("src/main/java/com/curlp/capaimagenes/Limpiar.png");
+        ImageIcon iconbtnEliminar = new ImageIcon("src/main/java/com/curlp/capaimagenes/delete.png");
+        ImageIcon iconbtnSalir = new ImageIcon("src/main/java/com/curlp/capaimagenes/logout.png");
+        this.jBtnAgregarProfesion.setIcon(iconbtnGuardar);
+        this.jBtnActualizarProfesion.setIcon(iconbtnActualizar);
+        this.jBtnEliminarProfesion.setIcon(iconbtnEliminar);
+        this.jBtnLimpiarProfesion.setIcon(iconbtnLimpiar);
+        this.jLblSalir.setIcon(iconbtnSalir);
+    }
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -205,7 +221,7 @@ public class JFFProfesion extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
+        jLblSalir = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
@@ -228,29 +244,28 @@ public class JFFProfesion extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 48)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(0, 153, 153));
-        jLabel1.setText("X");
-        jLabel1.addMouseListener(new java.awt.event.MouseAdapter() {
+        jLblSalir.setFont(new java.awt.Font("Tahoma", 1, 48)); // NOI18N
+        jLblSalir.setForeground(new java.awt.Color(0, 153, 153));
+        jLblSalir.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
-                jLabel1MousePressed(evt);
+                jLblSalirMousePressed(evt);
             }
         });
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 0, 40, -1));
+        jPanel1.add(jLblSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 10, 40, 40));
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 3, 24)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(0, 153, 153));
-        jLabel3.setText("Gestion de Profesión");
+        jLabel3.setText("Gestión de Profesión");
         jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 20, 280, -1));
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Profesión", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 14))); // NOI18N
+        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 102, 102)), "Profesión", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 14))); // NOI18N
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jLabel2.setText("Insertar Profesión");
+        jLabel2.setText("Ingresar Profesión");
 
         jTFProfesion.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
 
@@ -277,7 +292,7 @@ public class JFFProfesion extends javax.swing.JFrame {
         jBtnActualizarProfesion.setBackground(new java.awt.Color(204, 204, 204));
         jBtnActualizarProfesion.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jBtnActualizarProfesion.setForeground(new java.awt.Color(0, 153, 153));
-        jBtnActualizarProfesion.setText("Actualizar");
+        jBtnActualizarProfesion.setText("Editar");
         jBtnActualizarProfesion.setEnabled(false);
         jBtnActualizarProfesion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -318,9 +333,9 @@ public class JFFProfesion extends javax.swing.JFrame {
                             .addComponent(jTFProfesion, javax.swing.GroupLayout.DEFAULT_SIZE, 248, Short.MAX_VALUE)
                             .addComponent(jTFIdProfesion)))
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(0, 10, Short.MAX_VALUE)
+                        .addContainerGap(115, Short.MAX_VALUE)
                         .addComponent(jBtnAgregarProfesion, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
+                        .addGap(18, 18, 18)
                         .addComponent(jBtnActualizarProfesion)
                         .addGap(38, 38, 38)
                         .addComponent(jBtnEliminarProfesion)
@@ -334,7 +349,7 @@ public class JFFProfesion extends javax.swing.JFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addContainerGap(18, Short.MAX_VALUE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel4))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(jTFIdProfesion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -344,25 +359,27 @@ public class JFFProfesion extends javax.swing.JFrame {
                     .addComponent(jTFProfesion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jBtnActualizarProfesion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jBtnEliminarProfesion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jBtnLimpiarProfesion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jBtnAgregarProfesion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jBtnActualizarProfesion, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jBtnEliminarProfesion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(jBtnAgregarProfesion, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 2, Short.MAX_VALUE))
+                    .addComponent(jBtnLimpiarProfesion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(29, 29, 29))
         );
 
-        jPanel2.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 20, 570, 160));
+        jPanel2.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 640, 160));
 
         jTbProfesion.setBackground(new java.awt.Color(204, 255, 204));
+        jTbProfesion.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jTbProfesion.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jTbProfesion.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Id Profesion", "Profesion"
+                "Id Profesión", "Profesión"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -430,9 +447,9 @@ public class JFFProfesion extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jLabel1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MousePressed
+    private void jLblSalirMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLblSalirMousePressed
         this.dispose();
-    }//GEN-LAST:event_jLabel1MousePressed
+    }//GEN-LAST:event_jLblSalirMousePressed
 
     private void jBtnAgregarProfesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnAgregarProfesionActionPerformed
         try {
@@ -465,8 +482,7 @@ public class JFFProfesion extends javax.swing.JFrame {
     }//GEN-LAST:event_jBtnEliminarProfesionActionPerformed
 
     private void jBtnLimpiarProfesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnLimpiarProfesionActionPerformed
-
-            limpiarTextField();
+        limpiarTextField();
     }//GEN-LAST:event_jBtnLimpiarProfesionActionPerformed
 
     
@@ -515,10 +531,10 @@ public class JFFProfesion extends javax.swing.JFrame {
     private javax.swing.JButton jBtnAgregarProfesion;
     private javax.swing.JButton jBtnEliminarProfesion;
     private javax.swing.JButton jBtnLimpiarProfesion;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLblSalir;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
