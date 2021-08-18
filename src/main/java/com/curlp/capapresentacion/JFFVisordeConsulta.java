@@ -13,6 +13,7 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.ImageIcon;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -24,9 +25,16 @@ public class JFFVisordeConsulta extends javax.swing.JFrame {
     /**
      * Creates new form JFFVisordeConsulta
      */
+    
+   
     public JFFVisordeConsulta() throws SQLException {
         initComponents();
         llenarTabla();
+        agregarIconos();
+    }
+     public final void agregarIconos() {
+        ImageIcon iconbtnSalir = new ImageIcon("src/main/java/com/curlp/capaimagenes/logout.png");
+        this.jLblSalir.setIcon(iconbtnSalir);
     }
     DefaultTableModel modelo;
     private void llenarTabla() throws SQLException{
@@ -64,8 +72,8 @@ public class JFFVisordeConsulta extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
+        jLblSalir = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTBPacientes = new javax.swing.JTable();
         jPfranjaSuperior = new javax.swing.JPanel();
@@ -78,23 +86,25 @@ public class JFFVisordeConsulta extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 48)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(0, 153, 153));
-        jLabel1.setText("X");
-        jLabel1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                jLabel1MousePressed(evt);
-            }
-        });
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(990, 0, 40, -1));
-
         jLabel3.setFont(new java.awt.Font("Tahoma", 3, 24)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(0, 153, 153));
         jLabel3.setText("Visor de Consulta");
-        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 20, 280, -1));
+        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 20, 280, -1));
+
+        jLblSalir.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLblSalir.setForeground(new java.awt.Color(0, 153, 153));
+        jLblSalir.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jLblSalirMousePressed(evt);
+            }
+        });
+        jPanel1.add(jLblSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(980, 10, 40, 40));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1040, 60));
 
+        jTBPacientes.setBackground(new java.awt.Color(204, 255, 204));
+        jTBPacientes.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jTBPacientes.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jTBPacientes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -149,9 +159,9 @@ public class JFFVisordeConsulta extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jLabel1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MousePressed
+    private void jLblSalirMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLblSalirMousePressed
         this.dispose();
-    }//GEN-LAST:event_jLabel1MousePressed
+    }//GEN-LAST:event_jLblSalirMousePressed
 
     /**
      * @param args the command line arguments
@@ -193,8 +203,8 @@ public class JFFVisordeConsulta extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLblSalir;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPfranjaSuperior;
     private javax.swing.JPanel jPfranjaSuperior1;
