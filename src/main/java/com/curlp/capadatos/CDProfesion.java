@@ -28,7 +28,7 @@ public class CDProfesion {
     Statement st;
 
     public CDProfesion() throws SQLException {
-        this.cn = conexion.conectar();
+        this.cn = Conexion.conectar();
     }
 
     // Insertar una profesion en la tabla Profesion

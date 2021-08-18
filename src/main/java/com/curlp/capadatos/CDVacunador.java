@@ -28,7 +28,7 @@ public class CDVacunador {
     Statement st;
 
     public CDVacunador() throws SQLException {
-        this.cn = conexion.conectar();
+        this.cn = Conexion.conectar();
     }
     
     //Registrar un vacunador en la tabla.

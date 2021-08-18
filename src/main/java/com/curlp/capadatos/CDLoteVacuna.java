@@ -24,7 +24,7 @@ public class CDLoteVacuna {
     Statement st;
 
     public CDLoteVacuna() throws SQLException {
-        this.cn = conexion.conectar();
+        this.cn = Conexion.conectar();
 
     }
 

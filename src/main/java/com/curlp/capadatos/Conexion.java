@@ -13,7 +13,7 @@ import java.sql.DriverManager;
  *
  * @author sanch
  */
-public class conexion {
+public class Conexion {
     private static String url = "jdbc:mysql://localhost:3306/proyectopoocurlpbd?zeroDateTimeBehavior=CONVERT_TO_NULL";
     private static String user = "root" ;
     private static String clave = "Alejandra*2001*"; 
@@ -28,3 +28,4 @@ public class conexion {
         }
     }
 }
+

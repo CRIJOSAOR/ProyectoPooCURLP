@@ -24,7 +24,7 @@ public class CDSexo {
     Statement st;
 
     public CDSexo() throws SQLException {
-        this.cn = conexion.conectar();
+        this.cn = Conexion.conectar();
     }
     
     public ArrayList<String> cargarSexos() throws SQLException {

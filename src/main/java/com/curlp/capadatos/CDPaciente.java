@@ -26,7 +26,7 @@ public class CDPaciente {
     Statement st;
 
     public CDPaciente() throws SQLException {
-        this.cn = conexion.conectar();
+        this.cn = Conexion.conectar();
     }
     
     public void insertarPaciente(CLPaciente cl) throws SQLException {

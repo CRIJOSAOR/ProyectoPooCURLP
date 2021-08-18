@@ -29,7 +29,7 @@ public class CDEstablecimiento {
     Statement st;
 
     public CDEstablecimiento() throws SQLException {
-        this.cn = conexion.conectar();
+        this.cn = Conexion.conectar();
 
     }
 

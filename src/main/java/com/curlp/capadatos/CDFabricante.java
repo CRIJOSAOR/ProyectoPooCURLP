@@ -28,7 +28,7 @@ public class CDFabricante {
     Statement st;
 
     public CDFabricante() throws SQLException {
-        this.cn = conexion.conectar();
+        this.cn = Conexion.conectar();
     }
 
     //Metodos para insertar un fabricante
