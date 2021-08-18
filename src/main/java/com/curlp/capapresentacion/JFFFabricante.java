@@ -29,13 +29,13 @@ public class JFFFabricante extends javax.swing.JFrame {
         initComponents();
         poblarTablaFabricante();
         encontrarCorrelativo();
-         agregarIconos();
+        agregarIconos();
         this.JTFNombreFabricante.requestFocus();
         this.setLocationRelativeTo(null);
 
     }
-    
-    public final void  agregarIconos(){
+
+    public final void agregarIconos() {
         ImageIcon iconobtn = new ImageIcon("src/main/java/com/curlp/capaimagenes/logout.png");
         ImageIcon iconLogoTitulo = new ImageIcon("src/main/java/com/curlp/capaimagenes/user.png");
         ImageIcon iconbtnGuardar = new ImageIcon("src/main/java/com/curlp/capaimagenes/save.png");
@@ -48,6 +48,7 @@ public class JFFFabricante extends javax.swing.JFrame {
         this.jBtnEditar.setIcon(iconbtnEditar);
         this.jBtnEliminar.setIcon(iconbtnEliminar);
     }
+
     // Metodo para limpiar los datos de la tabla
     private void limpiatTablaFabricante() {
         DefaultTableModel dtm = (DefaultTableModel) this.jTblFabricante.getModel();
@@ -113,14 +114,14 @@ public class JFFFabricante extends javax.swing.JFrame {
                 CLFabricante cl = new CLFabricante();
                 cl.setNombreFabricante(this.JTFNombreFabricante.getText().trim());
                 cdp.insertarFabricante(cl);
-                JOptionPane.showMessageDialog(null,"Registrado correctamente","Proyecto Vacunación",JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Registrado correctamente", "Cova System", JOptionPane.INFORMATION_MESSAGE);
                 this.JTFNombreFabricante.requestFocus();
             } catch (SQLException e) {
-                JOptionPane.showMessageDialog(null,"Error al almacenar" + e);
+                JOptionPane.showMessageDialog(null, "Error al almacenar" + e);
                 this.JTFNombreFabricante.requestFocus();
             }
         } else {
-            JOptionPane.showMessageDialog(null,"Ingresar el nombre del fabricante","Proyecto Vacunación",JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Ingresar el nombre del fabricante", "Cova System", JOptionPane.INFORMATION_MESSAGE);
             this.JTFNombreFabricante.requestFocus();
         }
     }
@@ -143,14 +144,14 @@ public class JFFFabricante extends javax.swing.JFrame {
                 cl.setIdFabricante(Integer.parseInt(this.jTFIDFabricante.getText().trim()));
                 cl.setNombreFabricante(this.JTFNombreFabricante.getText().trim());
                 cdp.actualizarFabricante(cl);
-                JOptionPane.showMessageDialog(null,"Registrado actualizado","Proyecto Vacunación",JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Registrado actualizado", "Cova System", JOptionPane.INFORMATION_MESSAGE);
                 this.JTFNombreFabricante.requestFocus();
             } catch (SQLException e) {
-                JOptionPane.showMessageDialog(null,"Error al modificar" + e);
+                JOptionPane.showMessageDialog(null, "Error al modificar" + e);
                 this.JTFNombreFabricante.requestFocus();
-            }  
+            }
         } else {
-            JOptionPane.showMessageDialog(null,"Ingresar el nombre del fabricante","Proyecto Vacunación",JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Ingresar el nombre del fabricante", "Cova System", JOptionPane.INFORMATION_MESSAGE);
             this.JTFNombreFabricante.requestFocus();
         }
     }
@@ -180,35 +181,36 @@ public class JFFFabricante extends javax.swing.JFrame {
                 CLFabricante cl = new CLFabricante();
                 cl.setIdFabricante(Integer.parseInt(this.jTFIDFabricante.getText().trim()));
                 cdp.eliminarFabricante(cl);
-                JOptionPane.showMessageDialog(null,"Registrado eliminado","Proyecto Vacunación",JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Registrado eliminado", "Cova System", JOptionPane.INFORMATION_MESSAGE);
                 this.JTFNombreFabricante.requestFocus();
             } catch (SQLException e) {
-                JOptionPane.showMessageDialog(null,"Error al eliminar" + e);
+                JOptionPane.showMessageDialog(null, "Error al eliminar" + e);
                 this.JTFNombreFabricante.requestFocus();
             }
         } else {
-            JOptionPane.showMessageDialog(null,"Ingresar el nombre del fabricante","Proyecto Vacunación",JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Ingresar el nombre del fabricante", "Cova System", JOptionPane.INFORMATION_MESSAGE);
             this.JTFNombreFabricante.requestFocus();
         }
     }
 
     // Metodo para eliminar el metodo de actualizar la tabla 
     private void eliminar() throws SQLException {
-         int resp = JOptionPane.showConfirmDialog(null, "Seguro que desea eliminar el registro","Proyecto Vacunacion",JOptionPane.YES_NO_OPTION);
+        int resp = JOptionPane.showConfirmDialog(null, "Seguro que desea eliminar el registro", "Cova System", JOptionPane.YES_NO_OPTION);
         if (resp == JOptionPane.YES_OPTION) {
             try {
                 eliminarFabricante();
                 poblarTablaFabricante();
-                habilitarBotones(true,false,false,false);
+                habilitarBotones(true, false, false, false);
                 limpiarTextField();
                 encontrarCorrelativo();
             } catch (SQLException ex) {
-                JOptionPane.showMessageDialog(null,"Error: " + ex);
+                JOptionPane.showMessageDialog(null, "Error: " + ex);
             }
         } else {
             limpiarTextField();
         }
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
