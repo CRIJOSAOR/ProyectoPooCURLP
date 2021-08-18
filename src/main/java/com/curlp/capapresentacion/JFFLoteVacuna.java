@@ -35,7 +35,6 @@ public class JFFLoteVacuna extends javax.swing.JFrame {
         this.jTFNumLote.requestFocus();
         this.setLocationRelativeTo(null);
     }
-    
 
     // Metodo para limpiar los datos de la tabla
     private void limpiarTabla() {
@@ -79,6 +78,7 @@ public class JFFLoteVacuna extends javax.swing.JFrame {
         this.jDCFechaFabricacion.setCalendar(null);
         this.jDCFechaVencimietno.setCalendar(null);
         this.jTFNumLote.requestFocus();
+        this.jCboFabricantes.setSelectedIndex(0);
 
     }
     // Metodo para validar la TextField
@@ -98,12 +98,12 @@ public class JFFLoteVacuna extends javax.swing.JFrame {
                 java.sql.Date fechaVencimietno = new java.sql.Date(this.jDCFechaVencimietno.getDate().getTime());
                 CDLoteVacuna cdlv = new CDLoteVacuna();
                 CLLoteVacuna cl = new CLLoteVacuna();
-                cl.setNumLoteVacuna(this.jTFNumLote.getText().trim());
+                cl.setNumLoteVacuna(this.jTFNumLote.getText().trim().toUpperCase());
                 cl.setFechaFabricacion(fechaFabricacion);
                 cl.setFechaVencimiento(fechaVencimietno);
                 cl.setIdFbricante(Integer.parseInt(jTFIdFabricante.getText()));
                 cdlv.insertarLoteVacuna(cl);
-                JOptionPane.showMessageDialog(null, "Registrado correctamente", "Proyecto Vacunación", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Registrado correctamente", "COVA System", JOptionPane.INFORMATION_MESSAGE);
                 this.jTFNumLote.requestFocus();
             } catch (SQLException e) {
                 JOptionPane.showMessageDialog(null, "Error al almacenar el nuevo lote" + e);
@@ -111,7 +111,7 @@ public class JFFLoteVacuna extends javax.swing.JFrame {
             }
 
         } else {
-            JOptionPane.showMessageDialog(null, "Tiene que ingresar el numero de lote de vacunas", "Proyecto Vacunación", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Tiene que ingresar los datos del lote de vacunas", "COVA System", JOptionPane.INFORMATION_MESSAGE);
             this.jTFNumLote.requestFocus();
         }
     }
@@ -132,19 +132,19 @@ public class JFFLoteVacuna extends javax.swing.JFrame {
                 java.sql.Date fechaVencimietno = new java.sql.Date(this.jDCFechaVencimietno.getDate().getTime());
                 CDLoteVacuna cdlv = new CDLoteVacuna();
                 CLLoteVacuna cl = new CLLoteVacuna();
-                cl.setNumLoteVacuna(this.jTFNumLote.getText().trim());
+                cl.setNumLoteVacuna(this.jTFNumLote.getText().trim().toUpperCase());
                 cl.setFechaFabricacion(fechaFabricacion);
                 cl.setFechaVencimiento(fechaVencimietno);
                 cl.setIdFbricante(Integer.parseInt(jTFIdFabricante.getText()));
                 cdlv.actualizarloteVacuna(cl);
-                JOptionPane.showMessageDialog(null, "Registrado actualizado", "Proyecto Vacunación", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Registrado actualizado", "COVA System", JOptionPane.INFORMATION_MESSAGE);
                 this.jTFNumLote.requestFocus();
             } catch (SQLException e) {
                 JOptionPane.showMessageDialog(null, "Error al modificar" + e);
                 this.jTFNumLote.requestFocus();
             }
         } else {
-            JOptionPane.showMessageDialog(null, "Ingresar los nuevos datos del lote", "Proyecto Vacunación", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Ingresar los nuevos datos del lote", "COVA System", JOptionPane.INFORMATION_MESSAGE);
             this.jTFNumLote.requestFocus();
         }
     }
@@ -153,10 +153,8 @@ public class JFFLoteVacuna extends javax.swing.JFrame {
     private void filaSeleccionada() throws ParseException {
         if (this.jTblLoteVacuna.getSelectedRow() != -1) {
             this.jTFNumLote.setText(String.valueOf(this.jTblLoteVacuna.getValueAt(this.jTblLoteVacuna.getSelectedRow(), 0)));
-//            Date fechaParseada = (Date) new SimpleDateFormat("dd/MM/yyyy").parse((String)this.jTblLoteVacuna.getValueAt(this.jTblLoteVacuna.getSelectedRow(), 1));
-//            this.jDCFechaFabricacion.setDate(fechaParseada);
-//            Date fechaParseada1 = (Date) new SimpleDateFormat("dd/MM/yyyy").parse((String)this.jTblLoteVacuna.getValueAt(this.jTblLoteVacuna.getSelectedRow(), 2));
-//            this.jDCFechaVencimietno.setDate(fechaParseada);
+            this.jDCFechaFabricacion.setDate((Date) this.jTblLoteVacuna.getValueAt(this.jTblLoteVacuna.getSelectedRow(),1));
+            this.jDCFechaVencimietno.setDate((Date) this.jTblLoteVacuna.getValueAt(this.jTblLoteVacuna.getSelectedRow(),2));
             this.jTFIdFabricante.setText(String.valueOf(this.jTblLoteVacuna.getValueAt(this.jTblLoteVacuna.getSelectedRow(), 3)));
         }
     }
@@ -177,21 +175,21 @@ public class JFFLoteVacuna extends javax.swing.JFrame {
                 CLLoteVacuna cl = new CLLoteVacuna();
                 cl.setNumLoteVacuna((this.jTFNumLote.getText().trim()));
                 cdlv.eliminarLoteVacuna(cl);
-                JOptionPane.showMessageDialog(null, "Registrado eliminado", "Proyecto Vacunación", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Registrado eliminado", "COVA System", JOptionPane.INFORMATION_MESSAGE);
                 this.jTFNumLote.requestFocus();
             } catch (SQLException e) {
                 JOptionPane.showMessageDialog(null, "Error al eliminar" + e);
                 this.jTFNumLote.requestFocus();
             }
         } else {
-            JOptionPane.showMessageDialog(null, "Ingresar el numero de lote", "Proyecto Vacunación", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Ingresar el número de lote", "COVA System", JOptionPane.INFORMATION_MESSAGE);
             this.jTFNumLote.requestFocus();
         }
     }
 
     // Metodo llamar eliminar 
     private void eliminar() throws SQLException {
-        int resp = JOptionPane.showConfirmDialog(null, "Seguro que desea eliminar este lote", "Proyecto Vacunacion", JOptionPane.YES_NO_OPTION);
+        int resp = JOptionPane.showConfirmDialog(null, "Seguro que desea eliminar este lote", "COVA System", JOptionPane.YES_NO_OPTION);
         if (resp == JOptionPane.YES_OPTION) {
             try {
                 eliminarLoteVacuna();
@@ -299,29 +297,33 @@ public class JFFLoteVacuna extends javax.swing.JFrame {
         jLabel2.setBackground(new java.awt.Color(0, 153, 153));
         jLabel2.setFont(new java.awt.Font("Tahoma", 3, 24)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(0, 153, 153));
-        jLabel2.setText("Gestión de lotes de vacunas");
+        jLabel2.setText("Gestión de Lotes de Vacunas");
         jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 10, 350, 30));
         jPanel1.add(jLbUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 10, 40, 40));
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(), "Registrar un lote de vacuna"));
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 102, 102)), "Lotes de Vacunas", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 14))); // NOI18N
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        jPanel2.add(jTFNumLote, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 20, 157, 30));
+        jPanel2.add(jTFNumLote, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 20, 157, 30));
 
-        jLabel3.setText("Numero de lote:");
+        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel3.setText("Número de lote:");
         jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 30, -1, -1));
 
-        jLabel4.setText("Fecha de vencimiento:");
-        jPanel2.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 70, -1, -1));
+        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel4.setText("Fecha De Vencimiento:");
+        jPanel2.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 70, -1, -1));
 
-        jLabel5.setText("Fecha de fabricacion:");
+        jLabel5.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel5.setText("Fecha De Fabricación:");
         jPanel2.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 70, -1, -1));
 
-        jLabel6.setText("ID Fabricante:");
-        jPanel2.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 140, -1, -1));
+        jLabel6.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel6.setText("Fabricante");
+        jPanel2.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 140, -1, -1));
 
         jTFIdFabricante.setEditable(false);
-        jPanel2.add(jTFIdFabricante, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 130, 206, 28));
+        jPanel2.add(jTFIdFabricante, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 140, 20, 30));
 
         jBtnGuardar.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jBtnGuardar.setForeground(new java.awt.Color(0, 153, 153));
@@ -377,18 +379,20 @@ public class JFFLoteVacuna extends javax.swing.JFrame {
                 jCboFabricantesActionPerformed(evt);
             }
         });
-        jPanel2.add(jCboFabricantes, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 170, 210, -1));
+        jPanel2.add(jCboFabricantes, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 140, 210, -1));
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
         jPanel3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 153, 153)));
         jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        jTblLoteVacuna.setBackground(new java.awt.Color(204, 255, 204));
+        jTblLoteVacuna.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jTblLoteVacuna.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "# Lote de vacuna", "Fecha de fabricacion", "Fecha de vencimiento", "ID fabricante", "Fabricante"
+                "# Lote de Vacuna", "Fecha de Fabricación", "Fecha de Vencimiento", "ID Fabricante", "Fabricante"
             }
         ));
         jTblLoteVacuna.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -398,7 +402,7 @@ public class JFFLoteVacuna extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(jTblLoteVacuna);
 
-        jPanel3.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 500, 260));
+        jPanel3.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 520, 280));
 
         jPfranjaSuperior1.setBackground(new java.awt.Color(0, 153, 153));
         jPfranjaSuperior1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -441,7 +445,7 @@ public class JFFLoteVacuna extends javax.swing.JFrame {
         } catch (ParseException ex) {
             Logger.getLogger(JFFLoteVacuna.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
     }//GEN-LAST:event_jTblLoteVacunaMouseClicked
 
     private void jBtnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnEditarActionPerformed
