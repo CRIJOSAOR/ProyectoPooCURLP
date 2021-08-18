@@ -30,6 +30,7 @@ public class JFFVisordeConsulta extends javax.swing.JFrame {
     public JFFVisordeConsulta() throws SQLException {
         initComponents();
         llenarTabla();
+         this.setLocationRelativeTo(null);
         agregarIconos();
     }
      public final void agregarIconos() {
