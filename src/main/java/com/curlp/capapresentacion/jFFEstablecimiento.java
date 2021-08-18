@@ -1,9 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-//este es el coreecto saa
+// librerias
 package com.curlp.capapresentacion;
 
 import com.curlp.capadatos.CDEstablecimiento;
@@ -15,6 +10,7 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.ImageIcon;
+
 /**
  *
  * @author usuario
@@ -34,7 +30,7 @@ public class jFFEstablecimiento extends javax.swing.JFrame {
 
     }
 
-    //metodo  limpiar tabla
+    // metodo  limpiar tabla
     private void limpiarTabla() {
         DefaultTableModel dtm = (DefaultTableModel) this.jTblEstablecimiento.getModel();
 
@@ -44,8 +40,8 @@ public class jFFEstablecimiento extends javax.swing.JFrame {
         }
 
     }
-    //metodo para poblar datos
-
+    
+    // metodo para poblar datos
     private void poblarTablasEstablecimiento() throws SQLException {
         limpiarTabla();
 
@@ -60,26 +56,26 @@ public class jFFEstablecimiento extends javax.swing.JFrame {
             return fila;
         }).forEachOrdered(temp::addRow);
     }
+    
     // Metodo para crear el correlativo 
-
     private void encontrarCorrelativo() throws SQLException {
         CDEstablecimiento cde = new CDEstablecimiento();
         CLEstablecimiento cl = new CLEstablecimiento();
 
-       //cl.setCodEstablecimiento(cde.autoIncrementarEstablecimiento());
+        //cl.setCodEstablecimiento(cde.autoIncrementarEstablecimiento());
         this.jTFCod_Establecimiento.setText(String.valueOf(cl.getCodEstablecimiento()));
 
     }
 
-    //metodo para habilitar y deshabilitar botones
-    private void habilitarBotones(boolean guardar, boolean editar, boolean eliminar, boolean limpiar) {
-        this.jBtnGuardar.setEnabled(guardar);
+    // metodo para habilitar y deshabilitar botones
+    private void habilitarBotones(boolean agregar, boolean editar, boolean eliminar, boolean limpiar) {
+        this.jBtnAgregar.setEnabled(agregar);
         this.jBtnEditar.setEnabled(editar);
         this.jBtnEliminar.setEnabled(eliminar);
         this.jBtnLimpiar.setEnabled(limpiar);
     }
 
-    //metodos para limpiar textFiled
+    // metodos para limpiar textFiled
     private void limpiarTextField() throws SQLException {
         this.jTFCod_Establecimiento.setEditable(true);
 
@@ -99,34 +95,32 @@ public class jFFEstablecimiento extends javax.swing.JFrame {
 
         return estado;
     }
-
+     // metodo para insertar establecimiento
     private void insertarEstablecimiento() {
         if (!validarTextField()) {
-             JOptionPane.showMessageDialog(null, "tiene que ingresar nombre del Establecimiento", "Proyecto Vacunación",
-                                           JOptionPane.INFORMATION_MESSAGE);
-             this.jTFNombre_Establecimiento.requestFocus();
-        }else{
-            
-        
+            JOptionPane.showMessageDialog(null, "Tiene que ingresar el nombre del Establecimiento", "COVA System",
+                    JOptionPane.INFORMATION_MESSAGE);
+            this.jTFNombre_Establecimiento.requestFocus();
+        } else {
+
             try {
                 CDEstablecimiento cde = new CDEstablecimiento();
                 CLEstablecimiento cl = new CLEstablecimiento();
-                 cl.setCodEstablecimiento(Integer.parseInt(this.jTFCod_Establecimiento.getText().trim()));
+                cl.setCodEstablecimiento(Integer.parseInt(this.jTFCod_Establecimiento.getText().trim()));
                 cl.setNombreEstablecimiento(this.jTFNombre_Establecimiento.getText().trim());
-               
+
                 cde.insertarEstablecimiento(cl);
-                
-                JOptionPane.showMessageDialog(null, "Registrado almacenado satifactoriamente", "Proyecto Vacunación",
-                                               JOptionPane.INFORMATION_MESSAGE);
-                
-              
+
+                JOptionPane.showMessageDialog(null, "Registro almacenado satisfactoriamente", "COVA System",
+                        JOptionPane.INFORMATION_MESSAGE);
+
             } catch (SQLException ex) {
                 JOptionPane.showMessageDialog(null, "Error al almacenar" + ex);
                 this.jTFNombre_Establecimiento.requestFocus();
             }
-         } 
+        }
     }
-
+     // metodo para guardar establecimiento
     private void guardar() throws SQLException {
         insertarEstablecimiento();
         poblarTablasEstablecimiento();
@@ -136,15 +130,15 @@ public class jFFEstablecimiento extends javax.swing.JFrame {
 
     }
 
-    //metodo para actualicar un establecimiento
+    // metodo para actualicar un establecimiento
     private void actualizarEstablecimiento() {
         if (!validarTextField()) {
-            JOptionPane.showMessageDialog(null, "tiene que ingresar el nombre del Establecimiento ", "Proyecto Vacunación",
-                                                 JOptionPane.INFORMATION_MESSAGE);
-               
+            JOptionPane.showMessageDialog(null, "Tiene que ingresar el nombre del Establecimiento ", "COVA System",
+                    JOptionPane.INFORMATION_MESSAGE);
+
             this.jTFNombre_Establecimiento.requestFocus();
-            
-               }else{
+
+        } else {
             try {
                 CDEstablecimiento cde = new CDEstablecimiento();
                 CLEstablecimiento cl = new CLEstablecimiento();
@@ -152,10 +146,8 @@ public class jFFEstablecimiento extends javax.swing.JFrame {
                 cl.setNombreEstablecimiento(this.jTFNombre_Establecimiento.getText().trim());
                 cde.actualizarEstablecimiento(cl);
 
-                JOptionPane.showMessageDialog(null, "Registro actualizado satisfactoriamente ", "Proyecto Vacunación",
+                JOptionPane.showMessageDialog(null, "Registro editado satisfactoriamente ", "COVA System",
                         JOptionPane.INFORMATION_MESSAGE);
-                
-                
 
             } catch (SQLException ex) {
                 JOptionPane.showMessageDialog(null, "Error al modificar el registro" + ex);
@@ -164,7 +156,7 @@ public class jFFEstablecimiento extends javax.swing.JFrame {
         }
     }
 
-    //metodo para seleccionar los datos de la fila y modificarlos
+    // metodo para seleccionar los datos de la fila y modificarlos
     private void filaSeleccionada() {
         if (this.jTblEstablecimiento.getSelectedRow() != -1) {
             this.jTFCod_Establecimiento.setText(String.valueOf(this.jTblEstablecimiento.getValueAt(this.jTblEstablecimiento.getSelectedRow(), 0)));
@@ -184,7 +176,7 @@ public class jFFEstablecimiento extends javax.swing.JFrame {
 
     }
 
-    //metodo para eliminar
+    // metodo para eliminar
     public void eliminarEstablecimiento() {
         try {
             CDEstablecimiento cde = new CDEstablecimiento();
@@ -192,7 +184,7 @@ public class jFFEstablecimiento extends javax.swing.JFrame {
             cl.setCodEstablecimiento(Integer.parseInt(this.jTFCod_Establecimiento.getText().trim()));
             cde.eliminarEstablecimiento(cl);
 
-            JOptionPane.showMessageDialog(null, "Registro eliminado correctamente", "Proyecto Vacunación", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Registro eliminado correctamente", "COVA System", JOptionPane.INFORMATION_MESSAGE);
             this.jTFNombre_Establecimiento.requestFocus();
 
         } catch (SQLException e) {
@@ -200,9 +192,10 @@ public class jFFEstablecimiento extends javax.swing.JFrame {
             this.jTFNombre_Establecimiento.requestFocus();
         }
     }
-
+    
+    // metodo para eliminar establecimientos
     public void eliminar() throws SQLException {
-        int resp = JOptionPane.showConfirmDialog(null, "¿esta seguro de eliminar el registro?", "registro vacuna",
+        int resp = JOptionPane.showConfirmDialog(null, "¿Esta seguro de eliminar el registro?", "COVA System",
                 JOptionPane.YES_NO_CANCEL_OPTION);
         if (resp == JOptionPane.YES_OPTION) {
             try {
@@ -220,16 +213,21 @@ public class jFFEstablecimiento extends javax.swing.JFrame {
             limpiarTextField();
         }
     }
-public final void agregarIconos() {
+    
+    // metodo para agregar iconos
+    public final void agregarIconos() {
         ImageIcon iconbtnGuardar = new ImageIcon("src/main/java/com/curlp/capaimagenes/save.png");
         ImageIcon iconbtnEditar = new ImageIcon("src/main/java/com/curlp/capaimagenes/edit.png");
         ImageIcon iconbtnEliminar = new ImageIcon("src/main/java/com/curlp/capaimagenes/delete.png");
         ImageIcon iconbtnLimpiar = new ImageIcon("src/main/java/com/curlp/capaimagenes/Limpiar.png");
-        this.jBtnGuardar.setIcon(iconbtnGuardar);
+        ImageIcon iconobtn = new ImageIcon("src/main/java/com/curlp/capaimagenes/logout.png");
+        this.jBtnAgregar.setIcon(iconbtnGuardar);
         this.jBtnEditar.setIcon(iconbtnEditar);
         this.jBtnEliminar.setIcon(iconbtnEliminar);
-        this.jBtnLimpiar .setIcon(iconbtnLimpiar);
+        this.jBtnLimpiar.setIcon(iconbtnLimpiar);
+        this.jLblXEstablecimiento.setIcon(iconobtn);
     }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -243,7 +241,7 @@ public final void agregarIconos() {
         jLabel3 = new javax.swing.JLabel();
         jTFCod_Establecimiento = new javax.swing.JTextField();
         jTFNombre_Establecimiento = new javax.swing.JTextField();
-        jBtnGuardar = new javax.swing.JButton();
+        jBtnAgregar = new javax.swing.JButton();
         jBtnEditar = new javax.swing.JButton();
         jBtnLimpiar = new javax.swing.JButton();
         jBtnEliminar = new javax.swing.JButton();
@@ -260,7 +258,7 @@ public final void agregarIconos() {
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 3, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(0, 153, 153));
-        jLabel1.setText("GESTION DE ESTABLECIMIENTO");
+        jLabel1.setText("Gestión de Establecimiento");
 
         jPanel2.setBackground(new java.awt.Color(0, 153, 153));
 
@@ -268,21 +266,21 @@ public final void agregarIconos() {
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGap(0, 828, Short.MAX_VALUE)
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 26, Short.MAX_VALUE)
+            .addGap(0, 15, Short.MAX_VALUE)
         );
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true), "Establecimiento", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 3, 12))); // NOI18N
+        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Establecimiento", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(0, 102, 102))); // NOI18N
 
-        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel2.setText("Nombre Establecimiento");
 
-        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jLabel3.setText("Codigo de Establecimiento");
+        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel3.setText("Código  Establecimiento");
 
         jTFCod_Establecimiento.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -296,19 +294,19 @@ public final void agregarIconos() {
             }
         });
 
-        jBtnGuardar.setBackground(new java.awt.Color(255, 255, 255));
-        jBtnGuardar.setFont(new java.awt.Font("Tahoma", 3, 12)); // NOI18N
-        jBtnGuardar.setForeground(new java.awt.Color(0, 153, 153));
-        jBtnGuardar.setText("Guardar");
-        jBtnGuardar.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        jBtnGuardar.addActionListener(new java.awt.event.ActionListener() {
+        jBtnAgregar.setBackground(new java.awt.Color(255, 255, 255));
+        jBtnAgregar.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jBtnAgregar.setForeground(new java.awt.Color(0, 153, 153));
+        jBtnAgregar.setText("Agregar");
+        jBtnAgregar.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jBtnAgregar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jBtnGuardarActionPerformed(evt);
+                jBtnAgregarActionPerformed(evt);
             }
         });
 
         jBtnEditar.setBackground(new java.awt.Color(255, 255, 255));
-        jBtnEditar.setFont(new java.awt.Font("Tahoma", 3, 12)); // NOI18N
+        jBtnEditar.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jBtnEditar.setForeground(new java.awt.Color(0, 153, 153));
         jBtnEditar.setText("Editar");
         jBtnEditar.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -320,7 +318,7 @@ public final void agregarIconos() {
         });
 
         jBtnLimpiar.setBackground(new java.awt.Color(255, 255, 255));
-        jBtnLimpiar.setFont(new java.awt.Font("Tahoma", 3, 12)); // NOI18N
+        jBtnLimpiar.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jBtnLimpiar.setForeground(new java.awt.Color(0, 153, 153));
         jBtnLimpiar.setText("Limpiar");
         jBtnLimpiar.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -331,7 +329,7 @@ public final void agregarIconos() {
         });
 
         jBtnEliminar.setBackground(new java.awt.Color(255, 255, 255));
-        jBtnEliminar.setFont(new java.awt.Font("Tahoma", 3, 12)); // NOI18N
+        jBtnEliminar.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jBtnEliminar.setForeground(new java.awt.Color(0, 153, 153));
         jBtnEliminar.setText("Eliminar");
         jBtnEliminar.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -347,26 +345,25 @@ public final void agregarIconos() {
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(78, 78, 78)
+                .addGap(60, 60, 60)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jBtnAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(jBtnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(48, 48, 48)
-                        .addComponent(jBtnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(74, 74, 74)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel3Layout.createSequentialGroup()
                         .addComponent(jBtnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(63, 63, 63)
+                        .addGap(101, 101, 101)
+                        .addComponent(jBtnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(68, 68, 68)
                         .addComponent(jBtnLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel3Layout.createSequentialGroup()
-                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jTFCod_Establecimiento, javax.swing.GroupLayout.PREFERRED_SIZE, 417, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jTFNombre_Establecimiento, javax.swing.GroupLayout.PREFERRED_SIZE, 423, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel3Layout.createSequentialGroup()
-                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(jTFCod_Establecimiento, javax.swing.GroupLayout.PREFERRED_SIZE, 417, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(205, Short.MAX_VALUE))
+                        .addGap(179, 179, 179)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -382,15 +379,14 @@ public final void agregarIconos() {
                 .addGap(37, 37, 37)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jBtnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jBtnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jBtnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jBtnLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jBtnAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jBtnLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jBtnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jLblXEstablecimiento.setFont(new java.awt.Font("Tahoma", 3, 48)); // NOI18N
+        jLblXEstablecimiento.setFont(new java.awt.Font("Tahoma", 0, 48)); // NOI18N
         jLblXEstablecimiento.setForeground(new java.awt.Color(0, 153, 153));
-        jLblXEstablecimiento.setText("x");
         jLblXEstablecimiento.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 jLblXEstablecimientoMousePressed(evt);
@@ -403,33 +399,38 @@ public final void agregarIconos() {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 827, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addContainerGap())
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 440, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(206, 206, 206)
-                        .addComponent(jLblXEstablecimiento, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE))))
-            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 408, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(90, 90, 90)
+                        .addComponent(jLblXEstablecimiento, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(9, 9, 9)))
+                .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLblXEstablecimiento, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLblXEstablecimiento, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(21, 21, 21)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(30, 30, 30)
-                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(26, 26, 26)
+                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(22, 22, 22))
         );
 
         jTblEstablecimiento.setBackground(new java.awt.Color(204, 255, 204));
         jTblEstablecimiento.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true));
-        jTblEstablecimiento.setFont(new java.awt.Font("Tahoma", 3, 11)); // NOI18N
+        jTblEstablecimiento.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jTblEstablecimiento.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -465,19 +466,20 @@ public final void agregarIconos() {
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1)
-                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 815, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(2, 2, 2)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(35, 35, 35)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 208, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -492,13 +494,13 @@ public final void agregarIconos() {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTFNombre_EstablecimientoActionPerformed
 
-    private void jBtnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnGuardarActionPerformed
+    private void jBtnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnAgregarActionPerformed
         try {
             guardar();
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error al guardar" + ex);
         }
-    }//GEN-LAST:event_jBtnGuardarActionPerformed
+    }//GEN-LAST:event_jBtnAgregarActionPerformed
 
     private void jTblEstablecimientoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTblEstablecimientoMouseClicked
         filaSeleccionada();
@@ -575,9 +577,9 @@ public final void agregarIconos() {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jBtnAgregar;
     private javax.swing.JButton jBtnEditar;
     private javax.swing.JButton jBtnEliminar;
-    private javax.swing.JButton jBtnGuardar;
     private javax.swing.JButton jBtnLimpiar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
