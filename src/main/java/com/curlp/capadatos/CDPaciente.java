@@ -147,7 +147,7 @@ public class CDPaciente {
         return cl;
     }
     
-    public List<CLPaciente> obtenerListaPacientesPorNombre(String nombrePaciente) throws SQLException {
+    public List<CLPaciente> ObtenerListaPacientesPorNombre(String nombrePaciente) throws SQLException {
         String sql = "CALL mostrarPacientePorNombre(?)";
         List<CLPaciente> miLista = null;
         
