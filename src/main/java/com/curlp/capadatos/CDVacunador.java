@@ -5,6 +5,7 @@
  */
 package com.curlp.capadatos;
 
+import com.curlp.capalogica.CLPaciente;
 import com.curlp.capalogica.CLVacunador;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -110,6 +111,31 @@ public class CDVacunador {
             JOptionPane.showMessageDialog(null, "Error: " + e.getMessage());
         }
         return miListaV;
+    }
+    
+    public CLVacunador mostrarVacunadorX(String dniVacunador) throws SQLException {
+        String sql = "CALL mostrarVacunadorX(?)";
+        CLVacunador cl = new CLVacunador();
+
+        try {
+
+            ps = cn.prepareStatement(sql);
+            ps.setString(1, dniVacunador);
+            rs = ps.executeQuery();
+
+            cl.setDniVacunador(rs.getString("dniVacunador"));
+            cl.setNombresV(rs.getString("nombre"));
+            cl.setApellidosV(rs.getString("apellidos"));
+            cl.setDireccionV(rs.getString("direccion"));
+            cl.setNumCelularV(rs.getString("numCelular")); 
+            cl.setEstado(rs.getString("estado"));
+
+        } catch (SQLException e) {
+
+            JOptionPane.showMessageDialog(null, "Error al mostrar -- Vuelva a intentarlo", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+
+        return cl;
     }
     
     //Metodo que nos va a permitir llenar Combo de Vacunador.
