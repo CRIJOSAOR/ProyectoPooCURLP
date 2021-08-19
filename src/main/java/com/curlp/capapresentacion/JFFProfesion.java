@@ -265,7 +265,7 @@ public class JFFProfesion extends javax.swing.JFrame {
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 102, 102)), "Profesión", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 14))); // NOI18N
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jLabel2.setText("Ingresar Profesión");
+        jLabel2.setText("Nombre Profesión");
 
         jTFProfesion.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
 
