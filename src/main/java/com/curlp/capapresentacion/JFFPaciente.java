@@ -5,7 +5,6 @@
  */
 package com.curlp.capapresentacion;
 
-
 import com.curlp.capadatos.CDPaciente;
 import com.curlp.capadatos.CDProfesion;
 import com.curlp.capadatos.CDSexo;
@@ -34,6 +33,7 @@ public class JFFPaciente extends javax.swing.JFrame {
 
     /**
      * Creates new form JFFPaciente
+     *
      * @throws java.sql.SQLException
      */
     public JFFPaciente() throws SQLException {
@@ -43,39 +43,39 @@ public class JFFPaciente extends javax.swing.JFrame {
         llenarComboBoxProfesiones();
         llenarComboBoxSexo();
         this.setLocationRelativeTo(null);
-        this.border = this.jTFnumIdentidad.getBorder(); 
-        TextPrompt placeHolder = new TextPrompt("Ejemplo: Miguel Abraham",this.jTFnombres);
+        this.border = this.jTFnumIdentidad.getBorder();
+        TextPrompt placeHolder = new TextPrompt("Ejemplo: Miguel Abraham", this.jTFnombres);
     }
     /* se agrega miembro de clase tipo border para obtener el borde default. si hay errores el borde del componente sera rojo asi que:
        con el mienbro de clase border se puede establecer el borde default a todos los campos */
     private final Border border;
-    
+
     DefaultTableModel modelo; // permitira manejar la jTable
-    
+
     /**
-        +++++++++++++++++++++++ Metodos para gestion de Paciente ++++++++++++++++++++++++++++++++++++
-    
-    */
-    public boolean registrarPaciente() throws SQLException{
+     * +++++++++++++++++++++++ Metodos para gestion de Paciente
+     * ++++++++++++++++++++++++++++++++++++
+     *
+     */
+    public boolean registrarPaciente() throws SQLException {
         // instancias para el registro del paciente y clase paciente
         CDPaciente registro = new CDPaciente();  // registro sera quien inserte a la base de Datos
         CLPaciente paciente = new CLPaciente();  // paciente guardara la informacion que escribira el usuario
         CDProfesion profesion = new CDProfesion();
-        
+
         boolean validar = false; // variable para retorno asi si hay un error no manda a recargar la tabla ni limpia campos permitiendo corregir errores
-        
+
         // Antes de todo se debe verificar que los campos cumplan con lo requerido
-        if(this.verificarCampos(1)){
+        if (this.verificarCampos(1)) {
             // recuperar datos de los Combo Box
             int idProfesion = profesion.obtenerIdProfesion(this.jCboProfesion.getItemAt(this.jCboProfesion.getSelectedIndex()).trim());
             //int idProfesion = this.getIdProfesion( this.jCboProfesion.getItemAt(this.jCboProfesion.getSelectedIndex()));
             int idSexo = this.jCboSexo.getSelectedIndex();
-            
+
             // recoleccion de la fecha del jDateChooser
             java.sql.Date fechaSql = new java.sql.Date(this.jDCFechaNacimiento.getDate().getTime());
-            
+
             // Siguiente paso es completar toda la informacion necesaria para la clase CLPaciente 
-            
             paciente.setNumIdentidad(this.jTFnumIdentidad.getText().trim());
             paciente.setNombres(this.jTFnombres.getText().trim());
             paciente.setApellidos(this.jTFapellidos.getText().trim());
@@ -85,9 +85,8 @@ public class JFFPaciente extends javax.swing.JFrame {
             paciente.setDireccion(this.jTAdireccion.getText().trim());
             paciente.setIdSexo(idSexo);
             paciente.setIdProfesion(idProfesion);
-            
+
             // siguiente linea inserta el objeto Paciente a la base de datos
-            
             registro.insertarPaciente(paciente);
             limpiarCampos();
             validar = true;
@@ -95,24 +94,23 @@ public class JFFPaciente extends javax.swing.JFrame {
         return validar;
     }
 
-    public boolean actualizarPaciente() throws SQLException{
+    public boolean actualizarPaciente() throws SQLException {
         // instancias para el registro del paciente y clase paciente
         CDPaciente registro = new CDPaciente();  // registro sera quien inserte a la base de Datos
         CLPaciente paciente = new CLPaciente();  // paciente guardara la informacion que escribira el usuario
-        
+
         boolean validar = false; // variable para retorno asi si hay un error no manda a recargar la tabla ni limpia campos permitiendo corregir errores
-        
+
         // Antes de todo se debe verificar que los campos cumplan con lo requerido
-        if(this.verificarCampos(2)){
+        if (this.verificarCampos(2)) {
             // recuperar datos de los Combo Box
             int idSexo = this.jCboSexo.getSelectedIndex();
             int idProfesion = getIdProfesion(this.jCboProfesion.getItemAt(this.jCboProfesion.getSelectedIndex()));
-            
+
             // recoleccion de la fecha del jDateChooser
             java.sql.Date fechaSql = new java.sql.Date(this.jDCFechaNacimiento.getDate().getTime());
-            
+
             // Siguiente paso es completar toda la informacion necesaria para la clase CLPaciente 
-            
             paciente.setNumIdentidad(this.jTFnumIdentidad.getText().trim());
             paciente.setNombres(this.jTFnombres.getText().trim());
             paciente.setApellidos(this.jTFapellidos.getText().trim());
@@ -122,91 +120,62 @@ public class JFFPaciente extends javax.swing.JFrame {
             paciente.setDireccion(this.jTAdireccion.getText().trim());
             paciente.setIdSexo(idSexo);
             paciente.setIdProfesion(idProfesion);
-            
+
             // siguiente linea inserta el objeto Paciente a la base de datos
-            
             registro.actualizarPaciente(paciente);
             this.limpiarCampos();
             validar = true;
         }
         return validar;
-    } 
-    
+    }
+
     public void eliminarPaciente() throws SQLException {
-        try{
+        try {
             CDPaciente registro = new CDPaciente();  // registro sera quien inserte a la base de Datos
-            CLPaciente paciente = new CLPaciente(); 
-        
+            CLPaciente paciente = new CLPaciente();
+
             // paciente.setNumIdentidad(this.jTFnumIdentidad.getText().trim());
-            if(jTBPacientes.getSelectedRow() != -1){
+            if (jTBPacientes.getSelectedRow() != -1) {
                 paciente.setNumIdentidad(String.valueOf(this.jTBPacientes.getValueAt(this.jTBPacientes.getSelectedRow(), 0)));
                 registro.eliminarPaciente(paciente);
             }
-            
-            
-        } catch (SQLException ex){
-                JOptionPane.showMessageDialog(null, "Error al eliminar");
+
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al eliminar");
         }
-        
+
     }
 
     /**
-        +++++++++++++++++++++++ Metodos para gestion de jTable ++++++++++++++++++++++++++++++++++++
-    
-    */
-    
-        private void limpiarTabla(){
-        
+     * +++++++++++++++++++++++ Metodos para gestion de jTable
+     * ++++++++++++++++++++++++++++++++++++
+     *
+     */
+    private void limpiarTabla() {
+
         modelo = (DefaultTableModel) this.jTBPacientes.getModel();
-        
-        while(modelo.getRowCount() > 0){
+
+        while (modelo.getRowCount() > 0) {
             modelo.removeRow(0);
         }
-        
+
     }
-    
-    private void llenarTabla() throws SQLException{
-        
+
+    private void llenarTabla() throws SQLException {
+
         // limpiar la tabla
         limpiarTabla();
-        
+
         // instanciar una clase tipo CDPaciente para la conexion con la base de datos 
         CDPaciente registro = new CDPaciente();
-        
+
         // recuperar todos los pacientes en forma de lista
         List<CLPaciente> listaPacientes = registro.mostrarPacientes();
         // instanciamos un model 
         modelo = (DefaultTableModel) this.jTBPacientes.getModel();
-      
+
         // llenar cada fila con un ciclo      
-        listaPacientes.stream().map((CLPaciente persona) ->{
-            Object[] fila = new Object[9];
-            fila[0] = persona.getNumIdentidad();
-            fila[1] = persona.getNombres();
-            fila[2] = persona.getApellidos();
-            fila[3] = persona.getNumCelular();
-            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-            fila[4] = (String) sdf.format(persona.getFechaNacimiento());
-            fila[5] = persona.getLugarTrabajo();
-            fila[6] = persona.getDireccion();
-            fila[7] = persona.getSexo();
-            fila[8] = persona.getProfesion();
-            return fila;
-        }).forEachOrdered(modelo::addRow);    
-    }
-    
-    private void llenarTablarPorNombre(String nombreCliente) throws SQLException {
-        limpiarTabla();
-        // instanciar una clase tipo CDPaciente para la conexion con la base de datos 
-        CDPaciente registro = new CDPaciente();
-        
-        // recuperar todos los pacientes en forma de lista
-        List<CLPaciente> listaPacientes = registro.obtenerListaPacientesPorNombre(nombreCliente);
-        // instanciamos un model 
-        modelo = (DefaultTableModel) this.jTBPacientes.getModel();
-      
-        // llenar cada fila con un ciclo      
-        listaPacientes.stream().map((CLPaciente persona) ->{
+        listaPacientes.stream().map((CLPaciente persona) -> {
             Object[] fila = new Object[9];
             fila[0] = persona.getNumIdentidad();
             fila[1] = persona.getNombres();
@@ -220,19 +189,45 @@ public class JFFPaciente extends javax.swing.JFrame {
             fila[8] = persona.getProfesion();
             return fila;
         }).forEachOrdered(modelo::addRow);
-        
-        
     }
-    
-    private void seleccionarFila() throws SQLException, ParseException{
-        if(this.jTBPacientes.getSelectedRow() != -1){
-            
+
+    private void llenarTablarPorNombre(String nombreCliente) throws SQLException {
+        limpiarTabla();
+        // instanciar una clase tipo CDPaciente para la conexion con la base de datos 
+        CDPaciente registro = new CDPaciente();
+
+        // recuperar todos los pacientes en forma de lista
+        List<CLPaciente> listaPacientes = registro.obtenerListaPacientesPorNombre(nombreCliente);
+        // instanciamos un model 
+        modelo = (DefaultTableModel) this.jTBPacientes.getModel();
+
+        // llenar cada fila con un ciclo      
+        listaPacientes.stream().map((CLPaciente persona) -> {
+            Object[] fila = new Object[9];
+            fila[0] = persona.getNumIdentidad();
+            fila[1] = persona.getNombres();
+            fila[2] = persona.getApellidos();
+            fila[3] = persona.getNumCelular();
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+            fila[4] = (String) sdf.format(persona.getFechaNacimiento());
+            fila[5] = persona.getLugarTrabajo();
+            fila[6] = persona.getDireccion();
+            fila[7] = persona.getSexo();
+            fila[8] = persona.getProfesion();
+            return fila;
+        }).forEachOrdered(modelo::addRow);
+
+    }
+
+    private void seleccionarFila() throws SQLException, ParseException {
+        if (this.jTBPacientes.getSelectedRow() != -1) {
+
             // preparar el espacio para editar el registro
             this.jTFnumIdentidad.setEditable(false);
             this.jTFnombres.requestFocus();
-            activarBotones(false,true,true);
+            activarBotones(false, true, true);
             this.jTabbedPane1.setSelectedIndex(0);
-            
+
             // insertar los datos en los campos
             this.jTFnumIdentidad.setText(String.valueOf(this.jTBPacientes.getValueAt(this.jTBPacientes.getSelectedRow(), 0)));
             this.jTFnombres.setText(String.valueOf(this.jTBPacientes.getValueAt(this.jTBPacientes.getSelectedRow(), 1)));
@@ -242,8 +237,8 @@ public class JFFPaciente extends javax.swing.JFrame {
             this.jTAdireccion.setText(String.valueOf(this.jTBPacientes.getValueAt(this.jTBPacientes.getSelectedRow(), 6)));
 
             // asignar un lugar de trabajo si lo tiene y en dado caso activar el checkBox
-            if(String.valueOf(this.jTBPacientes.getValueAt(this.jTBPacientes.getSelectedRow(), 5)).length() != 0){
-                this.jCBtrabaja.setSelected(true);   
+            if (String.valueOf(this.jTBPacientes.getValueAt(this.jTBPacientes.getSelectedRow(), 5)).length() != 0) {
+                this.jCBtrabaja.setSelected(true);
             } else {
                 this.jCBtrabaja.setSelected(false);
             }
@@ -253,7 +248,7 @@ public class JFFPaciente extends javax.swing.JFrame {
             // Buscar el index adecuado para el sexo y mostrarlo en el comboBox
             String sexo = String.valueOf(this.jTBPacientes.getValueAt(this.jTBPacientes.getSelectedRow(), 7)).trim();
 
-            if(sexo.charAt(0) == 'F'){
+            if (sexo.charAt(0) == 'F') {
                 this.jCboSexo.setSelectedIndex(1);
             } else {
                 this.jCboSexo.setSelectedIndex(2);
@@ -264,92 +259,89 @@ public class JFFPaciente extends javax.swing.JFrame {
             int posicion = getSelecProfesion(profesion);
             this.jCboProfesion.setSelectedIndex(posicion);
 
-            
             // asignar la fecha al jDateChooser
             Date fechaParseada = (Date) new SimpleDateFormat("dd/MM/yyyy").parse((String) this.jTBPacientes.getValueAt(this.jTBPacientes.getSelectedRow(), 4));
             this.jDCFechaNacimiento.setDate(fechaParseada);
-            
-            
-            
+
         }
     }
-    
+
     /**
-        +++++++++++++++++++++++ Metodos para funcionamiendo de Botones ++++++++++++++++++++++++++++++++++++
-    
-    */
-    
-    public void guardar() throws SQLException{
-        try{
-                if (registrarPaciente()){
-                    llenarTabla();
-                    limpiarCampos();
-                }
+     * +++++++++++++++++++++++ Metodos para funcionamiendo de Botones
+     * ++++++++++++++++++++++++++++++++++++
+     *
+     */
+    public void guardar() throws SQLException {
+        try {
+            if (registrarPaciente()) {
+                llenarTabla();
+                limpiarCampos();
+            }
 
-        } catch (SQLException ex){
-                JOptionPane.showMessageDialog(null, "Error al ingresar");
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al ingresar");
         }
     }
-    
-    public void editar() throws SQLException{
-        try{
-                if(actualizarPaciente()){
-                    llenarTabla();
-                    limpiarCampos();
-                }
 
-        } catch (SQLException ex){
-                JOptionPane.showMessageDialog(null, "Error al guardar cambios");
+    public void editar() throws SQLException {
+        try {
+            if (actualizarPaciente()) {
+                llenarTabla();
+                limpiarCampos();
+            }
+
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al guardar cambios");
         }
     }
-    
-    public void eliminar() throws SQLException{
-        int respuesta = JOptionPane.showConfirmDialog(null,"¿Está seguro de eliminar éste registro?", "Eliminar un Paciente", JOptionPane.YES_NO_OPTION);
-        if(respuesta == JOptionPane.YES_OPTION){
-            try{
+
+    public void eliminar() throws SQLException {
+        int respuesta = JOptionPane.showConfirmDialog(null, "¿Está seguro de eliminar éste registro?", "Eliminar un Paciente", JOptionPane.YES_NO_OPTION);
+        if (respuesta == JOptionPane.YES_OPTION) {
+            try {
                 eliminarPaciente();
-                llenarTabla(); 
+                llenarTabla();
 
-            } catch (SQLException ex){
+            } catch (SQLException ex) {
                 JOptionPane.showMessageDialog(null, "Error al eliminar");
             }
-        } 
-    }  
-    
-    /**
-        +++++++++++++++++++++++ Metodos para llenar los ComboBox ++++++++++++++++++++++++++++++++++++
-    
-    */   
-    
-    public void llenarComboBoxProfesiones() throws SQLException{
-        CDProfesion profesiones = new CDProfesion();
-        List<String> listaProfesiones = profesiones.cragarComboProfesiones();
-        
-        this.jCboProfesion.removeAllItems();
-        
-        for (String x: listaProfesiones){
-             this.jCboProfesion.addItem(x);
         }
     }
-    
+
+    /**
+     * +++++++++++++++++++++++ Metodos para llenar los ComboBox
+     * ++++++++++++++++++++++++++++++++++++
+     *
+     */
+    public void llenarComboBoxProfesiones() throws SQLException {
+        CDProfesion profesiones = new CDProfesion();
+        List<String> listaProfesiones = profesiones.cragarComboProfesiones();
+
+        this.jCboProfesion.removeAllItems();
+
+        for (String x : listaProfesiones) {
+            this.jCboProfesion.addItem(x);
+        }
+    }
+
     public void llenarComboBoxSexo() throws SQLException {
         CDSexo cds = new CDSexo();
         List<String> sexos = cds.cargarSexos();
-        
+
         this.jCboSexo.removeAllItems();
-        
-        for (String x: sexos){
-             this.jCboSexo.addItem(x);
+
+        for (String x : sexos) {
+            this.jCboSexo.addItem(x);
         }
-    }  
-    
+    }
+
     /**
-        +++++++++++++++++++++++ Metodos secundarios necesarios en metodos anteriores ++++++++++++++++++++++++++++++++++++
-    
-    */
-    
+     * +++++++++++++++++++++++ Metodos secundarios necesarios en metodos
+     * anteriores ++++++++++++++++++++++++++++++++++++
+     *
+     */
     // metodo de clase que permite agregar iconos a los botones y labels del JFForm
-    public final void  agregarIconos(){
+    public final void agregarIconos() {
         ImageIcon iconobtn = new ImageIcon("src/main/java/com/curlp/capaimagenes/logout.png");
         ImageIcon iconLogoTitulo = new ImageIcon("src/main/java/com/curlp/capaimagenes/user.png");
         ImageIcon iconbtnGuardar = new ImageIcon("src/main/java/com/curlp/capaimagenes/save.png");
@@ -363,128 +355,118 @@ public class JFFPaciente extends javax.swing.JFrame {
     }
 
     // metodo de clase que verifica si los campos para insertar un paciente cumplen con los requerimientos
-    public boolean verificarCampos( int caso){
-        boolean verificador = true ;
-        String errors = ""; 
-        
+    public boolean verificarCampos(int caso) {
+        boolean verificador = true;
+        String errors = "";
+
         //-------------------------
-        
-        
-        if(caso == 1 && jTFnumIdentidad.getValue() == null) { //se verifica si tiene el tamanio correcto de 15 elementos 
+        if (caso == 1 && jTFnumIdentidad.getValue() == null) { //se verifica si tiene el tamanio correcto de 15 elementos 
             //si el numero de identidad no tiene 15 elementos
             verificador = false;
-            errors +=  "Debe ingresar correctamente el numero de identidad, ejemplo: 0801-2000-00011 \n";
+            errors += "Debe ingresar correctamente el numero de identidad, ejemplo: 0801-2000-00011 \n";
             this.jTFnumIdentidad.setBorder(BorderFactory.createLineBorder(Color.red));
         }
-       
+
         //--------------------------
         // verificar que nombre y apellido este lleno
-        
-        if(this.jTFnombres.getText().length() == 0){
-            
+        if (this.jTFnombres.getText().length() == 0) {
+
             verificador = false;
-            errors +=  "Por favor ingrese un nombre \n";
+            errors += "Por favor ingrese un nombre \n";
             this.jTFnombres.setBorder(BorderFactory.createLineBorder(Color.red));
-            
+
         }
-        
-        if(this.jTFapellidos.getText().length() == 0){
+
+        if (this.jTFapellidos.getText().length() == 0) {
             verificador = false;
-            errors +=  "Por favor ingrese un apellido \n";
+            errors += "Por favor ingrese un apellido \n";
             this.jTFapellidos.setBorder(BorderFactory.createLineBorder(Color.red));
-            
+
         }
-        
+
         //--------------------------
         // verificar que el numero de telefono este lleno, tenga todos los numeros 
-
-        if(caso == 1 && this.jTFnumCelular.getValue() == null){
+        if (caso == 1 && this.jTFnumCelular.getValue() == null) {
             verificador = false;
-            errors +=  "El número de teléfono debe tener 9 digitos, por ejemplo: 0000-0000\n";
+            errors += "El número de teléfono debe tener 9 digitos, por ejemplo: 0000-0000\n";
             this.jTFnumCelular.setBorder(BorderFactory.createLineBorder(Color.red));
-            
+
         }
-        
 
         //--------------------------
         // verificar que los combo box esten seleccionados
-        
-        if(this.jCboSexo.getSelectedIndex() == 0){
+        if (this.jCboSexo.getSelectedIndex() == 0) {
             verificador = false;
-            errors +=  "Por favor seleccione un sexo\n";
+            errors += "Por favor seleccione un sexo\n";
             this.jCboSexo.setBorder(BorderFactory.createLineBorder(Color.red));
         }
-        
-        if(this.jCboProfesion.getSelectedIndex() == 0){
+
+        if (this.jCboProfesion.getSelectedIndex() == 0) {
             verificador = false;
-            errors +=  "Por favor seleccione una profesión\n";
+            errors += "Por favor seleccione una profesión\n";
             this.jCboProfesion.setBorder(BorderFactory.createLineBorder(Color.red));
         }
-        
+
         //--------------------------
         // verificar si habilito Trabajo y en dado caso que haya algo escrito
-        
-        if(this.jCBtrabaja.isSelected()){
-            if(this.jTFlugarTrabajo.getText().length() == 0 ){
+        if (this.jCBtrabaja.isSelected()) {
+            if (this.jTFlugarTrabajo.getText().length() == 0) {
                 verificador = false;
-                errors +=  "Si trabaja por favor introduzca el lugar de empleo\n";
+                errors += "Si trabaja por favor introduzca el lugar de empleo\n";
                 this.jTFlugarTrabajo.setBorder(BorderFactory.createLineBorder(Color.red));
-                
-            
+
             }
         }
-        
+
         // verificar que el campo de direccion este lleno
-        
-        if(this.jTAdireccion.getText().length() == 0){
+        if (this.jTAdireccion.getText().length() == 0) {
             verificador = false;
-            errors +=  "Por Favor introduza un dirección\n";
+            errors += "Por Favor introduza un dirección\n";
             this.jTAdireccion.setBorder(BorderFactory.createLineBorder(Color.red));
-            
+
         }
         // verificar si se introdujo una fecha al jDayChooser
-        if(this.jDCFechaNacimiento.getDate() == null){
+        if (this.jDCFechaNacimiento.getDate() == null) {
             verificador = false;
-            errors +=  "Por Favor introduza una fecha de nacimiento\n";
-            
-        } 
-        
-        if(verificador == false){
-           JOptionPane.showMessageDialog(null,errors);
+            errors += "Por Favor introduza una fecha de nacimiento\n";
+
+        }
+
+        if (verificador == false) {
+            JOptionPane.showMessageDialog(null, errors);
         }
         return verificador;
     }
 
-
-    public int getIdProfesion(String profesion) throws SQLException{
+    public int getIdProfesion(String profesion) throws SQLException {
         CDProfesion datos = new CDProfesion();
         List<CLProfesiones> listaProfeciones = datos.obtenerListaProfesiones();
         int index = 1;
-        for(int i = 0; i < listaProfeciones.size();i++){
+        for (int i = 0; i < listaProfeciones.size(); i++) {
             String profesionDB;
             profesionDB = listaProfeciones.get(i).getProfesion().trim();
-            
-            if(profesionDB.equals(profesion.trim())){
+
+            if (profesionDB.equals(profesion.trim())) {
                 index = listaProfeciones.get(i).getIdProfesion();
-            }
-        } 
-        return index;
-    }
-    
-    public int getSelecProfesion(String profesion){
-        int index = 0;
-        
-       
-        for (int i = 1; i < this.jCboProfesion.getItemCount() ; i++){
-            
-            if(profesion.trim().equals(String.valueOf(this.jCboProfesion.getItemAt(i)).trim())) {
-                index = i ;    
             }
         }
         return index;
     }
-    public void activarCampoLugarTrabajo(){
-        if(this.jCBtrabaja.isSelected()){
+
+    public int getSelecProfesion(String profesion) {
+        int index = 0;
+
+        for (int i = 1; i < this.jCboProfesion.getItemCount(); i++) {
+
+            if (profesion.trim().equals(String.valueOf(this.jCboProfesion.getItemAt(i)).trim())) {
+                index = i;
+            }
+        }
+        return index;
+    }
+
+    public void activarCampoLugarTrabajo() {
+        if (this.jCBtrabaja.isSelected()) {
             this.jTFlugarTrabajo.setEnabled(true);
             jLBmensaje.setForeground(Color.black);
         } else {
@@ -492,14 +474,14 @@ public class JFFPaciente extends javax.swing.JFrame {
             this.jTFlugarTrabajo.setEnabled(false);
             jLBmensaje.setForeground(Color.white);
         }
-        
+
     }
-    
-    public void limpiarCampos(){
+
+    public void limpiarCampos() {
         this.jTFnumIdentidad.requestFocus();
         this.jTFnumIdentidad.setEditable(true);
-        activarBotones(true,false,true);
-        
+        activarBotones(true, false, true);
+
         this.jTFnumIdentidad.setValue(null);
         this.jTFnombres.setText("");
         this.jTFapellidos.setText("");
@@ -510,10 +492,8 @@ public class JFFPaciente extends javax.swing.JFrame {
         this.jCBtrabaja.setSelected(false);
         this.jTAdireccion.setText("");
         this.jDCFechaNacimiento.setCalendar(null);
-        
-        
+
         // devolver los bordes a default
-        
         this.jTFnumIdentidad.setBorder(this.border);
         this.jTFnombres.setBorder(this.border);
         this.jTFnombres.setBorder(this.border);
@@ -524,16 +504,15 @@ public class JFFPaciente extends javax.swing.JFrame {
         this.jCboProfesion.setBorder(this.border);
         this.jCBtrabaja.setBorder(this.border);
         this.jTAdireccion.setBorder(this.border);
-        
-        
+
     }
-    
-    
-    private void activarBotones(boolean estadoGuardar, boolean estadoEditar, boolean estadoLimpiar){
+
+    private void activarBotones(boolean estadoGuardar, boolean estadoEditar, boolean estadoLimpiar) {
         this.jBtnGuardar.setEnabled(estadoGuardar);
         this.jBtnEditar.setEnabled(estadoEditar);
         this.jBtnLimpiar.setEnabled(estadoLimpiar);
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -607,6 +586,7 @@ public class JFFPaciente extends javax.swing.JFrame {
 
         jPTitulo.setBackground(new java.awt.Color(255, 255, 255));
 
+        jBTNSalir.setBackground(new java.awt.Color(255, 255, 255));
         jBTNSalir.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jBTNSalir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -626,9 +606,9 @@ public class JFFPaciente extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPTituloLayout.createSequentialGroup()
                 .addGap(35, 35, 35)
                 .addComponent(jLBiconoNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 300, Short.MAX_VALUE)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 558, Short.MAX_VALUE)
+                .addGap(264, 264, 264)
                 .addComponent(jBTNSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(19, 19, 19))
         );
@@ -638,9 +618,11 @@ public class JFFPaciente extends javax.swing.JFrame {
                 .addGroup(jPTituloLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPTituloLayout.createSequentialGroup()
                         .addGap(16, 16, 16)
-                        .addGroup(jPTituloLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jBTNSalir, javax.swing.GroupLayout.DEFAULT_SIZE, 38, Short.MAX_VALUE)
-                            .addComponent(jLabel1)))
+                        .addGroup(jPTituloLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jBTNSalir, javax.swing.GroupLayout.DEFAULT_SIZE, 33, Short.MAX_VALUE)
+                            .addGroup(jPTituloLayout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(jLabel1))))
                     .addGroup(jPTituloLayout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jLBiconoNombre, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
@@ -708,7 +690,7 @@ public class JFFPaciente extends javax.swing.JFrame {
                 jTFlugarTrabajoKeyPressed(evt);
             }
         });
-        jPgestionar.add(jTFlugarTrabajo, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 220, 190, 30));
+        jPgestionar.add(jTFlugarTrabajo, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 230, 190, 30));
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel3.setText("Nombre:");
@@ -730,7 +712,7 @@ public class JFFPaciente extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(jTAdireccion);
 
-        jPgestionar.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 270, 510, 90));
+        jPgestionar.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 280, 510, 90));
 
         jCBtrabaja.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jCBtrabaja.setText("Trabaja?");
@@ -739,7 +721,7 @@ public class JFFPaciente extends javax.swing.JFrame {
                 jCBtrabajaActionPerformed(evt);
             }
         });
-        jPgestionar.add(jCBtrabaja, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 220, 100, 30));
+        jPgestionar.add(jCBtrabaja, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 230, 100, 30));
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel2.setText("Número de Identidad:");
@@ -762,7 +744,7 @@ public class JFFPaciente extends javax.swing.JFrame {
 
         jLabel8.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel8.setText("Dirección de residencia:");
-        jPgestionar.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 250, -1, -1));
+        jPgestionar.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 260, -1, -1));
 
         jCboProfesion.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "--Seleccione", "Ingeniero" }));
         jCboProfesion.addActionListener(new java.awt.event.ActionListener() {
@@ -780,8 +762,9 @@ public class JFFPaciente extends javax.swing.JFrame {
         jLBmensaje.setFont(new java.awt.Font("Lucida Grande", 0, 10)); // NOI18N
         jLBmensaje.setForeground(new java.awt.Color(255, 255, 255));
         jLBmensaje.setText("Si es asi, especifique donde:");
-        jPgestionar.add(jLBmensaje, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 210, -1, -1));
+        jPgestionar.add(jLBmensaje, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 210, 150, -1));
 
+        jBtnEditar.setBackground(new java.awt.Color(255, 255, 255));
         jBtnEditar.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
         jBtnEditar.setForeground(new java.awt.Color(0, 153, 153));
         jBtnEditar.setText("Editar");
@@ -791,8 +774,9 @@ public class JFFPaciente extends javax.swing.JFrame {
                 jBtnEditarActionPerformed(evt);
             }
         });
-        jPgestionar.add(jBtnEditar, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 370, 170, 40));
+        jPgestionar.add(jBtnEditar, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 380, 170, 40));
 
+        jBtnGuardar.setBackground(new java.awt.Color(255, 255, 255));
         jBtnGuardar.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
         jBtnGuardar.setForeground(new java.awt.Color(0, 153, 153));
         jBtnGuardar.setText("Guardar");
@@ -801,16 +785,18 @@ public class JFFPaciente extends javax.swing.JFrame {
                 jBtnGuardarActionPerformed(evt);
             }
         });
-        jPgestionar.add(jBtnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 370, 260, 40));
+        jPgestionar.add(jBtnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 380, 260, 40));
 
-        jBtnLimpiar.setForeground(new java.awt.Color(51, 51, 51));
+        jBtnLimpiar.setBackground(new java.awt.Color(255, 255, 255));
+        jBtnLimpiar.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
+        jBtnLimpiar.setForeground(new java.awt.Color(0, 153, 153));
         jBtnLimpiar.setText("Limpiar");
         jBtnLimpiar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jBtnLimpiarActionPerformed(evt);
             }
         });
-        jPgestionar.add(jBtnLimpiar, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 370, 110, 40));
+        jPgestionar.add(jBtnLimpiar, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 380, 110, 40));
         jPgestionar.add(jLimagenGrande, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 10, 370, 400));
 
         try {
@@ -915,7 +901,7 @@ public class JFFPaciente extends javax.swing.JFrame {
         try {
             guardar();
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null,"No se registro el paciente");
+            JOptionPane.showMessageDialog(null, "No se registro el paciente");
         }
     }//GEN-LAST:event_jBtnGuardarActionPerformed
 
@@ -947,35 +933,51 @@ public class JFFPaciente extends javax.swing.JFrame {
     }//GEN-LAST:event_jMiEliminarActionPerformed
 
     private void jTFnombresKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTFnombresKeyPressed
-        if(jTFnombres.getText().length() >=  0 ){ jTFnombres.setBorder(this.border); }
+        if (jTFnombres.getText().length() >= 0) {
+            jTFnombres.setBorder(this.border);
+        }
     }//GEN-LAST:event_jTFnombresKeyPressed
 
     private void jTFnumCelularKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTFnumCelularKeyPressed
-        if(jTFnumCelular.getText().length() >=  0 ){ jTFnumCelular.setBorder(this.border); }
+        if (jTFnumCelular.getText().length() >= 0) {
+            jTFnumCelular.setBorder(this.border);
+        }
     }//GEN-LAST:event_jTFnumCelularKeyPressed
 
     private void jTFapellidosKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTFapellidosKeyPressed
-        if(jTFapellidos.getText().length() >=  0 ){ jTFapellidos.setBorder(this.border); }
+        if (jTFapellidos.getText().length() >= 0) {
+            jTFapellidos.setBorder(this.border);
+        }
     }//GEN-LAST:event_jTFapellidosKeyPressed
 
     private void jTFlugarTrabajoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTFlugarTrabajoKeyPressed
-        if(jTFlugarTrabajo.getText().length() >=  0 ){ jTFlugarTrabajo.setBorder(this.border); }
+        if (jTFlugarTrabajo.getText().length() >= 0) {
+            jTFlugarTrabajo.setBorder(this.border);
+        }
     }//GEN-LAST:event_jTFlugarTrabajoKeyPressed
 
     private void jTFnumIdentidadKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTFnumIdentidadKeyPressed
-        if(jTFnumIdentidad.getText().length() >=  0 ){ jTFnumIdentidad.setBorder(this.border); }
+        if (jTFnumIdentidad.getText().length() >= 0) {
+            jTFnumIdentidad.setBorder(this.border);
+        }
     }//GEN-LAST:event_jTFnumIdentidadKeyPressed
 
     private void jTAdireccionKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTAdireccionKeyPressed
-        if(jTAdireccion.getText().length() >=  0 ){ jTAdireccion.setBorder(this.border); }
+        if (jTAdireccion.getText().length() >= 0) {
+            jTAdireccion.setBorder(this.border);
+        }
     }//GEN-LAST:event_jTAdireccionKeyPressed
 
     private void jCboSexoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCboSexoActionPerformed
-        if(jCboSexo.getSelectedIndex() >  0 ){ jCboSexo.setBorder(this.border); }
+        if (jCboSexo.getSelectedIndex() > 0) {
+            jCboSexo.setBorder(this.border);
+        }
     }//GEN-LAST:event_jCboSexoActionPerformed
 
     private void jCboProfesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCboProfesionActionPerformed
-        if(jCboProfesion.getSelectedIndex() >  0 ){ jCboProfesion.setBorder(this.border); }
+        if (jCboProfesion.getSelectedIndex() > 0) {
+            jCboProfesion.setBorder(this.border);
+        }
     }//GEN-LAST:event_jCboProfesionActionPerformed
 
     /**

@@ -390,8 +390,8 @@ public class jFFEstablecimiento extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        jBtnSalir.setBackground(new java.awt.Color(255, 255, 255));
         jBtnSalir.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jBtnSalir.setText("Salir");
         jBtnSalir.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jBtnSalir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -452,7 +452,7 @@ public class jFFEstablecimiento extends javax.swing.JFrame {
 
             },
             new String [] {
-                "cod Establecimiento", "nombre Establecimiento"
+                "cod Establecimiento", "Nombre Establecimiento"
             }
         ));
         jTblEstablecimiento.addMouseListener(new java.awt.event.MouseAdapter() {

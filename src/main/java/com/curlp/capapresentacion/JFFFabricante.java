@@ -36,20 +36,18 @@ public class JFFFabricante extends javax.swing.JFrame {
     }
 
     public final void agregarIconos() {
-        ImageIcon iconobtn = new ImageIcon("src/main/java/com/curlp/capaimagenes/logout.png");
         ImageIcon iconLogoTitulo = new ImageIcon("src/main/java/com/curlp/capaimagenes/user.png");
         ImageIcon iconbtnGuardar = new ImageIcon("src/main/java/com/curlp/capaimagenes/save.png");
         ImageIcon iconbtnEditar = new ImageIcon("src/main/java/com/curlp/capaimagenes/edit.png");
         ImageIcon iconbtnEliminar = new ImageIcon("src/main/java/com/curlp/capaimagenes/delete.png");
         ImageIcon iconbtnLimpiar = new ImageIcon("src/main/java/com/curlp/capaimagenes/Limpiar.png");
-        ImageIcon iconImage = new ImageIcon("src/main/java/com/curlp/capaimagenes/image.jpg");
-         ImageIcon iconbtnSalir = new ImageIcon("src/main/java/com/curlp/capaimagenes/logout.png");
+        ImageIcon iconbtnSalir = new ImageIcon("src/main/java/com/curlp/capaimagenes/logout.png");
         this.jLBiconoNombre.setIcon(iconLogoTitulo);
         this.jBtnAgregar.setIcon(iconbtnGuardar);
         this.jBtnEditar.setIcon(iconbtnEditar);
         this.jBtnEliminar.setIcon(iconbtnEliminar);
         this.jBtnLimpiar.setIcon(iconbtnLimpiar);
-        this.jLblSalir.setIcon(iconbtnSalir);
+        this.jBtnSalir.setIcon(iconbtnSalir);
     }
 
     // Metodo para limpiar los datos de la tabla
@@ -85,7 +83,7 @@ public class JFFFabricante extends javax.swing.JFrame {
         this.jTFIDFabricante.setText(String.valueOf(cl.getIdFabricante()));
     }
 
-    //metodo para habilitar y deshabilitar botones
+    // Metodo para habilitar y deshabilitar botones
     private void habilitarBotones(boolean agregar, boolean actualizar, boolean eliminar, boolean limpiar) {
         this.jBtnAgregar.setEnabled(agregar);
         this.jBtnEditar.setEnabled(actualizar);
@@ -93,13 +91,13 @@ public class JFFFabricante extends javax.swing.JFrame {
         this.jBtnLimpiar.setEnabled(limpiar);
     }
 
-    //metodos para limpiar textFiled
+    // Metodos para limpiar textFiled
     private void limpiarTextField() {
         this.JTFNombreFabricante.setText("");
         this.JTFNombreFabricante.requestFocus();
     }
 
-    // metodo para validar la TextField
+    // Metodo para validar la TextField
     private boolean validarTextField() {
         boolean estado;
 
@@ -116,10 +114,10 @@ public class JFFFabricante extends javax.swing.JFrame {
                 CLFabricante cl = new CLFabricante();
                 cl.setNombreFabricante(this.JTFNombreFabricante.getText().trim());
                 cdp.insertarFabricante(cl);
-                JOptionPane.showMessageDialog(null, "Registrado correctamente", "Cova System", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "¡Registrado correctamente!", "Cova System", JOptionPane.INFORMATION_MESSAGE);
                 this.JTFNombreFabricante.requestFocus();
             } catch (SQLException e) {
-                JOptionPane.showMessageDialog(null, "Error al almacenar" + e);
+                JOptionPane.showMessageDialog(null, "¡Error al almacenar!" + e);
                 this.JTFNombreFabricante.requestFocus();
             }
         } else {
@@ -146,10 +144,10 @@ public class JFFFabricante extends javax.swing.JFrame {
                 cl.setIdFabricante(Integer.parseInt(this.jTFIDFabricante.getText().trim()));
                 cl.setNombreFabricante(this.JTFNombreFabricante.getText().trim());
                 cdp.actualizarFabricante(cl);
-                JOptionPane.showMessageDialog(null, "Registrado actualizado", "Cova System", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "¡Registro actualizado!", "Cova System", JOptionPane.INFORMATION_MESSAGE);
                 this.JTFNombreFabricante.requestFocus();
             } catch (SQLException e) {
-                JOptionPane.showMessageDialog(null, "Error al modificar" + e);
+                JOptionPane.showMessageDialog(null, "¡Error al modificar!" + e);
                 this.JTFNombreFabricante.requestFocus();
             }
         } else {
@@ -183,10 +181,10 @@ public class JFFFabricante extends javax.swing.JFrame {
                 CLFabricante cl = new CLFabricante();
                 cl.setIdFabricante(Integer.parseInt(this.jTFIDFabricante.getText().trim()));
                 cdp.eliminarFabricante(cl);
-                JOptionPane.showMessageDialog(null, "Registrado eliminado", "Cova System", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "¡Registro eliminado!", "Cova System", JOptionPane.INFORMATION_MESSAGE);
                 this.JTFNombreFabricante.requestFocus();
             } catch (SQLException e) {
-                JOptionPane.showMessageDialog(null, "Error al eliminar" + e);
+                JOptionPane.showMessageDialog(null, "¡Error al eliminar!" + e);
                 this.JTFNombreFabricante.requestFocus();
             }
         } else {
@@ -197,7 +195,7 @@ public class JFFFabricante extends javax.swing.JFrame {
 
     // Metodo para eliminar el metodo de actualizar la tabla 
     private void eliminar() throws SQLException {
-        int resp = JOptionPane.showConfirmDialog(null, "Seguro que desea eliminar el registro", "Cova System", JOptionPane.YES_NO_OPTION);
+        int resp = JOptionPane.showConfirmDialog(null, "¿Seguro que desea eliminar el registro?", "Cova System", JOptionPane.YES_NO_OPTION);
         if (resp == JOptionPane.YES_OPTION) {
             try {
                 eliminarFabricante();
@@ -238,7 +236,7 @@ public class JFFFabricante extends javax.swing.JFrame {
         jPTitulo = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLBiconoNombre = new javax.swing.JLabel();
-        jLblSalir = new javax.swing.JLabel();
+        jBtnSalir = new javax.swing.JButton();
         jPfranjaSuperior = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -252,27 +250,29 @@ public class JFFFabricante extends javax.swing.JFrame {
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Fabricante", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 14))); // NOI18N
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jLabel2.setText("Id Fabricante");
+        jLabel2.setText("Id fabricante");
 
         jTFIDFabricante.setEditable(false);
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel4.setText("Nombre fabricante");
 
-        jBtnAgregar.setBackground(new java.awt.Color(204, 204, 204));
+        jBtnAgregar.setBackground(new java.awt.Color(255, 255, 255));
         jBtnAgregar.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jBtnAgregar.setForeground(new java.awt.Color(0, 153, 153));
         jBtnAgregar.setText("Agregar");
+        jBtnAgregar.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jBtnAgregar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jBtnAgregarActionPerformed(evt);
             }
         });
 
-        jBtnEditar.setBackground(new java.awt.Color(204, 204, 204));
-        jBtnEditar.setFont(new java.awt.Font("Trebuchet MS", 1, 11)); // NOI18N
+        jBtnEditar.setBackground(new java.awt.Color(255, 255, 255));
+        jBtnEditar.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jBtnEditar.setForeground(new java.awt.Color(0, 153, 153));
         jBtnEditar.setText("Editar");
+        jBtnEditar.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jBtnEditar.setEnabled(false);
         jBtnEditar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -280,10 +280,11 @@ public class JFFFabricante extends javax.swing.JFrame {
             }
         });
 
-        jBtnEliminar.setBackground(new java.awt.Color(204, 204, 204));
-        jBtnEliminar.setFont(new java.awt.Font("Trebuchet MS", 1, 11)); // NOI18N
+        jBtnEliminar.setBackground(new java.awt.Color(255, 255, 255));
+        jBtnEliminar.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jBtnEliminar.setForeground(new java.awt.Color(0, 153, 153));
         jBtnEliminar.setText("Eliminar");
+        jBtnEliminar.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jBtnEliminar.setEnabled(false);
         jBtnEliminar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -291,10 +292,11 @@ public class JFFFabricante extends javax.swing.JFrame {
             }
         });
 
-        jBtnLimpiar.setBackground(new java.awt.Color(204, 204, 204));
-        jBtnLimpiar.setFont(new java.awt.Font("Trebuchet MS", 1, 11)); // NOI18N
+        jBtnLimpiar.setBackground(new java.awt.Color(255, 255, 255));
+        jBtnLimpiar.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jBtnLimpiar.setForeground(new java.awt.Color(0, 153, 153));
         jBtnLimpiar.setText("Limpiar");
+        jBtnLimpiar.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jBtnLimpiar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jBtnLimpiarActionPerformed(evt);
@@ -313,23 +315,18 @@ public class JFFFabricante extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jTFIDFabricante, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addComponent(jLabel4)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 42, Short.MAX_VALUE)
-                                .addComponent(jBtnAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jBtnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(25, 25, 25)))
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addComponent(jBtnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jBtnLimpiar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGap(14, 14, 14))
-                            .addComponent(JTFNombreFabricante, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addComponent(jLabel4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 194, Short.MAX_VALUE)
+                        .addComponent(JTFNombreFabricante, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(20, 20, 20)
+                        .addComponent(jBtnAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jBtnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(25, 25, 25)
+                        .addComponent(jBtnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jBtnLimpiar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addGap(27, 27, 27))
         );
         jPanel3Layout.setVerticalGroup(
@@ -343,13 +340,13 @@ public class JFFFabricante extends javax.swing.JFrame {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(JTFNombreFabricante, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4))
-                .addGap(24, 24, 24)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE, false)
                     .addComponent(jBtnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jBtnAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jBtnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jBtnLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(25, Short.MAX_VALUE))
+                .addGap(20, 20, 20))
         );
 
         jPanel2.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 650, 180));
@@ -404,13 +401,13 @@ public class JFFFabricante extends javax.swing.JFrame {
         jLabel1.setBackground(new java.awt.Color(0, 153, 153));
         jLabel1.setFont(new java.awt.Font("Tahoma", 3, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(0, 153, 153));
-        jLabel1.setText("Gestion de Fabricante");
+        jLabel1.setText("Gestión de Fabricante");
 
-        jLblSalir.setFont(new java.awt.Font("Tahoma", 1, 48)); // NOI18N
-        jLblSalir.setForeground(new java.awt.Color(0, 153, 153));
-        jLblSalir.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                jLblSalirMousePressed(evt);
+        jBtnSalir.setBackground(new java.awt.Color(255, 255, 255));
+        jBtnSalir.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jBtnSalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBtnSalirActionPerformed(evt);
             }
         });
 
@@ -423,23 +420,23 @@ public class JFFFabricante extends javax.swing.JFrame {
                 .addComponent(jLBiconoNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(109, 109, 109)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 268, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 160, Short.MAX_VALUE)
-                .addComponent(jLblSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(30, 30, 30))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 177, Short.MAX_VALUE)
+                .addComponent(jBtnSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         jPTituloLayout.setVerticalGroup(
             jPTituloLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPTituloLayout.createSequentialGroup()
-                .addGroup(jPTituloLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPTituloLayout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jLblSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPTituloLayout.createSequentialGroup()
-                        .addGap(17, 20, Short.MAX_VALUE)
+            .addGroup(jPTituloLayout.createSequentialGroup()
+                .addGroup(jPTituloLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPTituloLayout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel1))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPTituloLayout.createSequentialGroup()
+                    .addGroup(jPTituloLayout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jLBiconoNombre, javax.swing.GroupLayout.DEFAULT_SIZE, 38, Short.MAX_VALUE)))
+                        .addComponent(jLBiconoNombre, javax.swing.GroupLayout.DEFAULT_SIZE, 38, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPTituloLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jBtnSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
 
@@ -496,9 +493,9 @@ public class JFFFabricante extends javax.swing.JFrame {
         limpiarTextField();
     }//GEN-LAST:event_jBtnLimpiarActionPerformed
 
-    private void jLblSalirMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLblSalirMousePressed
+    private void jBtnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnSalirActionPerformed
         this.dispose();
-    }//GEN-LAST:event_jLblSalirMousePressed
+    }//GEN-LAST:event_jBtnSalirActionPerformed
 
     /**
      * @param args the command line arguments
@@ -552,11 +549,11 @@ public class JFFFabricante extends javax.swing.JFrame {
     private javax.swing.JButton jBtnEditar;
     private javax.swing.JButton jBtnEliminar;
     private javax.swing.JButton jBtnLimpiar;
+    private javax.swing.JButton jBtnSalir;
     private javax.swing.JLabel jLBiconoNombre;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLblSalir;
     private javax.swing.JPanel jPTitulo;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;

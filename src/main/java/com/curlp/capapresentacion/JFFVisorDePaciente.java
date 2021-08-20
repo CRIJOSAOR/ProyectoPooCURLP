@@ -5,7 +5,6 @@
  */
 package com.curlp.capapresentacion;
 
-
 import com.curlp.capadatos.CDPaciente;
 import com.curlp.capalogica.CLPaciente;
 import com.curlp.capapresentacion.*;
@@ -29,21 +28,21 @@ public class JFFVisorDePaciente extends javax.swing.JFrame {
 
     /**
      * Creates new form JFFPaciente
+     *
      * @throws java.sql.SQLException
      */
     JFFRegistroVacuna ventanaPrincipal = new JFFRegistroVacuna();
-    
+
     public JFFVisorDePaciente(JFFRegistroVacuna main) throws SQLException {
         initComponents();
         agregarIconos();
         llenarTabla();
-        this.setLocationRelativeTo(null);   
+        this.setLocationRelativeTo(null);
         this.ventanaPrincipal = main;
     }
     /* se agrega miembro de clase tipo border para obtener el borde default. si hay errores el borde del componente sera rojo asi que:
        con el mienbro de clase border se puede establecer el borde default a todos los campos */
-    
-    
+
     DefaultTableModel modelo; // permitira manejar la jTable
 
     private JFFVisorDePaciente() throws SQLException {
@@ -52,65 +51,37 @@ public class JFFVisorDePaciente extends javax.swing.JFrame {
         llenarTabla();
         this.setLocationRelativeTo(null);
     }
-    
 
     /**
-        +++++++++++++++++++++++ Metodos para gestion de jTable ++++++++++++++++++++++++++++++++++++
-    
-    */
-    
-        private void limpiarTabla(){
-        
+     * +++++++++++++++++++++++ Metodos para gestion de jTable
+     * ++++++++++++++++++++++++++++++++++++
+     *
+     */
+    private void limpiarTabla() {
+
         modelo = (DefaultTableModel) this.jTBPacientes.getModel();
-        
-        while(modelo.getRowCount() > 0){
+
+        while (modelo.getRowCount() > 0) {
             modelo.removeRow(0);
         }
-        
+
     }
-    
-    private void llenarTabla() throws SQLException{
-        
+
+    private void llenarTabla() throws SQLException {
+
         // limpiar la tabla
         limpiarTabla();
-        
+
         // instanciar una clase tipo CDPaciente para la conexion con la base de datos 
         CDPaciente registro = new CDPaciente();
-        
+
         // recuperar todos los pacientes en forma de lista
         List<CLPaciente> listaPacientes = registro.mostrarPacientes();
         // instanciamos un model 
         modelo = (DefaultTableModel) this.jTBPacientes.getModel();
-      
+
         // llenar cada fila con un ciclo      
-        listaPacientes.stream().map((CLPaciente persona) ->{
-            Object[] fila = new Object[9];
-            fila[0] = persona.getNumIdentidad();
-            fila[1] = persona.getNombres();
-            fila[2] = persona.getApellidos();
-            fila[3] = persona.getNumCelular();
-            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-            fila[4] = (String) sdf.format(persona.getFechaNacimiento());
-            fila[5] = persona.getLugarTrabajo();
-            fila[6] = persona.getDireccion();
-            fila[7] = persona.getSexo();
-            fila[8] = persona.getProfesion();
-            return fila;
-        }).forEachOrdered(modelo::addRow);    
-    }
-    
-    private void llenarTablarPorNombre(String nombreCliente) throws SQLException {
-        limpiarTabla();
-        // instanciar una clase tipo CDPaciente para la conexion con la base de datos 
-        CDPaciente registro = new CDPaciente();
-        
-        // recuperar todos los pacientes en forma de lista
-        List<CLPaciente> listaPacientes = registro.obtenerListaPacientesPorNombre(nombreCliente);
-        // instanciamos un model 
-        modelo = (DefaultTableModel) this.jTBPacientes.getModel();
-      
-        // llenar cada fila con un ciclo      
-        listaPacientes.stream().map((CLPaciente persona) ->{
+        listaPacientes.stream().map((CLPaciente persona) -> {
             Object[] fila = new Object[9];
             fila[0] = persona.getNumIdentidad();
             fila[1] = persona.getNombres();
@@ -124,46 +95,68 @@ public class JFFVisorDePaciente extends javax.swing.JFrame {
             fila[8] = persona.getProfesion();
             return fila;
         }).forEachOrdered(modelo::addRow);
-        
-        
     }
-    
-    private void seleccionarFila() throws SQLException, ParseException{
-        if(this.jTBPacientes.getSelectedRow() != -1){
-                
+
+    private void llenarTablarPorNombre(String nombreCliente) throws SQLException {
+        limpiarTabla();
+        // instanciar una clase tipo CDPaciente para la conexion con la base de datos 
+        CDPaciente registro = new CDPaciente();
+
+        // recuperar todos los pacientes en forma de lista
+        List<CLPaciente> listaPacientes = registro.obtenerListaPacientesPorNombre(nombreCliente);
+        // instanciamos un model 
+        modelo = (DefaultTableModel) this.jTBPacientes.getModel();
+
+        // llenar cada fila con un ciclo      
+        listaPacientes.stream().map((CLPaciente persona) -> {
+            Object[] fila = new Object[9];
+            fila[0] = persona.getNumIdentidad();
+            fila[1] = persona.getNombres();
+            fila[2] = persona.getApellidos();
+            fila[3] = persona.getNumCelular();
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+            fila[4] = (String) sdf.format(persona.getFechaNacimiento());
+            fila[5] = persona.getLugarTrabajo();
+            fila[6] = persona.getDireccion();
+            fila[7] = persona.getSexo();
+            fila[8] = persona.getProfesion();
+            return fila;
+        }).forEachOrdered(modelo::addRow);
+
+    }
+
+    private void seleccionarFila() throws SQLException, ParseException {
+        if (this.jTBPacientes.getSelectedRow() != -1) {
+
             String id, nombre, apellido, fechaNacimiento;
-            
+
             id = (String.valueOf(this.jTBPacientes.getValueAt(jTBPacientes.getSelectedRow(), 0)));
             nombre = (String.valueOf(this.jTBPacientes.getValueAt(jTBPacientes.getSelectedRow(), 1)));
             apellido = (String.valueOf(this.jTBPacientes.getValueAt(jTBPacientes.getSelectedRow(), 2)));
-            fechaNacimiento = (String.valueOf(this.jTBPacientes.getValueAt(jTBPacientes.getSelectedRow(),4)));
-            
+            fechaNacimiento = (String.valueOf(this.jTBPacientes.getValueAt(jTBPacientes.getSelectedRow(), 4)));
+
             this.ventanaPrincipal.llenarDatosPaciente(id, nombre, apellido, fechaNacimiento);
-            
+
             this.setVisible(false);
             this.dispose();
         } else {
             JOptionPane.showMessageDialog(null, "Por favor seleccione un paciente", "COVA System", JOptionPane.INFORMATION_MESSAGE);
         }
-    } 
-    
+    }
 
-    
     /**
-        +++++++++++++++++++++++ Metodos secundarios  ++++++++++++++++++++++++++++++++++++
-    
-    */
-    
+     * +++++++++++++++++++++++ Metodos secundarios
+     * ++++++++++++++++++++++++++++++++++++
+     *
+     */
     // metodo de clase que permite agregar iconos a los botones y labels del JFForm
-    public final void  agregarIconos(){
+    public final void agregarIconos() {
         ImageIcon iconoBtn = new ImageIcon("src/main/java/com/curlp/capaimagenes/logout.png");
         ImageIcon iconLogoTitulo = new ImageIcon("src/main/java/com/curlp/capaimagenes/user.png");
 
         this.jBTNSalir.setIcon(iconoBtn);
         this.jLBiconoNombre.setIcon(iconLogoTitulo);
     }
-
-
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -245,7 +238,9 @@ public class JFFVisorDePaciente extends javax.swing.JFrame {
 
         jPTitulo.setBackground(new java.awt.Color(255, 255, 255));
 
+        jBTNSalir.setBackground(new java.awt.Color(255, 255, 255));
         jBTNSalir.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jBTNSalir.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jBTNSalir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jBTNSalirActionPerformed(evt);
@@ -264,9 +259,9 @@ public class JFFVisorDePaciente extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPTituloLayout.createSequentialGroup()
                 .addGap(35, 35, 35)
                 .addComponent(jLBiconoNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 252, Short.MAX_VALUE)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 293, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 418, Short.MAX_VALUE)
+                .addGap(184, 184, 184)
                 .addComponent(jBTNSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(24, 24, 24))
         );
@@ -277,7 +272,7 @@ public class JFFVisorDePaciente extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPTituloLayout.createSequentialGroup()
                         .addGap(16, 16, 16)
                         .addGroup(jPTituloLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jBTNSalir, javax.swing.GroupLayout.DEFAULT_SIZE, 38, Short.MAX_VALUE)
+                            .addComponent(jBTNSalir, javax.swing.GroupLayout.DEFAULT_SIZE, 33, Short.MAX_VALUE)
                             .addComponent(jLabel1)))
                     .addGroup(jPTituloLayout.createSequentialGroup()
                         .addContainerGap()
@@ -319,18 +314,22 @@ public class JFFVisorDePaciente extends javax.swing.JFrame {
         jLabel14.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel14.setText("Buscar por nombre o apellido:");
 
+        jBtnSeleccionar.setBackground(new java.awt.Color(255, 255, 255));
         jBtnSeleccionar.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
         jBtnSeleccionar.setForeground(new java.awt.Color(0, 153, 153));
         jBtnSeleccionar.setText("Seleccionar");
+        jBtnSeleccionar.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jBtnSeleccionar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jBtnSeleccionarActionPerformed(evt);
             }
         });
 
+        jBtnMostrarTodos1.setBackground(new java.awt.Color(255, 255, 255));
         jBtnMostrarTodos1.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
         jBtnMostrarTodos1.setForeground(new java.awt.Color(0, 153, 153));
         jBtnMostrarTodos1.setText("Mostrar Todos");
+        jBtnMostrarTodos1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jBtnMostrarTodos1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jBtnMostrarTodos1ActionPerformed(evt);
@@ -385,11 +384,11 @@ public class JFFVisorDePaciente extends javax.swing.JFrame {
     private void jTFBusquedaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTFBusquedaKeyReleased
         String Busqueda;
         Busqueda = this.jTFBusqueda.getText();
-        
-        try{
+
+        try {
             this.llenarTablarPorNombre(Busqueda);
-        } catch (SQLException ex){
-            JOptionPane.showMessageDialog(null,"Error: " + ex.getMessage());
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error: " + ex.getMessage());
         }
     }//GEN-LAST:event_jTFBusquedaKeyReleased
 
@@ -412,11 +411,11 @@ public class JFFVisorDePaciente extends javax.swing.JFrame {
     }//GEN-LAST:event_jBtnSeleccionarActionPerformed
 
     private void jBtnMostrarTodos1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnMostrarTodos1ActionPerformed
-        try{
+        try {
             this.llenarTabla();
             this.jTFBusqueda.setText("");
-        } catch(SQLException ex){
-            JOptionPane.showMessageDialog(null,"Error: " + ex.getMessage());
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error: " + ex.getMessage());
         }
     }//GEN-LAST:event_jBtnMostrarTodos1ActionPerformed
 

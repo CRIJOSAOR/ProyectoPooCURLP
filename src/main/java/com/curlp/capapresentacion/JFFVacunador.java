@@ -147,7 +147,7 @@ public class JFFVacunador extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null,"¡Registrado correctamente!","COVA System",JOptionPane.INFORMATION_MESSAGE);
                 this.JTFDNI.requestFocus();
             } catch (SQLException e) {
-                JOptionPane.showMessageDialog(null,"Error al almacenar" + e);
+                JOptionPane.showMessageDialog(null,"¡Error al almacenar!" + e);
                 this.JTFDNI.requestFocus();
             }
         }
@@ -193,7 +193,7 @@ public class JFFVacunador extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null,"¡Registrado correctamente!","COVA System",JOptionPane.INFORMATION_MESSAGE);
                 this.JTFDNI.requestFocus();
             } catch (SQLException e) {
-                JOptionPane.showMessageDialog(null,"Error al almacenar" + e);
+                JOptionPane.showMessageDialog(null,"¡Error al almacenar!" + e);
                 this.JTFDNI.requestFocus();
             }
         }   
@@ -376,8 +376,8 @@ public class JFFVacunador extends javax.swing.JFrame {
         jLabel1.setForeground(new java.awt.Color(0, 153, 153));
         jLabel1.setText("Registro de Vacunador");
 
+        jBtnSalir.setBackground(new java.awt.Color(255, 255, 255));
         jBtnSalir.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jBtnSalir.setText("Salir");
         jBtnSalir.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jBtnSalir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -392,23 +392,27 @@ public class JFFVacunador extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(59, 59, 59)
                 .addComponent(jLBiconoNombres, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(73, 73, 73)
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 485, Short.MAX_VALUE)
+                .addGap(246, 246, 246)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 294, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 307, Short.MAX_VALUE)
                 .addComponent(jBtnSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(29, 29, 29))
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(19, 19, 19)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(jBtnSalir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(21, Short.MAX_VALUE))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLBiconoNombres, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(21, 21, 21)
+                        .addComponent(jLabel1)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jBtnSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addComponent(jLBiconoNombres, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap())
         );
 
@@ -476,6 +480,7 @@ public class JFFVacunador extends javax.swing.JFrame {
             }
         });
 
+        jBtnRegistrar.setBackground(new java.awt.Color(255, 255, 255));
         jBtnRegistrar.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jBtnRegistrar.setForeground(new java.awt.Color(0, 153, 153));
         jBtnRegistrar.setText("Registrar");
@@ -486,6 +491,7 @@ public class JFFVacunador extends javax.swing.JFrame {
             }
         });
 
+        jBtnActualizar.setBackground(new java.awt.Color(255, 255, 255));
         jBtnActualizar.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jBtnActualizar.setForeground(new java.awt.Color(0, 153, 153));
         jBtnActualizar.setText("Actualizar");
@@ -496,6 +502,7 @@ public class JFFVacunador extends javax.swing.JFrame {
             }
         });
 
+        jBtnEliminar.setBackground(new java.awt.Color(255, 255, 255));
         jBtnEliminar.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jBtnEliminar.setForeground(new java.awt.Color(0, 153, 153));
         jBtnEliminar.setText("Eliminar");

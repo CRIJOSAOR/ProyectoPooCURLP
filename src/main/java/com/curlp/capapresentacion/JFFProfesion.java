@@ -252,8 +252,8 @@ public class JFFProfesion extends javax.swing.JFrame {
         jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 20, 280, -1));
         jPanel1.add(jLblUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 70, 40));
 
+        jBtnSalir.setBackground(new java.awt.Color(255, 255, 255));
         jBtnSalir.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jBtnSalir.setText("Salir");
         jBtnSalir.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jBtnSalir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -269,11 +269,11 @@ public class JFFProfesion extends javax.swing.JFrame {
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 102, 102)), "Profesión", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 14))); // NOI18N
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jLabel2.setText("Nombre Profesión");
+        jLabel2.setText("Nombre profesión");
 
         jTFProfesion.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
 
-        jBtnAgregarProfesion.setBackground(new java.awt.Color(204, 204, 204));
+        jBtnAgregarProfesion.setBackground(new java.awt.Color(255, 255, 255));
         jBtnAgregarProfesion.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jBtnAgregarProfesion.setForeground(new java.awt.Color(0, 153, 153));
         jBtnAgregarProfesion.setText("Agregar");
@@ -284,7 +284,7 @@ public class JFFProfesion extends javax.swing.JFrame {
             }
         });
 
-        jBtnLimpiarProfesion.setBackground(new java.awt.Color(204, 204, 204));
+        jBtnLimpiarProfesion.setBackground(new java.awt.Color(255, 255, 255));
         jBtnLimpiarProfesion.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jBtnLimpiarProfesion.setForeground(new java.awt.Color(0, 153, 153));
         jBtnLimpiarProfesion.setText("Limpiar");
@@ -295,7 +295,7 @@ public class JFFProfesion extends javax.swing.JFrame {
             }
         });
 
-        jBtnActualizarProfesion.setBackground(new java.awt.Color(204, 204, 204));
+        jBtnActualizarProfesion.setBackground(new java.awt.Color(255, 255, 255));
         jBtnActualizarProfesion.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jBtnActualizarProfesion.setForeground(new java.awt.Color(0, 153, 153));
         jBtnActualizarProfesion.setText("Editar");
@@ -307,7 +307,7 @@ public class JFFProfesion extends javax.swing.JFrame {
             }
         });
 
-        jBtnEliminarProfesion.setBackground(new java.awt.Color(204, 204, 204));
+        jBtnEliminarProfesion.setBackground(new java.awt.Color(255, 255, 255));
         jBtnEliminarProfesion.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jBtnEliminarProfesion.setForeground(new java.awt.Color(0, 153, 153));
         jBtnEliminarProfesion.setText("Eliminar");
@@ -320,7 +320,7 @@ public class JFFProfesion extends javax.swing.JFrame {
         });
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jLabel4.setText("Id Profesión");
+        jLabel4.setText("Id profesión");
 
         jTFIdProfesion.setEditable(false);
         jTFIdProfesion.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
@@ -371,12 +371,11 @@ public class JFFProfesion extends javax.swing.JFrame {
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jBtnActualizarProfesion, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jBtnEliminarProfesion, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jBtnAgregarProfesion, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap())
+                            .addComponent(jBtnAgregarProfesion, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGap(18, 18, 18)
-                        .addComponent(jBtnLimpiarProfesion, javax.swing.GroupLayout.DEFAULT_SIZE, 39, Short.MAX_VALUE)
-                        .addContainerGap())))
+                        .addComponent(jBtnLimpiarProfesion, javax.swing.GroupLayout.DEFAULT_SIZE, 39, Short.MAX_VALUE)))
+                .addContainerGap())
         );
 
         jPanel2.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 640, 160));

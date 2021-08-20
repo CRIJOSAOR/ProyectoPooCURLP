@@ -31,6 +31,7 @@ public class JFFRegistroVacuna extends javax.swing.JFrame {
         initComponents();
         llenarComboBoxDosis();
     }
+    
 
     public void llenarComboBoxDosis() throws SQLException {
         CDDosis dosis = new CDDosis();
@@ -290,6 +291,7 @@ public class JFFRegistroVacuna extends javax.swing.JFrame {
         jBtnEliminar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setUndecorated(true);
         setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -314,8 +316,9 @@ public class JFFRegistroVacuna extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Tahoma", 3, 24)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(0, 153, 153));
         jLabel2.setText("Registro de Vacunación");
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 10, 350, 30));
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 10, 350, 30));
 
+        jBtnSalir.setBackground(new java.awt.Color(255, 255, 255));
         jBtnSalir.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jBtnSalir.setText("Salir");
         jBtnSalir.addActionListener(new java.awt.event.ActionListener() {
@@ -344,6 +347,7 @@ public class JFFRegistroVacuna extends javax.swing.JFrame {
         jLabel6.setText("# de Dosis");
         jPanel2.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 80, -1, -1));
 
+        jBtnBuscarLote.setBackground(new java.awt.Color(255, 255, 255));
         jBtnBuscarLote.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jBtnBuscarLote.setForeground(new java.awt.Color(0, 153, 153));
         jBtnBuscarLote.setText("Buscar");
@@ -396,6 +400,7 @@ public class JFFRegistroVacuna extends javax.swing.JFrame {
         jLabel9.setText("Nombre Establecimiento");
         jPanel3.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 20, -1, -1));
 
+        jBtnBuscarEstablecimiento.setBackground(new java.awt.Color(255, 255, 255));
         jBtnBuscarEstablecimiento.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jBtnBuscarEstablecimiento.setForeground(new java.awt.Color(0, 153, 153));
         jBtnBuscarEstablecimiento.setText("Buscar");
@@ -426,6 +431,7 @@ public class JFFRegistroVacuna extends javax.swing.JFrame {
         jLabel13.setText("Apellidos");
         jPanel4.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 20, -1, -1));
 
+        jBtnBuscarVacunador.setBackground(new java.awt.Color(255, 255, 255));
         jBtnBuscarVacunador.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jBtnBuscarVacunador.setForeground(new java.awt.Color(0, 153, 153));
         jBtnBuscarVacunador.setText("Buscar");
@@ -467,6 +473,7 @@ public class JFFRegistroVacuna extends javax.swing.JFrame {
         jLabel18.setText("Fecha de Nacimiento");
         jPanel5.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 80, -1, -1));
 
+        jBtnBuscarPaciente.setBackground(new java.awt.Color(255, 255, 255));
         jBtnBuscarPaciente.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jBtnBuscarPaciente.setForeground(new java.awt.Color(0, 153, 153));
         jBtnBuscarPaciente.setText("Buscar");
@@ -499,6 +506,7 @@ public class JFFRegistroVacuna extends javax.swing.JFrame {
         jPfranjaSuperior1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
         getContentPane().add(jPfranjaSuperior1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 770, 740, 20));
 
+        jBtnGuardar.setBackground(new java.awt.Color(255, 255, 255));
         jBtnGuardar.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jBtnGuardar.setForeground(new java.awt.Color(0, 153, 153));
         jBtnGuardar.setText("Guardar");
@@ -510,6 +518,7 @@ public class JFFRegistroVacuna extends javax.swing.JFrame {
         });
         getContentPane().add(jBtnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 80, 110, 30));
 
+        jBtnEditar.setBackground(new java.awt.Color(255, 255, 255));
         jBtnEditar.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jBtnEditar.setForeground(new java.awt.Color(0, 153, 153));
         jBtnEditar.setText("Editar");
@@ -522,6 +531,7 @@ public class JFFRegistroVacuna extends javax.swing.JFrame {
         });
         getContentPane().add(jBtnEditar, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 81, 110, 30));
 
+        jBtnEliminar.setBackground(new java.awt.Color(255, 255, 255));
         jBtnEliminar.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jBtnEliminar.setForeground(new java.awt.Color(0, 153, 153));
         jBtnEliminar.setText("Eliminar");
@@ -537,10 +547,6 @@ public class JFFRegistroVacuna extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jLabel1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MousePressed
-        this.dispose();
-    }//GEN-LAST:event_jLabel1MousePressed
 
     private void jBtnBuscarLoteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnBuscarLoteActionPerformed
         try {
@@ -609,6 +615,10 @@ public class JFFRegistroVacuna extends javax.swing.JFrame {
     private void jBtnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnSalirActionPerformed
         this.dispose();
     }//GEN-LAST:event_jBtnSalirActionPerformed
+
+    private void jLabel1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MousePressed
+        this.dispose();
+    }//GEN-LAST:event_jLabel1MousePressed
 
     /**
      * @param args the command line arguments

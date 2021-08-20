@@ -9,11 +9,9 @@ import com.curlp.capadatos.CDFabricante;
 import javax.swing.table.DefaultTableModel;
 import com.curlp.capapresentacion.*;
 import com.curlp.capadatos.CDLoteVacuna;
-import com.curlp.capalogica.CLFabricante;
 import com.curlp.capalogica.CLLoteVacuna;
 import java.sql.SQLException;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
@@ -106,7 +104,7 @@ public class JFFLoteVacuna extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "¡Registrado correctamente!", "COVA System", JOptionPane.INFORMATION_MESSAGE);
                 this.jTFNumLote.requestFocus();
             } catch (SQLException e) {
-                JOptionPane.showMessageDialog(null, "Error al almacenar el nuevo lote" + e);
+                JOptionPane.showMessageDialog(null, "¡Error al almacenar el nuevo lote!" + e);
                 this.jTFNumLote.requestFocus();
             }
 
@@ -140,7 +138,7 @@ public class JFFLoteVacuna extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "¡Registrado actualizado!", "COVA System", JOptionPane.INFORMATION_MESSAGE);
                 this.jTFNumLote.requestFocus();
             } catch (SQLException e) {
-                JOptionPane.showMessageDialog(null, "Error al modificar" + e);
+                JOptionPane.showMessageDialog(null, "¡Error al modificar!" + e);
                 this.jTFNumLote.requestFocus();
             }
         } else {
@@ -178,7 +176,7 @@ public class JFFLoteVacuna extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "¡Registrado eliminado!", "COVA System", JOptionPane.INFORMATION_MESSAGE);
                 this.jTFNumLote.requestFocus();
             } catch (SQLException e) {
-                JOptionPane.showMessageDialog(null, "Error al eliminar" + e);
+                JOptionPane.showMessageDialog(null, "¡Error al eliminar!" + e);
                 this.jTFNumLote.requestFocus();
             }
         } else {
@@ -289,16 +287,16 @@ public class JFFLoteVacuna extends javax.swing.JFrame {
         jLabel2.setForeground(new java.awt.Color(0, 153, 153));
         jLabel2.setText("Gestión de Lotes de Vacunas");
         jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 10, 350, 30));
-        jPanel1.add(jLbUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 10, 40, 40));
+        jPanel1.add(jLbUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 40, 40));
 
+        jBtnSalir.setBackground(new java.awt.Color(255, 255, 255));
         jBtnSalir.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jBtnSalir.setText("Salir");
         jBtnSalir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jBtnSalirActionPerformed(evt);
             }
         });
-        jPanel1.add(jBtnSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 20, -1, -1));
+        jPanel1.add(jBtnSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 10, 40, 40));
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 102, 102)), "Lotes de Vacunas", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 14))); // NOI18N
@@ -310,11 +308,11 @@ public class JFFLoteVacuna extends javax.swing.JFrame {
         jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 30, -1, -1));
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jLabel4.setText("Fecha De Vencimiento:");
+        jLabel4.setText("Fecha de vencimiento:");
         jPanel2.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 70, -1, -1));
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jLabel5.setText("Fecha De Fabricación:");
+        jLabel5.setText("Fecha de fabricación:");
         jPanel2.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 70, -1, -1));
 
         jLabel6.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
@@ -324,6 +322,7 @@ public class JFFLoteVacuna extends javax.swing.JFrame {
         jTFIdFabricante.setEditable(false);
         jPanel2.add(jTFIdFabricante, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 140, 20, 30));
 
+        jBtnGuardar.setBackground(new java.awt.Color(255, 255, 255));
         jBtnGuardar.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jBtnGuardar.setForeground(new java.awt.Color(0, 153, 153));
         jBtnGuardar.setText("Guardar");
@@ -335,6 +334,7 @@ public class JFFLoteVacuna extends javax.swing.JFrame {
         });
         jPanel2.add(jBtnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 30, 110, 30));
 
+        jBtnEditar.setBackground(new java.awt.Color(255, 255, 255));
         jBtnEditar.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jBtnEditar.setForeground(new java.awt.Color(0, 153, 153));
         jBtnEditar.setText("Editar");
@@ -347,6 +347,7 @@ public class JFFLoteVacuna extends javax.swing.JFrame {
         });
         jPanel2.add(jBtnEditar, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 70, 110, -1));
 
+        jBtnEliminar.setBackground(new java.awt.Color(255, 255, 255));
         jBtnEliminar.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jBtnEliminar.setForeground(new java.awt.Color(0, 153, 153));
         jBtnEliminar.setText("Eliminar");
@@ -359,6 +360,7 @@ public class JFFLoteVacuna extends javax.swing.JFrame {
         });
         jPanel2.add(jBtnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 110, 110, -1));
 
+        jBtnLimpiar.setBackground(new java.awt.Color(255, 255, 255));
         jBtnLimpiar.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jBtnLimpiar.setForeground(new java.awt.Color(0, 153, 153));
         jBtnLimpiar.setText("Limpiar");

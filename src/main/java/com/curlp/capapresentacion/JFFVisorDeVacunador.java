@@ -239,7 +239,9 @@ public class JFFVisorDeVacunador extends javax.swing.JFrame {
 
         jPTitulo.setBackground(new java.awt.Color(255, 255, 255));
 
+        jBTNSalir.setBackground(new java.awt.Color(255, 255, 255));
         jBTNSalir.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jBTNSalir.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jBTNSalir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jBTNSalirActionPerformed(evt);
@@ -258,9 +260,9 @@ public class JFFVisorDeVacunador extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPTituloLayout.createSequentialGroup()
                 .addGap(35, 35, 35)
                 .addComponent(jLBiconoNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 255, Short.MAX_VALUE)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 332, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 379, Short.MAX_VALUE)
+                .addGap(142, 142, 142)
                 .addComponent(jBTNSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(24, 24, 24))
         );
@@ -271,7 +273,7 @@ public class JFFVisorDeVacunador extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPTituloLayout.createSequentialGroup()
                         .addGap(16, 16, 16)
                         .addGroup(jPTituloLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jBTNSalir, javax.swing.GroupLayout.DEFAULT_SIZE, 38, Short.MAX_VALUE)
+                            .addComponent(jBTNSalir, javax.swing.GroupLayout.DEFAULT_SIZE, 33, Short.MAX_VALUE)
                             .addComponent(jLabel1)))
                     .addGroup(jPTituloLayout.createSequentialGroup()
                         .addContainerGap()
@@ -292,18 +294,22 @@ public class JFFVisorDeVacunador extends javax.swing.JFrame {
         jLabel14.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel14.setText("Buscar por nombre o apellido:");
 
+        jBtnSeleccionar.setBackground(new java.awt.Color(255, 255, 255));
         jBtnSeleccionar.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
         jBtnSeleccionar.setForeground(new java.awt.Color(0, 153, 153));
         jBtnSeleccionar.setText("Seleccionar");
+        jBtnSeleccionar.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jBtnSeleccionar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jBtnSeleccionarActionPerformed(evt);
             }
         });
 
+        jBtnMostrarTodos1.setBackground(new java.awt.Color(255, 255, 255));
         jBtnMostrarTodos1.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
         jBtnMostrarTodos1.setForeground(new java.awt.Color(0, 153, 153));
         jBtnMostrarTodos1.setText("Mostrar Todos");
+        jBtnMostrarTodos1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jBtnMostrarTodos1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jBtnMostrarTodos1ActionPerformed(evt);
