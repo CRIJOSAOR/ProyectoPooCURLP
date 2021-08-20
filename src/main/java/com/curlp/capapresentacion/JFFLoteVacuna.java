@@ -103,7 +103,7 @@ public class JFFLoteVacuna extends javax.swing.JFrame {
                 cl.setFechaVencimiento(fechaVencimietno);
                 cl.setIdFbricante(Integer.parseInt(jTFIdFabricante.getText()));
                 cdlv.insertarLoteVacuna(cl);
-                JOptionPane.showMessageDialog(null, "Registrado correctamente", "COVA System", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "¡Registrado correctamente!", "COVA System", JOptionPane.INFORMATION_MESSAGE);
                 this.jTFNumLote.requestFocus();
             } catch (SQLException e) {
                 JOptionPane.showMessageDialog(null, "Error al almacenar el nuevo lote" + e);
@@ -137,7 +137,7 @@ public class JFFLoteVacuna extends javax.swing.JFrame {
                 cl.setFechaVencimiento(fechaVencimietno);
                 cl.setIdFbricante(Integer.parseInt(jTFIdFabricante.getText()));
                 cdlv.actualizarloteVacuna(cl);
-                JOptionPane.showMessageDialog(null, "Registrado actualizado", "COVA System", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "¡Registrado actualizado!", "COVA System", JOptionPane.INFORMATION_MESSAGE);
                 this.jTFNumLote.requestFocus();
             } catch (SQLException e) {
                 JOptionPane.showMessageDialog(null, "Error al modificar" + e);
@@ -175,7 +175,7 @@ public class JFFLoteVacuna extends javax.swing.JFrame {
                 CLLoteVacuna cl = new CLLoteVacuna();
                 cl.setNumLoteVacuna((this.jTFNumLote.getText().trim()));
                 cdlv.eliminarLoteVacuna(cl);
-                JOptionPane.showMessageDialog(null, "Registrado eliminado", "COVA System", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "¡Registrado eliminado!", "COVA System", JOptionPane.INFORMATION_MESSAGE);
                 this.jTFNumLote.requestFocus();
             } catch (SQLException e) {
                 JOptionPane.showMessageDialog(null, "Error al eliminar" + e);
@@ -189,7 +189,7 @@ public class JFFLoteVacuna extends javax.swing.JFrame {
 
     // Metodo llamar eliminar 
     private void eliminar() throws SQLException {
-        int resp = JOptionPane.showConfirmDialog(null, "Seguro que desea eliminar este lote", "COVA System", JOptionPane.YES_NO_OPTION);
+        int resp = JOptionPane.showConfirmDialog(null, "¿Seguro que desea eliminar este lote?", "COVA System", JOptionPane.YES_NO_OPTION);
         if (resp == JOptionPane.YES_OPTION) {
             try {
                 eliminarLoteVacuna();
@@ -216,7 +216,7 @@ public class JFFLoteVacuna extends javax.swing.JFrame {
         this.jBtnEditar.setIcon(iconbtnEditar);
         this.jBtnEliminar.setIcon(iconbtnEliminar);
         this.jBtnLimpiar.setIcon(iconLimpiar);
-        this.jLabel1.setIcon(iconobtn);
+        this.jBtnSalir.setIcon(iconobtn);
         this.jLbUser.setIcon(iconUser);
     }
 
@@ -252,9 +252,9 @@ public class JFFLoteVacuna extends javax.swing.JFrame {
         jCalendar1 = new com.toedter.calendar.JCalendar();
         jPanel1 = new javax.swing.JPanel();
         jPfranjaSuperior = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLbUser = new javax.swing.JLabel();
+        jBtnSalir = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jTFNumLote = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
@@ -284,22 +284,21 @@ public class JFFLoteVacuna extends javax.swing.JFrame {
         jPfranjaSuperior.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
         jPanel1.add(jPfranjaSuperior, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 60, 540, 10));
 
-        jLabel1.setBackground(new java.awt.Color(0, 153, 153));
-        jLabel1.setFont(new java.awt.Font("Tahoma", 3, 48)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(0, 153, 153));
-        jLabel1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                jLabel1MousePressed(evt);
-            }
-        });
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 0, 50, 50));
-
         jLabel2.setBackground(new java.awt.Color(0, 153, 153));
         jLabel2.setFont(new java.awt.Font("Tahoma", 3, 24)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(0, 153, 153));
         jLabel2.setText("Gestión de Lotes de Vacunas");
         jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 10, 350, 30));
         jPanel1.add(jLbUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 10, 40, 40));
+
+        jBtnSalir.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jBtnSalir.setText("Salir");
+        jBtnSalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBtnSalirActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jBtnSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 20, -1, -1));
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 102, 102)), "Lotes de Vacunas", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 14))); // NOI18N
@@ -328,6 +327,7 @@ public class JFFLoteVacuna extends javax.swing.JFrame {
         jBtnGuardar.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jBtnGuardar.setForeground(new java.awt.Color(0, 153, 153));
         jBtnGuardar.setText("Guardar");
+        jBtnGuardar.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jBtnGuardar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jBtnGuardarActionPerformed(evt);
@@ -338,6 +338,7 @@ public class JFFLoteVacuna extends javax.swing.JFrame {
         jBtnEditar.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jBtnEditar.setForeground(new java.awt.Color(0, 153, 153));
         jBtnEditar.setText("Editar");
+        jBtnEditar.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jBtnEditar.setEnabled(false);
         jBtnEditar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -349,6 +350,7 @@ public class JFFLoteVacuna extends javax.swing.JFrame {
         jBtnEliminar.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jBtnEliminar.setForeground(new java.awt.Color(0, 153, 153));
         jBtnEliminar.setText("Eliminar");
+        jBtnEliminar.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jBtnEliminar.setEnabled(false);
         jBtnEliminar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -360,6 +362,7 @@ public class JFFLoteVacuna extends javax.swing.JFrame {
         jBtnLimpiar.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jBtnLimpiar.setForeground(new java.awt.Color(0, 153, 153));
         jBtnLimpiar.setText("Limpiar");
+        jBtnLimpiar.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jBtnLimpiar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jBtnLimpiarActionPerformed(evt);
@@ -434,10 +437,6 @@ public class JFFLoteVacuna extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jLabel1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MousePressed
-        this.dispose();
-    }//GEN-LAST:event_jLabel1MousePressed
-
     private void jTblLoteVacunaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTblLoteVacunaMouseClicked
         try {
             filaSeleccionada();
@@ -484,6 +483,10 @@ public class JFFLoteVacuna extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jCboFabricantesActionPerformed
 
+    private void jBtnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnSalirActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_jBtnSalirActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -529,11 +532,11 @@ public class JFFLoteVacuna extends javax.swing.JFrame {
     private javax.swing.JButton jBtnEliminar;
     private javax.swing.JButton jBtnGuardar;
     private javax.swing.JButton jBtnLimpiar;
+    private javax.swing.JButton jBtnSalir;
     private com.toedter.calendar.JCalendar jCalendar1;
     private javax.swing.JComboBox<String> jCboFabricantes;
     private com.toedter.calendar.JDateChooser jDCFechaFabricacion;
     private com.toedter.calendar.JDateChooser jDCFechaVencimietno;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;

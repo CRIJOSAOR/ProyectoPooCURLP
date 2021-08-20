@@ -33,7 +33,7 @@ public class JFFProfesion extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
 
     }
-    
+
     // Método para limpiar los datos de la tabla
     private void limpiatTablaProfesion() {
         DefaultTableModel dtm = (DefaultTableModel) this.jTbProfesion.getModel();
@@ -99,7 +99,7 @@ public class JFFProfesion extends javax.swing.JFrame {
                 CLProfesiones cl = new CLProfesiones();
                 cl.setProfesion(this.jTFProfesion.getText().trim());
                 cdp.insertarProfesiones(cl);
-                JOptionPane.showMessageDialog(null, "Registrado correctamente", "COVA System", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "¡Registrado correctamente!", "COVA System", JOptionPane.INFORMATION_MESSAGE);
                 this.jTFProfesion.requestFocus();
             } catch (SQLException e) {
                 JOptionPane.showMessageDialog(null, "Error al almacenar" + e);
@@ -129,7 +129,7 @@ public class JFFProfesion extends javax.swing.JFrame {
                 cl.setIdProfesion(Integer.parseInt(this.jTFIdProfesion.getText().trim()));
                 cl.setProfesion(this.jTFProfesion.getText().trim());
                 cdp.actualizarProfesiones(cl);
-                JOptionPane.showMessageDialog(null, "Registro actualizado", "COVA System", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "¡Registro actualizado!", "COVA System", JOptionPane.INFORMATION_MESSAGE);
                 this.jTFProfesion.requestFocus();
             } catch (SQLException e) {
                 JOptionPane.showMessageDialog(null, "Error al modificar" + e);
@@ -166,7 +166,7 @@ public class JFFProfesion extends javax.swing.JFrame {
                 CLProfesiones cl = new CLProfesiones();
                 cl.setIdProfesion(Integer.parseInt(this.jTFIdProfesion.getText().trim()));
                 cdp.eliminarProfesiones(cl);
-                JOptionPane.showMessageDialog(null, "Registrado eliminado", "COVA System", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "¡Registro eliminado!", "COVA System", JOptionPane.INFORMATION_MESSAGE);
                 this.jTFProfesion.requestFocus();
             } catch (SQLException e) {
                 JOptionPane.showMessageDialog(null, "Error al eliminar" + e);
@@ -180,7 +180,7 @@ public class JFFProfesion extends javax.swing.JFrame {
 
     // Metodo para eliminar el metodo de actualizar la tabla 
     private void eliminar() throws SQLException {
-        int resp = JOptionPane.showConfirmDialog(null, "Seguro que desea eliminar el registro", "COVA System", JOptionPane.YES_NO_OPTION);
+        int resp = JOptionPane.showConfirmDialog(null, "¿Está seguro de eliminar éste registro?", "COVA System", JOptionPane.YES_NO_OPTION);
         if (resp == JOptionPane.YES_OPTION) {
             try {
                 eliminarProfesion();
@@ -195,21 +195,22 @@ public class JFFProfesion extends javax.swing.JFrame {
             limpiarTextField();
         }
     }
-    
-    // metodo de clase que permite agregar iconos a los botones y labels del JFForm
-    public final void  agregarIconos(){
-        ImageIcon iconbtnGuardar = new ImageIcon("src/main/java/com/curlp/capaimagenes/save.png");
-        ImageIcon iconbtnActualizar = new ImageIcon("src/main/java/com/curlp/capaimagenes/edit.png");
-        ImageIcon iconbtnLimpiar = new ImageIcon("src/main/java/com/curlp/capaimagenes/Limpiar.png");
-        ImageIcon iconbtnEliminar = new ImageIcon("src/main/java/com/curlp/capaimagenes/delete.png");
-        ImageIcon iconbtnSalir = new ImageIcon("src/main/java/com/curlp/capaimagenes/logout.png");
-        this.jBtnAgregarProfesion.setIcon(iconbtnGuardar);
-        this.jBtnActualizarProfesion.setIcon(iconbtnActualizar);
-        this.jBtnEliminarProfesion.setIcon(iconbtnEliminar);
-        this.jBtnLimpiarProfesion.setIcon(iconbtnLimpiar);
-        this.jLblSalir.setIcon(iconbtnSalir);
-    }
 
+    // metodo de clase que permite agregar iconos a los botones y labels del JFForm
+    public final void agregarIconos() {
+        ImageIcon iconBtnGuardar = new ImageIcon("src/main/java/com/curlp/capaimagenes/save.png");
+        ImageIcon iconBtnActualizar = new ImageIcon("src/main/java/com/curlp/capaimagenes/edit.png");
+        ImageIcon iconBtnLimpiar = new ImageIcon("src/main/java/com/curlp/capaimagenes/Limpiar.png");
+        ImageIcon iconBtnEliminar = new ImageIcon("src/main/java/com/curlp/capaimagenes/delete.png");
+        ImageIcon iconBtnSalir = new ImageIcon("src/main/java/com/curlp/capaimagenes/logout.png");
+        ImageIcon iconLogoTitulo = new ImageIcon("src/main/java/com/curlp/capaimagenes/user.png");
+        this.jBtnAgregarProfesion.setIcon(iconBtnGuardar);
+        this.jBtnActualizarProfesion.setIcon(iconBtnActualizar);
+        this.jBtnEliminarProfesion.setIcon(iconBtnEliminar);
+        this.jBtnLimpiarProfesion.setIcon(iconBtnLimpiar);
+        this.jBtnSalir.setIcon(iconBtnSalir);
+        this.jLblUser.setIcon(iconLogoTitulo);
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -221,8 +222,9 @@ public class JFFProfesion extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jLblSalir = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
+        jLblUser = new javax.swing.JLabel();
+        jBtnSalir = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
@@ -244,19 +246,21 @@ public class JFFProfesion extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLblSalir.setFont(new java.awt.Font("Tahoma", 1, 48)); // NOI18N
-        jLblSalir.setForeground(new java.awt.Color(0, 153, 153));
-        jLblSalir.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                jLblSalirMousePressed(evt);
-            }
-        });
-        jPanel1.add(jLblSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 10, 40, 40));
-
         jLabel3.setFont(new java.awt.Font("Tahoma", 3, 24)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(0, 153, 153));
         jLabel3.setText("Gestión de Profesión");
         jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 20, 280, -1));
+        jPanel1.add(jLblUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 70, 40));
+
+        jBtnSalir.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jBtnSalir.setText("Salir");
+        jBtnSalir.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jBtnSalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBtnSalirActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jBtnSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 11, 70, 30));
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -265,7 +269,7 @@ public class JFFProfesion extends javax.swing.JFrame {
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 102, 102)), "Profesión", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 14))); // NOI18N
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jLabel2.setText("Ingresar Profesión");
+        jLabel2.setText("Nombre Profesión");
 
         jTFProfesion.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
 
@@ -273,6 +277,7 @@ public class JFFProfesion extends javax.swing.JFrame {
         jBtnAgregarProfesion.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jBtnAgregarProfesion.setForeground(new java.awt.Color(0, 153, 153));
         jBtnAgregarProfesion.setText("Agregar");
+        jBtnAgregarProfesion.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jBtnAgregarProfesion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jBtnAgregarProfesionActionPerformed(evt);
@@ -283,6 +288,7 @@ public class JFFProfesion extends javax.swing.JFrame {
         jBtnLimpiarProfesion.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jBtnLimpiarProfesion.setForeground(new java.awt.Color(0, 153, 153));
         jBtnLimpiarProfesion.setText("Limpiar");
+        jBtnLimpiarProfesion.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jBtnLimpiarProfesion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jBtnLimpiarProfesionActionPerformed(evt);
@@ -293,6 +299,7 @@ public class JFFProfesion extends javax.swing.JFrame {
         jBtnActualizarProfesion.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jBtnActualizarProfesion.setForeground(new java.awt.Color(0, 153, 153));
         jBtnActualizarProfesion.setText("Editar");
+        jBtnActualizarProfesion.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jBtnActualizarProfesion.setEnabled(false);
         jBtnActualizarProfesion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -304,6 +311,7 @@ public class JFFProfesion extends javax.swing.JFrame {
         jBtnEliminarProfesion.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jBtnEliminarProfesion.setForeground(new java.awt.Color(0, 153, 153));
         jBtnEliminarProfesion.setText("Eliminar");
+        jBtnEliminarProfesion.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jBtnEliminarProfesion.setEnabled(false);
         jBtnEliminarProfesion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -327,21 +335,20 @@ public class JFFProfesion extends javax.swing.JFrame {
                         .addGap(46, 46, 46)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel2)
-                            .addComponent(jLabel4))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jTFProfesion, javax.swing.GroupLayout.DEFAULT_SIZE, 248, Short.MAX_VALUE)
-                            .addComponent(jTFIdProfesion)))
+                            .addComponent(jLabel4)))
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addContainerGap(115, Short.MAX_VALUE)
-                        .addComponent(jBtnAgregarProfesion, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jBtnActualizarProfesion)
-                        .addGap(38, 38, 38)
-                        .addComponent(jBtnEliminarProfesion)
-                        .addGap(46, 46, 46)
-                        .addComponent(jBtnLimpiarProfesion)
-                        .addGap(15, 15, 15)))
+                        .addGap(25, 25, 25)
+                        .addComponent(jBtnAgregarProfesion, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(42, 42, 42)
+                        .addComponent(jBtnActualizarProfesion, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 44, Short.MAX_VALUE)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(jBtnEliminarProfesion, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(36, 36, 36)
+                        .addComponent(jBtnLimpiarProfesion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jTFProfesion, javax.swing.GroupLayout.DEFAULT_SIZE, 248, Short.MAX_VALUE)
+                    .addComponent(jTFIdProfesion))
                 .addGap(44, 44, 44))
         );
         jPanel3Layout.setVerticalGroup(
@@ -349,7 +356,7 @@ public class JFFProfesion extends javax.swing.JFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addContainerGap(21, Short.MAX_VALUE)
                         .addComponent(jLabel4))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(jTFIdProfesion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -358,15 +365,18 @@ public class JFFProfesion extends javax.swing.JFrame {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTFProfesion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2))
-                .addGap(18, 18, 18)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jBtnActualizarProfesion, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jBtnEliminarProfesion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(jBtnAgregarProfesion, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 2, Short.MAX_VALUE))
-                    .addComponent(jBtnLimpiarProfesion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(29, 29, 29))
+                        .addGap(20, 20, 20)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jBtnActualizarProfesion, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jBtnEliminarProfesion, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jBtnAgregarProfesion, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap())
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(jBtnLimpiarProfesion, javax.swing.GroupLayout.DEFAULT_SIZE, 39, Short.MAX_VALUE)
+                        .addContainerGap())))
         );
 
         jPanel2.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 640, 160));
@@ -447,10 +457,6 @@ public class JFFProfesion extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jLblSalirMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLblSalirMousePressed
-        this.dispose();
-    }//GEN-LAST:event_jLblSalirMousePressed
-
     private void jBtnAgregarProfesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnAgregarProfesionActionPerformed
         try {
             insertar();
@@ -485,7 +491,9 @@ public class JFFProfesion extends javax.swing.JFrame {
         limpiarTextField();
     }//GEN-LAST:event_jBtnLimpiarProfesionActionPerformed
 
-    
+    private void jBtnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnSalirActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_jBtnSalirActionPerformed
 
     /**
      * @param args the command line arguments
@@ -531,10 +539,11 @@ public class JFFProfesion extends javax.swing.JFrame {
     private javax.swing.JButton jBtnAgregarProfesion;
     private javax.swing.JButton jBtnEliminarProfesion;
     private javax.swing.JButton jBtnLimpiarProfesion;
+    private javax.swing.JButton jBtnSalir;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLblSalir;
+    private javax.swing.JLabel jLblUser;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;

@@ -197,7 +197,7 @@ public class jFFEstablecimiento extends javax.swing.JFrame {
 
     // metodo para eliminar establecimientos
     public void eliminar() throws SQLException {
-        int resp = JOptionPane.showConfirmDialog(null, "¿Esta seguro de eliminar el registro?", "COVA System",
+        int resp = JOptionPane.showConfirmDialog(null, "¿Está seguro de eliminar éste registro?", "COVA System",
                 JOptionPane.YES_NO_CANCEL_OPTION);
         if (resp == JOptionPane.YES_OPTION) {
             try {
@@ -223,11 +223,13 @@ public class jFFEstablecimiento extends javax.swing.JFrame {
         ImageIcon iconbtnEliminar = new ImageIcon("src/main/java/com/curlp/capaimagenes/delete.png");
         ImageIcon iconbtnLimpiar = new ImageIcon("src/main/java/com/curlp/capaimagenes/Limpiar.png");
         ImageIcon iconobtn = new ImageIcon("src/main/java/com/curlp/capaimagenes/logout.png");
+        ImageIcon iconLogoTitulo = new ImageIcon("src/main/java/com/curlp/capaimagenes/user.png");
         this.jBtnAgregar.setIcon(iconbtnGuardar);
         this.jBtnEditar.setIcon(iconbtnEditar);
         this.jBtnEliminar.setIcon(iconbtnEliminar);
         this.jBtnLimpiar.setIcon(iconbtnLimpiar);
-        this.jLblXEstablecimiento.setIcon(iconobtn);
+        this.jBtnSalir.setIcon(iconobtn);
+        this.jLblUser.setIcon(iconLogoTitulo);
     }
 
     @SuppressWarnings("unchecked")
@@ -247,7 +249,8 @@ public class jFFEstablecimiento extends javax.swing.JFrame {
         jBtnEditar = new javax.swing.JButton();
         jBtnLimpiar = new javax.swing.JButton();
         jBtnEliminar = new javax.swing.JButton();
-        jLblXEstablecimiento = new javax.swing.JLabel();
+        jBtnSalir = new javax.swing.JButton();
+        jLblUser = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTblEstablecimiento = new javax.swing.JTable();
         jPanel4 = new javax.swing.JPanel();
@@ -276,7 +279,7 @@ public class jFFEstablecimiento extends javax.swing.JFrame {
         );
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Establecimiento", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(0, 102, 102))); // NOI18N
+        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Establecimiento"));
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel2.setText("Nombre Establecimiento");
@@ -387,11 +390,12 @@ public class jFFEstablecimiento extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jLblXEstablecimiento.setFont(new java.awt.Font("Tahoma", 0, 48)); // NOI18N
-        jLblXEstablecimiento.setForeground(new java.awt.Color(0, 153, 153));
-        jLblXEstablecimiento.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                jLblXEstablecimientoMousePressed(evt);
+        jBtnSalir.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jBtnSalir.setText("Salir");
+        jBtnSalir.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jBtnSalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBtnSalirActionPerformed(evt);
             }
         });
 
@@ -400,14 +404,18 @@ public class jFFEstablecimiento extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 827, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 827, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(45, 45, 45)
+                        .addComponent(jLblUser, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 408, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(90, 90, 90)
-                        .addComponent(jLblXEstablecimiento, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(9, 9, 9)))
+                        .addGap(71, 71, 71)
+                        .addComponent(jBtnSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(14, 14, 14)))
                 .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -417,13 +425,19 @@ public class jFFEstablecimiento extends javax.swing.JFrame {
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLblXEstablecimiento, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(21, 21, 21)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(35, 35, 35)
+                                .addComponent(jBtnSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(30, 30, 30)
+                                .addComponent(jLblUser, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(26, 26, 26)
                 .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -487,11 +501,6 @@ public class jFFEstablecimiento extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jLblXEstablecimientoMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLblXEstablecimientoMousePressed
-        this.dispose();
-
-    }//GEN-LAST:event_jLblXEstablecimientoMousePressed
-
     private void jTFNombre_EstablecimientoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTFNombre_EstablecimientoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTFNombre_EstablecimientoActionPerformed
@@ -539,6 +548,10 @@ public class jFFEstablecimiento extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTFCod_EstablecimientoActionPerformed
 
+    private void jBtnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnSalirActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_jBtnSalirActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -583,10 +596,11 @@ public class jFFEstablecimiento extends javax.swing.JFrame {
     private javax.swing.JButton jBtnEditar;
     private javax.swing.JButton jBtnEliminar;
     private javax.swing.JButton jBtnLimpiar;
+    private javax.swing.JButton jBtnSalir;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLblXEstablecimiento;
+    private javax.swing.JLabel jLblUser;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;

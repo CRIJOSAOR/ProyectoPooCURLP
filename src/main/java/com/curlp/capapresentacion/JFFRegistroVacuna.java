@@ -120,6 +120,7 @@ public class JFFRegistroVacuna extends javax.swing.JFrame {
         jBtnGuardar.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jBtnGuardar.setForeground(new java.awt.Color(0, 153, 153));
         jBtnGuardar.setText("Buscar");
+        jBtnGuardar.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jBtnGuardar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jBtnGuardarActionPerformed(evt);
@@ -166,6 +167,7 @@ public class JFFRegistroVacuna extends javax.swing.JFrame {
         jBtnBuscarEstablecimiento.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jBtnBuscarEstablecimiento.setForeground(new java.awt.Color(0, 153, 153));
         jBtnBuscarEstablecimiento.setText("Buscar");
+        jBtnBuscarEstablecimiento.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jBtnBuscarEstablecimiento.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jBtnBuscarEstablecimientoActionPerformed(evt);
@@ -192,6 +194,7 @@ public class JFFRegistroVacuna extends javax.swing.JFrame {
         jBtnGuardar2.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jBtnGuardar2.setForeground(new java.awt.Color(0, 153, 153));
         jBtnGuardar2.setText("Buscar");
+        jBtnGuardar2.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jBtnGuardar2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jBtnGuardar2ActionPerformed(evt);
@@ -227,6 +230,7 @@ public class JFFRegistroVacuna extends javax.swing.JFrame {
         jBtnBuscarPaciente.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jBtnBuscarPaciente.setForeground(new java.awt.Color(0, 153, 153));
         jBtnBuscarPaciente.setText("Buscar");
+        jBtnBuscarPaciente.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jBtnBuscarPaciente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jBtnBuscarPacienteActionPerformed(evt);

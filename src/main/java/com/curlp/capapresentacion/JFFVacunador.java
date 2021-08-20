@@ -131,7 +131,7 @@ public class JFFVacunador extends javax.swing.JFrame {
     // Metodo para insertar un vacunador
     private void insertarVacunador() {
         if (!verificarCampos()) {
-            JOptionPane.showMessageDialog(null,"Ingresar los datos del vacunador","Proyecto Vacunación",JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null,"Ingresar los datos del vacunador","COVA System",JOptionPane.INFORMATION_MESSAGE);
             this.JTFDNI.requestFocus();
         } else {
             try {
@@ -144,7 +144,7 @@ public class JFFVacunador extends javax.swing.JFrame {
                 cl.setNumCelularV(this.JTFCelularV.getText().trim());
                 cl.setEstado(this.JTFEstado.getText().trim());
                 cdv.insertarVacunador(cl);
-                JOptionPane.showMessageDialog(null,"¡Registrado correctamente!","Proyecto Vacunación",JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null,"¡Registrado correctamente!","COVA System",JOptionPane.INFORMATION_MESSAGE);
                 this.JTFDNI.requestFocus();
             } catch (SQLException e) {
                 JOptionPane.showMessageDialog(null,"Error al almacenar" + e);
@@ -177,7 +177,7 @@ public class JFFVacunador extends javax.swing.JFrame {
     // Metodo para actualizar al vacunador
     private void actualizarVacunador() {
         if (!verificarCampos()) {
-            JOptionPane.showMessageDialog(null,"Ingresar los datos del vacunador","Proyecto Vacunación",JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null,"Ingresar los datos del vacunador","COVA System",JOptionPane.INFORMATION_MESSAGE);
             this.JTFDNI.requestFocus();
         } else {
             try {
@@ -190,7 +190,7 @@ public class JFFVacunador extends javax.swing.JFrame {
                 cl.setNumCelularV(this.JTFCelularV.getText().trim());
                 cl.setEstado(this.JTFEstado.getText().trim());
                 cdv.actualizarVacunador(cl);
-                JOptionPane.showMessageDialog(null,"¡Registrado correctamente!","Proyecto Vacunación",JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null,"¡Registrado correctamente!","COVA System",JOptionPane.INFORMATION_MESSAGE);
                 this.JTFDNI.requestFocus();
             } catch (SQLException e) {
                 JOptionPane.showMessageDialog(null,"Error al almacenar" + e);
@@ -268,7 +268,7 @@ public class JFFVacunador extends javax.swing.JFrame {
     }
     
     //Metodo para desahibilitar botones
-    private void habilitarBotones(boolean registrar, boolean buscar, boolean actualizar, boolean eliminar) {
+    private void habilitarBotones(boolean registrar, boolean actualizar, boolean eliminar) {
         this.jBtnRegistrar.setEnabled(registrar);
         this.jBtnActualizar.setEnabled(actualizar);
         this.jBtnEliminar.setEnabled(eliminar);
@@ -280,7 +280,7 @@ public class JFFVacunador extends javax.swing.JFrame {
         insertarVacunador();
         poblarTablaVacunador();
         limpiarCampos();
-        habilitarBotones(true,false,false,false);
+        habilitarBotones(true,false,false);
         limpiarTextField();
         
     }
@@ -290,7 +290,7 @@ public class JFFVacunador extends javax.swing.JFrame {
         actualizarVacunador();
         poblarTablaVacunador();
         limpiarCampos();
-        habilitarBotones(true,false,true,false);
+        habilitarBotones(true,true,false);
         limpiarTextField();
         
     }
@@ -302,7 +302,7 @@ public class JFFVacunador extends javax.swing.JFrame {
             CLVacunador cl = new CLVacunador();
             cl.setDniVacunador(this.JTFDNI.getText().trim());
             cdv.eliminarVacunador(cl);
-            JOptionPane.showMessageDialog(null, "¡Registro eliminado satisfactoriamente!", "Proyecto Vacunación", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "¡Registro eliminado satisfactoriamente!", "COVA System", JOptionPane.INFORMATION_MESSAGE);
             this.JTFDNI.requestFocus();
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Error al eliminar el registro" + e);
@@ -312,14 +312,14 @@ public class JFFVacunador extends javax.swing.JFrame {
     
     private void eliminar() throws SQLException {
         int resp = JOptionPane.showConfirmDialog(null, "¿Está seguro que desea eliminar el registro del vacunador?",
-                                                 "Proyecto Vacunación", JOptionPane.YES_NO_OPTION);
+                                                 "COVA System", JOptionPane.YES_NO_OPTION);
         
         if (resp == JOptionPane.YES_OPTION) {
             try {
                 eliminarVacunador();
                 poblarTablaVacunador();
                 limpiarCampos();
-                habilitarBotones(true, false, false, true);
+                habilitarBotones(true, false, true);
                 limpiarTextField();
             } catch (SQLException ex) {
                 JOptionPane.showMessageDialog(null, "Error al eliminar el registro: "+ ex);        
@@ -378,6 +378,7 @@ public class JFFVacunador extends javax.swing.JFrame {
 
         jBtnSalir.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jBtnSalir.setText("Salir");
+        jBtnSalir.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jBtnSalir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jBtnSalirActionPerformed(evt);
@@ -404,7 +405,7 @@ public class JFFVacunador extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(jBtnSalir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(20, Short.MAX_VALUE))
+                .addContainerGap(21, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLBiconoNombres, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -641,7 +642,7 @@ public class JFFVacunador extends javax.swing.JFrame {
 
     private void JTblVacunadoresMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JTblVacunadoresMouseClicked
         filaSeleccionada();
-        habilitarBotones(false,false,true,true);
+        habilitarBotones(false,true,true);
     }//GEN-LAST:event_JTblVacunadoresMouseClicked
 
     private void jBtnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnEliminarActionPerformed

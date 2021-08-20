@@ -35,7 +35,9 @@ public class JFFVisordeConsulta extends javax.swing.JFrame {
     }
      public final void agregarIconos() {
         ImageIcon iconbtnSalir = new ImageIcon("src/main/java/com/curlp/capaimagenes/logout.png");
-        this.jLblSalir.setIcon(iconbtnSalir);
+        ImageIcon iconLogoTitulo = new ImageIcon("src/main/java/com/curlp/capaimagenes/user.png");
+        this.jBtnSalir.setIcon(iconbtnSalir);
+        this.jLblUser.setIcon(iconLogoTitulo);
     }
     DefaultTableModel modelo;
     private void llenarTabla() throws SQLException{
@@ -74,7 +76,8 @@ public class JFFVisordeConsulta extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
-        jLblSalir = new javax.swing.JLabel();
+        jBtnSalir = new javax.swing.JButton();
+        jLblUser = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTBPacientes = new javax.swing.JTable();
         jPfranjaSuperior = new javax.swing.JPanel();
@@ -92,14 +95,16 @@ public class JFFVisordeConsulta extends javax.swing.JFrame {
         jLabel3.setText("Visor de Consulta");
         jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 20, 280, -1));
 
-        jLblSalir.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jLblSalir.setForeground(new java.awt.Color(0, 153, 153));
-        jLblSalir.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                jLblSalirMousePressed(evt);
+        jBtnSalir.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jBtnSalir.setText("Salir");
+        jBtnSalir.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jBtnSalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBtnSalirActionPerformed(evt);
             }
         });
-        jPanel1.add(jLblSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(980, 10, 40, 40));
+        jPanel1.add(jBtnSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(950, 20, 70, 30));
+        jPanel1.add(jLblUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 10, 50, 40));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1040, 60));
 
@@ -160,9 +165,9 @@ public class JFFVisordeConsulta extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jLblSalirMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLblSalirMousePressed
+    private void jBtnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnSalirActionPerformed
         this.dispose();
-    }//GEN-LAST:event_jLblSalirMousePressed
+    }//GEN-LAST:event_jBtnSalirActionPerformed
 
     /**
      * @param args the command line arguments
@@ -204,8 +209,9 @@ public class JFFVisordeConsulta extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jBtnSalir;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLblSalir;
+    private javax.swing.JLabel jLblUser;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPfranjaSuperior;
     private javax.swing.JPanel jPfranjaSuperior1;

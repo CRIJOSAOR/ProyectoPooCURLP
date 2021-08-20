@@ -199,7 +199,7 @@ public class JFFPaciente extends javax.swing.JFrame {
         CDPaciente registro = new CDPaciente();
         
         // recuperar todos los pacientes en forma de lista
-        List<CLPaciente> listaPacientes = registro.ObtenerListaPacientesPorNombre(nombreCliente);
+        List<CLPaciente> listaPacientes = registro.obtenerListaPacientesPorNombre(nombreCliente);
         // instanciamos un model 
         modelo = (DefaultTableModel) this.jTBPacientes.getModel();
       
@@ -602,6 +602,7 @@ public class JFFPaciente extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("GESTION DE PACIENTES");
         setBackground(new java.awt.Color(255, 255, 255));
+        setUndecorated(true);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPTitulo.setBackground(new java.awt.Color(255, 255, 255));
@@ -752,6 +753,7 @@ public class JFFPaciente extends javax.swing.JFrame {
         jBtnEditar.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
         jBtnEditar.setForeground(new java.awt.Color(0, 153, 153));
         jBtnEditar.setText("Guardar Cambios");
+        jBtnEditar.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jBtnEditar.setEnabled(false);
         jBtnEditar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -763,6 +765,7 @@ public class JFFPaciente extends javax.swing.JFrame {
         jBtnGuardar.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
         jBtnGuardar.setForeground(new java.awt.Color(0, 153, 153));
         jBtnGuardar.setText("Registrar");
+        jBtnGuardar.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jBtnGuardar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jBtnGuardarActionPerformed(evt);
@@ -770,8 +773,10 @@ public class JFFPaciente extends javax.swing.JFrame {
         });
         jPgestionar.add(jBtnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 370, 260, 40));
 
-        jBtnLimpiar.setForeground(new java.awt.Color(51, 51, 51));
+        jBtnLimpiar.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
+        jBtnLimpiar.setForeground(new java.awt.Color(0, 153, 153));
         jBtnLimpiar.setText("Cancelar");
+        jBtnLimpiar.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jBtnLimpiar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jBtnLimpiarActionPerformed(evt);

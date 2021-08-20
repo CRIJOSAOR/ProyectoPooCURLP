@@ -61,10 +61,10 @@ public class JFFVisorLoteeVacuna extends javax.swing.JFrame {
     // Metodo de clase que permite agregar iconos a los botones y labels del JFForm
     public final void agregarIconos() {
         ImageIcon iconobtn = new ImageIcon("src/main/java/com/curlp/capaimagenes/logout.png");
-           ImageIcon iconUser = new ImageIcon("src/main/java/com/curlp/capaimagenes/user.png");
-      
-        this.jLabel1.setIcon(iconobtn);
+        ImageIcon iconUser = new ImageIcon("src/main/java/com/curlp/capaimagenes/user.png");
+        ImageIcon iconBtnSalir = new ImageIcon("src/main/java/com/curlp/capaimagenes/logout.png");
         this.jLbUser.setIcon(iconUser);
+        this.jBtnSalir.setIcon(iconBtnSalir);
     }
 
     
@@ -81,9 +81,9 @@ public class JFFVisorLoteeVacuna extends javax.swing.JFrame {
         jCalendar1 = new com.toedter.calendar.JCalendar();
         jPanel1 = new javax.swing.JPanel();
         jPfranjaSuperior = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLbUser = new javax.swing.JLabel();
+        jBtnSalir = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTblLoteVacuna = new javax.swing.JTable();
@@ -99,22 +99,22 @@ public class JFFVisorLoteeVacuna extends javax.swing.JFrame {
         jPfranjaSuperior.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
         jPanel1.add(jPfranjaSuperior, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 60, 770, 10));
 
-        jLabel1.setBackground(new java.awt.Color(0, 153, 153));
-        jLabel1.setFont(new java.awt.Font("Tahoma", 3, 48)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(0, 153, 153));
-        jLabel1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                jLabel1MousePressed(evt);
-            }
-        });
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 0, 50, 50));
-
         jLabel2.setBackground(new java.awt.Color(0, 153, 153));
         jLabel2.setFont(new java.awt.Font("Tahoma", 3, 24)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(0, 153, 153));
         jLabel2.setText("Visor de Lotes de Vacunas");
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 10, 350, 30));
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 10, 350, 30));
         jPanel1.add(jLbUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 10, 40, 40));
+
+        jBtnSalir.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jBtnSalir.setText("Salir");
+        jBtnSalir.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jBtnSalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBtnSalirActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jBtnSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(613, 11, 90, 40));
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
         jPanel3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 153, 153)));
@@ -166,14 +166,14 @@ public class JFFVisorLoteeVacuna extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jLabel1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MousePressed
-        this.dispose();
-    }//GEN-LAST:event_jLabel1MousePressed
-
     private void jTblLoteVacunaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTblLoteVacunaMouseClicked
 
 
     }//GEN-LAST:event_jTblLoteVacunaMouseClicked
+
+    private void jBtnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnSalirActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_jBtnSalirActionPerformed
 
     /**
      * @param args the command line arguments
@@ -219,8 +219,8 @@ public class JFFVisorLoteeVacuna extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jBtnSalir;
     private com.toedter.calendar.JCalendar jCalendar1;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLbUser;
     private javax.swing.JPanel jPanel1;
