@@ -11,6 +11,7 @@ import com.curlp.capadatos.CDProfesion;
 import com.curlp.capadatos.CDSexo;
 import com.curlp.capalogica.CLPaciente;
 import com.curlp.capalogica.CLProfesiones;
+import com.curlp.librerias.TextPrompt;
 import java.awt.Color;
 import java.util.Date;
 import java.sql.SQLException;
@@ -42,7 +43,8 @@ public class JFFPaciente extends javax.swing.JFrame {
         llenarComboBoxProfesiones();
         llenarComboBoxSexo();
         this.setLocationRelativeTo(null);
-        this.border = this.jTFnumIdentidad.getBorder();  
+        this.border = this.jTFnumIdentidad.getBorder(); 
+        TextPrompt placeHolder = new TextPrompt("Ejemplo: Miguel Abraham",this.jTFnombres);
     }
     /* se agrega miembro de clase tipo border para obtener el borde default. si hay errores el borde del componente sera rojo asi que:
        con el mienbro de clase border se puede establecer el borde default a todos los campos */
@@ -63,7 +65,7 @@ public class JFFPaciente extends javax.swing.JFrame {
         boolean validar = false; // variable para retorno asi si hay un error no manda a recargar la tabla ni limpia campos permitiendo corregir errores
         
         // Antes de todo se debe verificar que los campos cumplan con lo requerido
-        if(this.verificarCampos()){
+        if(this.verificarCampos(1)){
             // recuperar datos de los Combo Box
             int idProfesion = profesion.obtenerIdProfesion(this.jCboProfesion.getItemAt(this.jCboProfesion.getSelectedIndex()).trim());
             //int idProfesion = this.getIdProfesion( this.jCboProfesion.getItemAt(this.jCboProfesion.getSelectedIndex()));
@@ -101,7 +103,7 @@ public class JFFPaciente extends javax.swing.JFrame {
         boolean validar = false; // variable para retorno asi si hay un error no manda a recargar la tabla ni limpia campos permitiendo corregir errores
         
         // Antes de todo se debe verificar que los campos cumplan con lo requerido
-        if(this.verificarCampos()){
+        if(this.verificarCampos(2)){
             // recuperar datos de los Combo Box
             int idSexo = this.jCboSexo.getSelectedIndex();
             int idProfesion = getIdProfesion(this.jCboProfesion.getItemAt(this.jCboProfesion.getSelectedIndex()));
@@ -361,15 +363,14 @@ public class JFFPaciente extends javax.swing.JFrame {
     }
 
     // metodo de clase que verifica si los campos para insertar un paciente cumplen con los requerimientos
-    public boolean verificarCampos(){
+    public boolean verificarCampos( int caso){
         boolean verificador = true ;
         String errors = ""; 
         
         //-------------------------
-        // verificacion de numero de identidad
-        String numIdentidad = this.jTFnumIdentidad.getText();
         
-        if(numIdentidad.length() != 15){ //se verifica si tiene el tamanio correcto de 15 elementos 
+        
+        if(caso == 1 && jTFnumIdentidad.getValue() == null) { //se verifica si tiene el tamanio correcto de 15 elementos 
             //si el numero de identidad no tiene 15 elementos
             verificador = false;
             errors +=  "Debe ingresar correctamente el numero de identidad, ejemplo: 0801-2000-00011 \n";
@@ -380,6 +381,7 @@ public class JFFPaciente extends javax.swing.JFrame {
         // verificar que nombre y apellido este lleno
         
         if(this.jTFnombres.getText().length() == 0){
+            
             verificador = false;
             errors +=  "Por favor ingrese un nombre \n";
             this.jTFnombres.setBorder(BorderFactory.createLineBorder(Color.red));
@@ -396,12 +398,13 @@ public class JFFPaciente extends javax.swing.JFrame {
         //--------------------------
         // verificar que el numero de telefono este lleno, tenga todos los numeros 
 
-        if(this.jTFnumCelular.getText().length() != 9){
+        if(caso == 1 && this.jTFnumCelular.getValue() == null){
             verificador = false;
             errors +=  "El número de teléfono debe tener 9 digitos, por ejemplo: 0000-0000\n";
             this.jTFnumCelular.setBorder(BorderFactory.createLineBorder(Color.red));
             
         }
+        
 
         //--------------------------
         // verificar que los combo box esten seleccionados
@@ -483,9 +486,11 @@ public class JFFPaciente extends javax.swing.JFrame {
     public void activarCampoLugarTrabajo(){
         if(this.jCBtrabaja.isSelected()){
             this.jTFlugarTrabajo.setEnabled(true);
+            jLBmensaje.setForeground(Color.black);
         } else {
             this.jTFlugarTrabajo.setText("");
             this.jTFlugarTrabajo.setEnabled(false);
+            jLBmensaje.setForeground(Color.white);
         }
         
     }
@@ -495,10 +500,10 @@ public class JFFPaciente extends javax.swing.JFrame {
         this.jTFnumIdentidad.setEditable(true);
         activarBotones(true,false,true);
         
-        this.jTFnumIdentidad.setText("");
+        this.jTFnumIdentidad.setValue(null);
         this.jTFnombres.setText("");
         this.jTFapellidos.setText("");
-        this.jTFnumCelular.setText("");
+        this.jTFnumCelular.setValue(null);
         this.jTFlugarTrabajo.setText("");
         this.jCboSexo.setSelectedIndex(0);
         this.jCboProfesion.setSelectedIndex(0);
@@ -566,8 +571,7 @@ public class JFFPaciente extends javax.swing.JFrame {
         jLabel8 = new javax.swing.JLabel();
         jCboProfesion = new javax.swing.JComboBox<>();
         jLabel11 = new javax.swing.JLabel();
-        jLabel12 = new javax.swing.JLabel();
-        jLabel13 = new javax.swing.JLabel();
+        jLBmensaje = new javax.swing.JLabel();
         jBtnEditar = new javax.swing.JButton();
         jBtnGuardar = new javax.swing.JButton();
         jBtnLimpiar = new javax.swing.JButton();
@@ -576,12 +580,8 @@ public class JFFPaciente extends javax.swing.JFrame {
         jTFnumCelular = new javax.swing.JFormattedTextField();
         jDCFechaNacimiento = new com.toedter.calendar.JDateChooser();
         jPMostrarPacientes = new javax.swing.JPanel();
-        jTFBusqueda = new javax.swing.JTextField();
-        jBtnMostrarTodos = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTBPacientes = new javax.swing.JTable();
-        jLabel14 = new javax.swing.JLabel();
-        jLabel15 = new javax.swing.JLabel();
 
         jMIEditar.setText("Seleccionar");
         jMIEditar.addActionListener(new java.awt.event.ActionListener() {
@@ -608,7 +608,6 @@ public class JFFPaciente extends javax.swing.JFrame {
         jPTitulo.setBackground(new java.awt.Color(255, 255, 255));
 
         jBTNSalir.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jBTNSalir.setText("Salir");
         jBTNSalir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jBTNSalirActionPerformed(evt);
@@ -618,7 +617,7 @@ public class JFFPaciente extends javax.swing.JFrame {
         jLabel1.setBackground(new java.awt.Color(0, 153, 153));
         jLabel1.setFont(new java.awt.Font("Tahoma", 3, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(0, 153, 153));
-        jLabel1.setText("Gestion de Pacientes");
+        jLabel1.setText("Gestión de Pacientes");
 
         javax.swing.GroupLayout jPTituloLayout = new javax.swing.GroupLayout(jPTitulo);
         jPTitulo.setLayout(jPTituloLayout);
@@ -683,31 +682,57 @@ public class JFFPaciente extends javax.swing.JFrame {
         jPgestionar.setBackground(new java.awt.Color(255, 255, 255));
         jPgestionar.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel4.setText("Apellido:");
-        jPgestionar.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 80, -1, -1));
+        jPgestionar.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 80, -1, -1));
 
+        jLabel5.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel5.setText("Celular:");
-        jPgestionar.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 120, -1, -1));
+        jPgestionar.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 130, -1, -1));
 
+        jLabel10.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel10.setText("Profesión:");
-        jPgestionar.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 170, -1, -1));
+        jPgestionar.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 180, -1, -1));
 
         jCboSexo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "--Seleccione", "Femenino", "Masculino" }));
+        jCboSexo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCboSexoActionPerformed(evt);
+            }
+        });
         jPgestionar.add(jCboSexo, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 170, 210, 30));
 
         jTFlugarTrabajo.setEnabled(false);
+        jTFlugarTrabajo.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jTFlugarTrabajoKeyPressed(evt);
+            }
+        });
         jPgestionar.add(jTFlugarTrabajo, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 220, 190, 30));
 
+        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel3.setText("Nombre:");
         jPgestionar.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 80, -1, -1));
+
+        jTFnombres.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jTFnombresKeyPressed(evt);
+            }
+        });
         jPgestionar.add(jTFnombres, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 70, 190, 30));
 
         jTAdireccion.setColumns(20);
         jTAdireccion.setRows(5);
+        jTAdireccion.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jTAdireccionKeyPressed(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTAdireccion);
 
         jPgestionar.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 270, 510, 90));
 
+        jCBtrabaja.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jCBtrabaja.setText("Trabaja?");
         jCBtrabaja.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -716,17 +741,26 @@ public class JFFPaciente extends javax.swing.JFrame {
         });
         jPgestionar.add(jCBtrabaja, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 220, 100, 30));
 
-        jLabel2.setText("Numero de Identidad:");
-        jPgestionar.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 40, -1, -1));
+        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel2.setText("Número de Identidad:");
+        jPgestionar.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 40, -1, -1));
 
-        jLabel6.setFont(new java.awt.Font("Lucida Grande", 0, 10)); // NOI18N
+        jLabel6.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel6.setText("nacimiento:");
         jPgestionar.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 120, -1, -1));
-        jPgestionar.add(jTFapellidos, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 70, 180, 30));
 
+        jTFapellidos.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jTFapellidosKeyPressed(evt);
+            }
+        });
+        jPgestionar.add(jTFapellidos, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 70, 180, 30));
+
+        jLabel9.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel9.setText("Sexo:");
-        jPgestionar.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 170, -1, -1));
+        jPgestionar.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 180, -1, -1));
 
+        jLabel8.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel8.setText("Dirección de residencia:");
         jPgestionar.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 250, -1, -1));
 
@@ -738,22 +772,19 @@ public class JFFPaciente extends javax.swing.JFrame {
         });
         jPgestionar.add(jCboProfesion, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 170, 210, 30));
 
-        jLabel11.setFont(new java.awt.Font("Lucida Grande", 0, 10)); // NOI18N
+        jLabel11.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel11.setText("Fecha de ");
-        jPgestionar.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 110, -1, -1));
+        jPgestionar.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 110, -1, -1));
 
-        jLabel12.setFont(new java.awt.Font("Lucida Grande", 0, 10)); // NOI18N
-        jLabel12.setText("Si es asi, especifique donde:");
-        jPgestionar.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 210, -1, -1));
-
-        jLabel13.setFont(new java.awt.Font("Lucida Grande", 0, 10)); // NOI18N
-        jLabel13.setText("ejemplo: 0000-0000");
-        jPgestionar.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 100, -1, -1));
+        jLBmensaje.setBackground(new java.awt.Color(255, 255, 255));
+        jLBmensaje.setFont(new java.awt.Font("Lucida Grande", 0, 10)); // NOI18N
+        jLBmensaje.setForeground(new java.awt.Color(255, 255, 255));
+        jLBmensaje.setText("Si es asi, especifique donde:");
+        jPgestionar.add(jLBmensaje, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 210, -1, -1));
 
         jBtnEditar.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
         jBtnEditar.setForeground(new java.awt.Color(0, 153, 153));
-        jBtnEditar.setText("Guardar Cambios");
-        jBtnEditar.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jBtnEditar.setText("Editar");
         jBtnEditar.setEnabled(false);
         jBtnEditar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -764,8 +795,7 @@ public class JFFPaciente extends javax.swing.JFrame {
 
         jBtnGuardar.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
         jBtnGuardar.setForeground(new java.awt.Color(0, 153, 153));
-        jBtnGuardar.setText("Registrar");
-        jBtnGuardar.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jBtnGuardar.setText("Guardar");
         jBtnGuardar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jBtnGuardarActionPerformed(evt);
@@ -773,10 +803,8 @@ public class JFFPaciente extends javax.swing.JFrame {
         });
         jPgestionar.add(jBtnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 370, 260, 40));
 
-        jBtnLimpiar.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
-        jBtnLimpiar.setForeground(new java.awt.Color(0, 153, 153));
-        jBtnLimpiar.setText("Cancelar");
-        jBtnLimpiar.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jBtnLimpiar.setForeground(new java.awt.Color(51, 51, 51));
+        jBtnLimpiar.setText("Limpiar");
         jBtnLimpiar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jBtnLimpiarActionPerformed(evt);
@@ -795,37 +823,34 @@ public class JFFPaciente extends javax.swing.JFrame {
                 jTFnumIdentidadActionPerformed(evt);
             }
         });
-        jPgestionar.add(jTFnumIdentidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 30, 230, 30));
+        jTFnumIdentidad.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jTFnumIdentidadKeyPressed(evt);
+            }
+        });
+        jPgestionar.add(jTFnumIdentidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 30, 230, 30));
 
         try {
             jTFnumCelular.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("####-####")));
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
-        jPgestionar.add(jTFnumCelular, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 110, 170, 30));
+        jTFnumCelular.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jTFnumCelularKeyPressed(evt);
+            }
+        });
+        jPgestionar.add(jTFnumCelular, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 120, 190, 30));
 
         jDCFechaNacimiento.setDateFormatString("dd/MM/yyyy");
-        jPgestionar.add(jDCFechaNacimiento, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 110, 200, -1));
+        jPgestionar.add(jDCFechaNacimiento, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 110, 200, -1));
 
         jTabbedPane1.addTab("Gestionar", jPgestionar);
 
         jPMostrarPacientes.setBackground(new java.awt.Color(255, 255, 255));
 
-        jTFBusqueda.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                jTFBusquedaKeyReleased(evt);
-            }
-        });
-
-        jBtnMostrarTodos.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
-        jBtnMostrarTodos.setForeground(new java.awt.Color(0, 153, 153));
-        jBtnMostrarTodos.setText("Mostrar Todos");
-        jBtnMostrarTodos.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jBtnMostrarTodosActionPerformed(evt);
-            }
-        });
-
+        jTBPacientes.setBackground(new java.awt.Color(204, 255, 204));
+        jTBPacientes.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jTBPacientes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -846,24 +871,10 @@ public class JFFPaciente extends javax.swing.JFrame {
         jTBPacientes.setShowGrid(true);
         jScrollPane2.setViewportView(jTBPacientes);
 
-        jLabel14.setText("Buscar por nombre o apellido:");
-
-        jLabel15.setText("ó");
-
         javax.swing.GroupLayout jPMostrarPacientesLayout = new javax.swing.GroupLayout(jPMostrarPacientes);
         jPMostrarPacientes.setLayout(jPMostrarPacientesLayout);
         jPMostrarPacientesLayout.setHorizontalGroup(
             jPMostrarPacientesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPMostrarPacientesLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel14)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTFBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, 434, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel15)
-                .addGap(21, 21, 21)
-                .addComponent(jBtnMostrarTodos, javax.swing.GroupLayout.PREFERRED_SIZE, 278, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPMostrarPacientesLayout.createSequentialGroup()
                 .addContainerGap(16, Short.MAX_VALUE)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 997, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -873,14 +884,8 @@ public class JFFPaciente extends javax.swing.JFrame {
             jPMostrarPacientesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPMostrarPacientesLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPMostrarPacientesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTFBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jBtnMostrarTodos, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel14)
-                    .addComponent(jLabel15))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 367, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(131, 131, 131))
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 410, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(88, 88, 88))
         );
 
         jTabbedPane1.addTab("Historal de Registros", jPMostrarPacientes);
@@ -897,10 +902,6 @@ public class JFFPaciente extends javax.swing.JFrame {
     private void jCBtrabajaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCBtrabajaActionPerformed
         activarCampoLugarTrabajo();
     }//GEN-LAST:event_jCBtrabajaActionPerformed
-
-    private void jCboProfesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCboProfesionActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jCboProfesionActionPerformed
 
     private void jBtnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnEditarActionPerformed
         try {
@@ -926,26 +927,6 @@ public class JFFPaciente extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTFnumIdentidadActionPerformed
 
-    private void jBtnMostrarTodosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnMostrarTodosActionPerformed
-        try{
-            this.llenarTabla();
-            this.jTFBusqueda.setText("");
-        } catch(SQLException ex){
-            JOptionPane.showMessageDialog(null,"Error: " + ex.getMessage());
-        }
-    }//GEN-LAST:event_jBtnMostrarTodosActionPerformed
-
-    private void jTFBusquedaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTFBusquedaKeyReleased
-        String Busqueda;
-        Busqueda = this.jTFBusqueda.getText();
-        
-        try{
-            this.llenarTablarPorNombre(Busqueda);
-        } catch (SQLException ex){
-            JOptionPane.showMessageDialog(null,"Error: " + ex.getMessage());
-        }
-    }//GEN-LAST:event_jTFBusquedaKeyReleased
-
     private void jMIEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMIEditarActionPerformed
         try {
             //llama al metodo siguiente para eliminar cualquier registro seleccionado con el click derecho en la jtable
@@ -964,6 +945,38 @@ public class JFFPaciente extends javax.swing.JFrame {
             Logger.getLogger(JFFPaciente.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jMiEliminarActionPerformed
+
+    private void jTFnombresKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTFnombresKeyPressed
+        if(jTFnombres.getText().length() >=  0 ){ jTFnombres.setBorder(this.border); }
+    }//GEN-LAST:event_jTFnombresKeyPressed
+
+    private void jTFnumCelularKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTFnumCelularKeyPressed
+        if(jTFnumCelular.getText().length() >=  0 ){ jTFnumCelular.setBorder(this.border); }
+    }//GEN-LAST:event_jTFnumCelularKeyPressed
+
+    private void jTFapellidosKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTFapellidosKeyPressed
+        if(jTFapellidos.getText().length() >=  0 ){ jTFapellidos.setBorder(this.border); }
+    }//GEN-LAST:event_jTFapellidosKeyPressed
+
+    private void jTFlugarTrabajoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTFlugarTrabajoKeyPressed
+        if(jTFlugarTrabajo.getText().length() >=  0 ){ jTFlugarTrabajo.setBorder(this.border); }
+    }//GEN-LAST:event_jTFlugarTrabajoKeyPressed
+
+    private void jTFnumIdentidadKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTFnumIdentidadKeyPressed
+        if(jTFnumIdentidad.getText().length() >=  0 ){ jTFnumIdentidad.setBorder(this.border); }
+    }//GEN-LAST:event_jTFnumIdentidadKeyPressed
+
+    private void jTAdireccionKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTAdireccionKeyPressed
+        if(jTAdireccion.getText().length() >=  0 ){ jTAdireccion.setBorder(this.border); }
+    }//GEN-LAST:event_jTAdireccionKeyPressed
+
+    private void jCboSexoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCboSexoActionPerformed
+        if(jCboSexo.getSelectedIndex() >  0 ){ jCboSexo.setBorder(this.border); }
+    }//GEN-LAST:event_jCboSexoActionPerformed
+
+    private void jCboProfesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCboProfesionActionPerformed
+        if(jCboProfesion.getSelectedIndex() >  0 ){ jCboProfesion.setBorder(this.border); }
+    }//GEN-LAST:event_jCboProfesionActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1016,19 +1029,15 @@ public class JFFPaciente extends javax.swing.JFrame {
     private javax.swing.JButton jBtnEditar;
     private javax.swing.JButton jBtnGuardar;
     private javax.swing.JButton jBtnLimpiar;
-    private javax.swing.JButton jBtnMostrarTodos;
     private javax.swing.JCheckBox jCBtrabaja;
     private javax.swing.JComboBox<String> jCboProfesion;
     private javax.swing.JComboBox<String> jCboSexo;
     private com.toedter.calendar.JDateChooser jDCFechaNacimiento;
     private javax.swing.JLabel jLBiconoNombre;
+    private javax.swing.JLabel jLBmensaje;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel13;
-    private javax.swing.JLabel jLabel14;
-    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -1049,7 +1058,6 @@ public class JFFPaciente extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTextArea jTAdireccion;
     private javax.swing.JTable jTBPacientes;
-    private javax.swing.JTextField jTFBusqueda;
     private javax.swing.JTextField jTFapellidos;
     private javax.swing.JTextField jTFlugarTrabajo;
     private javax.swing.JTextField jTFnombres;

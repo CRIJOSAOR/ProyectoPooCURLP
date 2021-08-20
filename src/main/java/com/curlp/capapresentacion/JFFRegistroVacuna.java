@@ -5,6 +5,13 @@
  */
 package com.curlp.capapresentacion;
 
+import com.curlp.capapresentacion.*;
+import java.sql.SQLException;
+import java.text.ParseException;
+import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author sanch
@@ -17,7 +24,17 @@ public class JFFRegistroVacuna extends javax.swing.JFrame {
     public JFFRegistroVacuna() {
         initComponents();
     }
-
+    public void abrirVentanaSelectorPaciente() throws SQLException, ParseException{
+        JFFVisorDePaciente visorPaciente = new JFFVisorDePaciente(this);
+        visorPaciente.setVisible(true);
+    }
+    
+    public void llenarDatosPaciente(String numIdentidad, String nombre, String apellido, String fechaNacimiento){
+        jTFNumIdentidadPaciente.setText(numIdentidad);
+        jTFNombrePaciente.setText(nombre);
+        jTFApellidosPaciente.setText(apellido);
+        jTFFechaNacimientoPaciente.setText(fechaNacimiento);
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -73,6 +90,7 @@ public class JFFRegistroVacuna extends javax.swing.JFrame {
         jPfranjaSuperior1 = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
@@ -120,7 +138,6 @@ public class JFFRegistroVacuna extends javax.swing.JFrame {
         jBtnGuardar.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jBtnGuardar.setForeground(new java.awt.Color(0, 153, 153));
         jBtnGuardar.setText("Buscar");
-        jBtnGuardar.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jBtnGuardar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jBtnGuardarActionPerformed(evt);
@@ -167,7 +184,6 @@ public class JFFRegistroVacuna extends javax.swing.JFrame {
         jBtnBuscarEstablecimiento.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jBtnBuscarEstablecimiento.setForeground(new java.awt.Color(0, 153, 153));
         jBtnBuscarEstablecimiento.setText("Buscar");
-        jBtnBuscarEstablecimiento.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jBtnBuscarEstablecimiento.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jBtnBuscarEstablecimientoActionPerformed(evt);
@@ -194,7 +210,6 @@ public class JFFRegistroVacuna extends javax.swing.JFrame {
         jBtnGuardar2.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jBtnGuardar2.setForeground(new java.awt.Color(0, 153, 153));
         jBtnGuardar2.setText("Buscar");
-        jBtnGuardar2.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jBtnGuardar2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jBtnGuardar2ActionPerformed(evt);
@@ -230,7 +245,6 @@ public class JFFRegistroVacuna extends javax.swing.JFrame {
         jBtnBuscarPaciente.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jBtnBuscarPaciente.setForeground(new java.awt.Color(0, 153, 153));
         jBtnBuscarPaciente.setText("Buscar");
-        jBtnBuscarPaciente.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jBtnBuscarPaciente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jBtnBuscarPacienteActionPerformed(evt);
@@ -253,6 +267,7 @@ public class JFFRegistroVacuna extends javax.swing.JFrame {
         getContentPane().add(jPfranjaSuperior1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 770, 740, 20));
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jLabel1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MousePressed
@@ -272,7 +287,13 @@ public class JFFRegistroVacuna extends javax.swing.JFrame {
     }//GEN-LAST:event_jBtnGuardar2ActionPerformed
 
     private void jBtnBuscarPacienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnBuscarPacienteActionPerformed
-        // TODO add your handling code here:
+        try {
+            abrirVentanaSelectorPaciente();
+        } catch (SQLException ex) {
+            Logger.getLogger(JFFRegistroVacuna.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ParseException ex) {
+            Logger.getLogger(JFFRegistroVacuna.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jBtnBuscarPacienteActionPerformed
 
     /**
