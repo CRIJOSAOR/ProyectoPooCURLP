@@ -219,11 +219,13 @@ public class JFFVacunador extends javax.swing.JFrame {
         ImageIcon iconImage = new ImageIcon("src/main/java/com/curlp/capaimagenes/image.jpg");
         ImageIcon iconbtnEliminar = new ImageIcon("src/main/java/com/curlp/capaimagenes/delete.png");
         ImageIcon iconbtnSalir = new ImageIcon("src/main/java/com/curlp/capaimagenes/logout.png");
+        ImageIcon iconbtnEditar = new ImageIcon("src/main/java/com/curlp/capaimagenes/limpiar.png");
         this.jBtnRegistrar.setIcon(iconbtnRegistrar);
         this.jLBiconoNombres.setIcon(iconLogoTitulo);
         this.jBtnActualizar.setIcon(iconbtnActualizar);
         this.jBtnEliminar.setIcon(iconbtnEliminar);
         this.jBtnSalir.setIcon(iconbtnSalir);
+        this.jBtnLimpiar.setIcon(iconbtnEditar);
         
     }
      
@@ -363,6 +365,7 @@ public class JFFVacunador extends javax.swing.JFrame {
         jBtnRegistrar = new javax.swing.JButton();
         jBtnActualizar = new javax.swing.JButton();
         jBtnEliminar = new javax.swing.JButton();
+        jBtnLimpiar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -513,6 +516,17 @@ public class JFFVacunador extends javax.swing.JFrame {
             }
         });
 
+        jBtnLimpiar.setBackground(new java.awt.Color(255, 255, 255));
+        jBtnLimpiar.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jBtnLimpiar.setForeground(new java.awt.Color(0, 153, 153));
+        jBtnLimpiar.setText("Limpiar");
+        jBtnLimpiar.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jBtnLimpiar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBtnLimpiarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -550,17 +564,21 @@ public class JFFVacunador extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel5)
-                            .addComponent(jBtnRegistrar, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(jBtnRegistrar, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(24, 24, 24)
+                                .addComponent(jBtnActualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(jBtnActualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jBtnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(16, 16, 16))
-                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(JTFDireccionV)
-                                .addGap(15, 15, 15)))))
+                                .addGap(15, 15, 15))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGap(28, 28, 28)
+                                .addComponent(jBtnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(35, 35, 35)
+                                .addComponent(jBtnLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE)))))
                 .addGap(84, 84, 84))
         );
         jPanel2Layout.setVerticalGroup(
@@ -593,8 +611,9 @@ public class JFFVacunador extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jBtnRegistrar, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jBtnActualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jBtnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jBtnActualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jBtnLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(96, 96, 96))
         );
 
@@ -664,6 +683,10 @@ public class JFFVacunador extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_jBtnSalirActionPerformed
 
+    private void jBtnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnLimpiarActionPerformed
+        limpiarCampos();
+    }//GEN-LAST:event_jBtnLimpiarActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -715,6 +738,7 @@ public class JFFVacunador extends javax.swing.JFrame {
     private javax.swing.JTable JTblVacunadores;
     private javax.swing.JButton jBtnActualizar;
     private javax.swing.JButton jBtnEliminar;
+    private javax.swing.JButton jBtnLimpiar;
     private javax.swing.JButton jBtnRegistrar;
     private javax.swing.JButton jBtnSalir;
     private javax.swing.JLabel jLBiconoNombres;
