@@ -6,9 +6,11 @@
 package com.curlp.capapresentacion;
 
 import com.curlp.capapresentacion.*;
+import com.curlp.capadatos.CDDosis;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.Date;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -22,8 +24,19 @@ public class JFFRegistroVacuna extends javax.swing.JFrame {
     /**
      * Creates new form JFFRegistroVacuna
      */
-    public JFFRegistroVacuna() {
+    public JFFRegistroVacuna() throws SQLException {
         initComponents();
+        llenarComboBoxDosis();
+    }
+    public void llenarComboBoxDosis() throws SQLException{
+        CDDosis dosis = new CDDosis();
+        List<String> lista = dosis.cargarDosis();
+        
+        this.jComboBox1.removeAllItems();
+        
+        for (String x: lista){
+             this.jComboBox1.addItem(x);
+        }
     }
     public void abrirVentanaSelectorPaciente() throws SQLException, ParseException{
         JFFVisorDePaciente visorPaciente = new JFFVisorDePaciente(this);
@@ -181,7 +194,11 @@ public class JFFRegistroVacuna extends javax.swing.JFrame {
         jLabel7.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel7.setText("Fecha de Aplicación");
         jPanel2.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, -1, -1));
+
+        jTFechaVencimiento.setEditable(false);
         jPanel2.add(jTFechaVencimiento, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 40, 210, 30));
+
+        jTFNumLote.setEditable(false);
         jPanel2.add(jTFNumLote, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 40, 200, 30));
 
         jDCFechaVacunacion.setDateFormatString("dd/MM/yyyy");
@@ -190,6 +207,8 @@ public class JFFRegistroVacuna extends javax.swing.JFrame {
         jLabel10.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel10.setText("Marca Vacuna");
         jPanel2.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 80, -1, -1));
+
+        jTFmarcaVacuna.setEditable(false);
         jPanel2.add(jTFmarcaVacuna, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 100, 170, 30));
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
@@ -223,7 +242,11 @@ public class JFFRegistroVacuna extends javax.swing.JFrame {
             }
         });
         jPanel3.add(jBtnBuscarEstablecimiento, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 70, 110, 30));
+
+        jTFNombreEstablecimiento.setEditable(false);
         jPanel3.add(jTFNombreEstablecimiento, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 40, 200, 30));
+
+        jTFCodigoEstablecimiento.setEditable(false);
         jPanel3.add(jTFCodigoEstablecimiento, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, 157, 30));
 
         getContentPane().add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 270, 710, 110));
@@ -253,8 +276,14 @@ public class JFFRegistroVacuna extends javax.swing.JFrame {
         jLabel15.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel15.setText("Número de Identidad:");
         jPanel4.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, -1, -1));
+
+        jTFApellidoVacunador.setEditable(false);
         jPanel4.add(jTFApellidoVacunador, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 40, 210, 30));
+
+        jTFNombreVacunador.setEditable(false);
         jPanel4.add(jTFNombreVacunador, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 40, 200, 30));
+
+        JTFNumIdentidadVacunador.setEditable(false);
         jPanel4.add(JTFNumIdentidadVacunador, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, 157, 30));
 
         getContentPane().add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 540, 710, 140));
@@ -288,9 +317,17 @@ public class JFFRegistroVacuna extends javax.swing.JFrame {
         jLabel19.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel19.setText("Número de Identidad:");
         jPanel5.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, -1, -1));
+
+        jTFFechaNacimientoPaciente.setEditable(false);
         jPanel5.add(jTFFechaNacimientoPaciente, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 100, 170, 30));
+
+        jTFApellidosPaciente.setEditable(false);
         jPanel5.add(jTFApellidosPaciente, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 40, 210, 30));
+
+        jTFNombrePaciente.setEditable(false);
         jPanel5.add(jTFNombrePaciente, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 40, 200, 30));
+
+        jTFNumIdentidadPaciente.setEditable(false);
         jPanel5.add(jTFNumIdentidadPaciente, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, 157, 30));
 
         getContentPane().add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 120, 710, 140));
@@ -377,7 +414,11 @@ public class JFFRegistroVacuna extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new JFFRegistroVacuna().setVisible(true);
+                try {
+                    new JFFRegistroVacuna().setVisible(true);
+                } catch (SQLException ex) {
+                    JOptionPane.showMessageDialog(null, "Error al iniciar", "COVA System", JOptionPane.INFORMATION_MESSAGE);
+                }
             }
         });
     }

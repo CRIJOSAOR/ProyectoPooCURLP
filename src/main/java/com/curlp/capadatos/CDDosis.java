@@ -17,18 +17,17 @@ import javax.swing.JOptionPane;
  *
  * @author davidmendoza
  */
-public class CDSexo {
+public class CDDosis {
     private final Connection cn;
     PreparedStatement ps;
     ResultSet rs;
     Statement st;
 
-    public CDSexo() throws SQLException {
+    public CDDosis() throws SQLException {
         this.cn = Conexion.conectar();
     }
-    
-    public ArrayList<String> cargarSexos() throws SQLException {
-        String sql  = "call mostrarSexos()";
+        public ArrayList<String> cargarDosis() throws SQLException {
+        String sql  = "call mostrarDosis()";
         
         ArrayList<String> miLista = null;
         try{
@@ -39,7 +38,7 @@ public class CDSexo {
             miLista.add("--SELECCIONE--");
             
             while(rs.next()){
-                miLista.add(rs.getString("sexo"));
+                miLista.add(rs.getString("dosis"));
             }
         } catch(SQLException e){
             JOptionPane.showMessageDialog(null, "Error: " + e.getMessage());
@@ -47,5 +46,4 @@ public class CDSexo {
         return miLista;
     }
     
-
 }

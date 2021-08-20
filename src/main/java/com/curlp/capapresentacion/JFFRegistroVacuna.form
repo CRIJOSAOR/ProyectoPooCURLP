@@ -207,6 +207,9 @@
           </Constraints>
         </Component>
         <Component class="javax.swing.JTextField" name="jTFechaVencimiento">
+          <Properties>
+            <Property name="editable" type="boolean" value="false"/>
+          </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
               <AbsoluteConstraints x="450" y="40" width="210" height="30"/>
@@ -214,6 +217,9 @@
           </Constraints>
         </Component>
         <Component class="javax.swing.JTextField" name="jTFNumLote">
+          <Properties>
+            <Property name="editable" type="boolean" value="false"/>
+          </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
               <AbsoluteConstraints x="210" y="40" width="200" height="30"/>
@@ -244,6 +250,9 @@
           </Constraints>
         </Component>
         <Component class="javax.swing.JTextField" name="jTFmarcaVacuna">
+          <Properties>
+            <Property name="editable" type="boolean" value="false"/>
+          </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
               <AbsoluteConstraints x="10" y="100" width="170" height="30"/>
@@ -366,6 +375,9 @@
           </Constraints>
         </Component>
         <Component class="javax.swing.JTextField" name="jTFNombreEstablecimiento">
+          <Properties>
+            <Property name="editable" type="boolean" value="false"/>
+          </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
               <AbsoluteConstraints x="210" y="40" width="200" height="30"/>
@@ -373,6 +385,9 @@
           </Constraints>
         </Component>
         <Component class="javax.swing.JTextField" name="jTFCodigoEstablecimiento">
+          <Properties>
+            <Property name="editable" type="boolean" value="false"/>
+          </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
               <AbsoluteConstraints x="10" y="40" width="157" height="30"/>
@@ -468,6 +483,9 @@
           </Constraints>
         </Component>
         <Component class="javax.swing.JTextField" name="jTFApellidoVacunador">
+          <Properties>
+            <Property name="editable" type="boolean" value="false"/>
+          </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
               <AbsoluteConstraints x="450" y="40" width="210" height="30"/>
@@ -475,6 +493,9 @@
           </Constraints>
         </Component>
         <Component class="javax.swing.JTextField" name="jTFNombreVacunador">
+          <Properties>
+            <Property name="editable" type="boolean" value="false"/>
+          </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
               <AbsoluteConstraints x="210" y="40" width="200" height="30"/>
@@ -482,6 +503,9 @@
           </Constraints>
         </Component>
         <Component class="javax.swing.JTextField" name="JTFNumIdentidadVacunador">
+          <Properties>
+            <Property name="editable" type="boolean" value="false"/>
+          </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
               <AbsoluteConstraints x="10" y="40" width="157" height="30"/>
@@ -590,6 +614,9 @@
           </Constraints>
         </Component>
         <Component class="javax.swing.JTextField" name="jTFFechaNacimientoPaciente">
+          <Properties>
+            <Property name="editable" type="boolean" value="false"/>
+          </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
               <AbsoluteConstraints x="10" y="100" width="170" height="30"/>
@@ -597,6 +624,9 @@
           </Constraints>
         </Component>
         <Component class="javax.swing.JTextField" name="jTFApellidosPaciente">
+          <Properties>
+            <Property name="editable" type="boolean" value="false"/>
+          </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
               <AbsoluteConstraints x="450" y="40" width="210" height="30"/>
@@ -604,6 +634,9 @@
           </Constraints>
         </Component>
         <Component class="javax.swing.JTextField" name="jTFNombrePaciente">
+          <Properties>
+            <Property name="editable" type="boolean" value="false"/>
+          </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
               <AbsoluteConstraints x="210" y="40" width="200" height="30"/>
@@ -611,6 +644,9 @@
           </Constraints>
         </Component>
         <Component class="javax.swing.JTextField" name="jTFNumIdentidadPaciente">
+          <Properties>
+            <Property name="editable" type="boolean" value="false"/>
+          </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
               <AbsoluteConstraints x="10" y="40" width="157" height="30"/>

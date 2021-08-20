@@ -119,7 +119,7 @@ public class JFFVisorDeLote extends javax.swing.JFrame {
             
             cod = (String.valueOf(this.jTblLoteVacuna.getValueAt(this.jTblLoteVacuna.getSelectedRow(), 0)));
             fecha = (String.valueOf(this.jTblLoteVacuna.getValueAt(this.jTblLoteVacuna.getSelectedRow(),1)));
-            marca = (String.valueOf(this.jTblLoteVacuna.getValueAt(this.jTblLoteVacuna.getSelectedRow(),3)));
+            marca = (String.valueOf(this.jTblLoteVacuna.getValueAt(this.jTblLoteVacuna.getSelectedRow(),4)));
             this.ventanaPrincipal.llenarDatosLote(cod,fecha,marca);
             
             this.setVisible(false);
