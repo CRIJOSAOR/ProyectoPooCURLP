@@ -124,7 +124,7 @@ public class CDRegistroVacuna {
                 cl.setCodEstablecimiento(rs.getInt("r.codEstablecimiento"));
                 cl.setNumLoteVacuna(rs.getString("r.numLoteVacuna"));
                 cl.setDniPaciente(rs.getString("r.dniPaciente"));
-                cl.setDosis(rs.getInt("d.dosis"));
+                cl.setDosis(rs.getInt("d.idDosis"));
 
                 miLista.add(cl);
             }
@@ -154,34 +154,37 @@ public class CDRegistroVacuna {
         }
         return miLista;
     }
+
+    public List<CLRegistroVacuna> obtenerListaRegistroVacunaPorNombre(String codRegistro) throws SQLException {
+        String sql = "CALL mostrarRegistroVacunaPorNombre(?)";
+        List<CLRegistroVacuna> miLista = null;
+        
+        try{
+            ps = cn.prepareStatement(sql);
+            ps.setString(1, codRegistro);
+            rs = ps.executeQuery();
+            
+            miLista = new ArrayList<>();
+            
+            while(rs.next()){
+                CLRegistroVacuna cl = new CLRegistroVacuna();
+                                
+                cl.setIdRegistroVacuna(rs.getInt("r.idRegistroVacuna"));
+                cl.setFechaVacunacion(rs.getDate("r.fechaVacunacion"));
+                cl.setDniVacunador(rs.getString("r.dniVacunador"));
+                cl.setCodEstablecimiento(rs.getInt("r.codEstablecimiento"));
+                cl.setNumLoteVacuna(rs.getString("r.numLoteVacuna"));
+                cl.setDniPaciente(rs.getString("r.dniPaciente"));
+                cl.setDosis(rs.getInt("d.idDosis"));
+
+                miLista.add(cl);
+                
+            }
+        } catch(SQLException e){
+            
+            JOptionPane.showMessageDialog(null, "Error al mostrar Registros de Vacuna", "COVA System", JOptionPane.INFORMATION_MESSAGE);
+        }
+        
+        return miLista;
+    } 
 }
-//    public List<CLLoteVacuna> obtenerListaLotesPorCod(String codLote) throws SQLException {
-//        String sql = "CALL mostrarLotePorCod(?)";
-//        List<CLLoteVacuna> miLista = null;
-//        
-//        try{
-//            ps = cn.prepareStatement(sql);
-//            ps.setString(1, codLote);
-//            rs = ps.executeQuery();
-//            
-//            miLista = new ArrayList<>();
-//            
-//            while(rs.next()){
-//                CLLoteVacuna cl = new CLLoteVacuna();
-//                cl.setNumLoteVacuna(rs.getString("lv.numLoteVacuna"));
-//                cl.setFechaFabricacion(rs.getDate("lv.fechaFabricacion"));
-//                cl.setFechaVencimiento(rs.getDate("lv.fechaVencimiento"));
-//                cl.setIdFbricante(rs.getInt("lv.idFabricante"));
-//                cl.setNombreFabricante(rs.getString("f.nombreFabricante"));
-//
-//                miLista.add(cl);
-//                
-//            }
-//        } catch(SQLException e){
-//            
-//            JOptionPane.showMessageDialog(null, "Error al mostrar lotes", "COVA System", JOptionPane.INFORMATION_MESSAGE);
-//        }
-//        
-//        return miLista;
-//    } 
-//}

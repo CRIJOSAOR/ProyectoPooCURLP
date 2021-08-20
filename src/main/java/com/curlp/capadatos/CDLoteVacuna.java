@@ -171,4 +171,30 @@ public class CDLoteVacuna {
         
         return miLista;
     } 
+    public CLLoteVacuna mostrarLoteVacunaX(String codLote) throws SQLException {
+        String sql = "CALL mostrarLoteVacunaX(?)";
+        
+        CLLoteVacuna cl = new CLLoteVacuna();
+        try{
+            
+            ps = cn.prepareStatement(sql);
+            ps.setString(1, codLote);
+            rs = ps.executeQuery();
+            
+            
+            rs.next();
+                
+                cl.setNumLoteVacuna(rs.getString("lv.numLoteVacuna"));
+                cl.setFechaFabricacion(rs.getDate("lv.fechaFabricacion"));
+                cl.setFechaVencimiento(rs.getDate("lv.fechaVencimiento"));
+                cl.setNombreFabricante(rs.getString("f.nombreFabricante"));
+            
+            
+        } catch(SQLException e){
+            
+            JOptionPane.showMessageDialog(null,"Error al mostrar -- Vuelva a intentarlo","Error",JOptionPane.ERROR_MESSAGE);
+        }
+        
+        return cl;
+    }
 }

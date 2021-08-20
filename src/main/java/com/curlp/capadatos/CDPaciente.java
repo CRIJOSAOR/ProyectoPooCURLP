@@ -118,26 +118,26 @@ public class CDPaciente {
     
     public CLPaciente mostrarPacienteX(String numIdentidad) throws SQLException {
         String sql = "CALL mostrarPacienteX(?)";
-        CLPaciente cl = new CLPaciente();
         
+        CLPaciente cl = new CLPaciente();
         try{
             
             ps = cn.prepareStatement(sql);
             ps.setString(1, numIdentidad);
             rs = ps.executeQuery();
             
-            cl.setNumIdentidad(rs.getString("p.dniPaciente"));
-            cl.setNombres(rs.getString("p.nombrePaciente"));
-            cl.setApellidos(rs.getString("p.apellidoPaciente"));
-            cl.setNumCelular(rs.getString("p.numCelular"));
-            cl.setFechaNacimiento(rs.getDate("p.fechaNacimiento"));
-            cl.setLugarTrabajo(rs.getString("p.lugarTrabajo"));
-            cl.setDireccion(rs.getString("p.direccionPaciente"));
-            cl.setSexo(rs.getString("s.sexo"));
-            cl.setProfesion(rs.getString("pr.profesion"));
-                
             
-                
+            rs.next();
+                cl.setNumIdentidad(rs.getString("p.dniPaciente"));
+                cl.setNombres(rs.getString("p.nombrePaciente"));
+                cl.setApellidos(rs.getString("p.apellidoPaciente"));
+                cl.setNumCelular(rs.getString("p.numCelular"));
+                cl.setFechaNacimiento(rs.getDate("p.fechaNacimiento"));
+                cl.setLugarTrabajo(rs.getString("p.lugarTrabajo"));
+                cl.setDireccion(rs.getString("p.direccionPaciente"));
+                cl.setSexo(rs.getString("s.sexo"));
+                cl.setProfesion(rs.getString("pr.profesion"));   
+            
             
         } catch(SQLException e){
             

@@ -122,7 +122,7 @@ public class CDVacunador {
             ps = cn.prepareStatement(sql);
             ps.setString(1, dniVacunador);
             rs = ps.executeQuery();
-
+            rs.next();
             cl.setDniVacunador(rs.getString("dniVacunador"));
             cl.setNombresV(rs.getString("nombre"));
             cl.setApellidosV(rs.getString("apellidos"));

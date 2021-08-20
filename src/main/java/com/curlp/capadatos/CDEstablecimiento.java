@@ -174,4 +174,28 @@ public class CDEstablecimiento {
         
         return miLista;
     } 
+    public CLEstablecimiento mostrarEstablecimientoX(int codEst) throws SQLException {
+        String sql = "CALL mostrarEstablecimientoX(?)";
+        
+        CLEstablecimiento cl = new CLEstablecimiento();
+        try{
+            
+            ps = cn.prepareStatement(sql);
+            ps.setInt(1, codEst);
+            rs = ps.executeQuery();
+            
+            
+            rs.next();
+                
+                cl.setCodEstablecimiento(rs.getInt("codEstablecimiento"));
+                cl.setNombreEstablecimiento(rs.getString("nombreEstablecimiento"));
+            
+            
+        } catch(SQLException e){
+            
+            JOptionPane.showMessageDialog(null,"Error al mostrar -- Vuelva a intentarlo","Error",JOptionPane.ERROR_MESSAGE);
+        }
+        
+        return cl;
+    }
 }
