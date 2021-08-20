@@ -142,4 +142,33 @@ public class CDLoteVacuna {
         }
         return miLista;
     }
+    public List<CLLoteVacuna> obtenerListaLotesPorCod(String codLote) throws SQLException {
+        String sql = "CALL mostrarLotePorCod(?)";
+        List<CLLoteVacuna> miLista = null;
+        
+        try{
+            ps = cn.prepareStatement(sql);
+            ps.setString(1, codLote);
+            rs = ps.executeQuery();
+            
+            miLista = new ArrayList<>();
+            
+            while(rs.next()){
+                CLLoteVacuna cl = new CLLoteVacuna();
+                cl.setNumLoteVacuna(rs.getString("lv.numLoteVacuna"));
+                cl.setFechaFabricacion(rs.getDate("lv.fechaFabricacion"));
+                cl.setFechaVencimiento(rs.getDate("lv.fechaVencimiento"));
+                cl.setIdFbricante(rs.getInt("lv.idFabricante"));
+                cl.setNombreFabricante(rs.getString("f.nombreFabricante"));
+
+                miLista.add(cl);
+                
+            }
+        } catch(SQLException e){
+            
+            JOptionPane.showMessageDialog(null, "Error al mostrar lotes", "COVA System", JOptionPane.INFORMATION_MESSAGE);
+        }
+        
+        return miLista;
+    } 
 }

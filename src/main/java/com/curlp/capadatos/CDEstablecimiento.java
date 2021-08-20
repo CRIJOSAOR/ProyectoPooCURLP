@@ -149,4 +149,29 @@ public class CDEstablecimiento {
         return miLista;
 
     }
+    public List<CLEstablecimiento> obtenerListaEstablecimientosPorNombre(String nombreEst) throws SQLException {
+        String sql = "CALL mostrarLotePorCod(?)";
+        List<CLEstablecimiento> miLista = null;
+        
+        try{
+            ps = cn.prepareStatement(sql);
+            ps.setString(1, nombreEst);
+            rs = ps.executeQuery();
+            
+            miLista = new ArrayList<>();
+            
+            while(rs.next()){
+                CLEstablecimiento cl = new CLEstablecimiento();
+                cl.setCodEstablecimiento(rs.getInt("codEstablecimiento"));
+                cl.setNombreEstablecimiento(rs.getString("nombreEstablecimiento"));
+                miLista.add(cl);
+                
+            }
+        } catch(SQLException e){
+            
+            JOptionPane.showMessageDialog(null, "Error al mostrar establecimiento", "COVA System", JOptionPane.INFORMATION_MESSAGE);
+        }
+        
+        return miLista;
+    } 
 }

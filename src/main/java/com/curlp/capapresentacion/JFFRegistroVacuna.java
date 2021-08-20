@@ -11,6 +11,7 @@ import java.text.ParseException;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -29,11 +30,43 @@ public class JFFRegistroVacuna extends javax.swing.JFrame {
         visorPaciente.setVisible(true);
     }
     
+    public void abrirVentanaSelectorVacunador() throws SQLException, ParseException{
+        JFFVisorDeVacunador visorVacunador = new JFFVisorDeVacunador(this);
+        visorVacunador.setVisible(true);
+    }
+    
+    public void abrirVentanaSelectorLote() throws SQLException, ParseException{
+        JFFVisorDeLote visorLote = new JFFVisorDeLote(this);
+        visorLote.setVisible(true);
+    }
+
+    public void abrirVentanaSelectorEstablecimiento() throws SQLException, ParseException{
+        JFFVisorDeEstablecimiento visorEst = new JFFVisorDeEstablecimiento(this);
+        visorEst.setVisible(true);
+    }
+    
     public void llenarDatosPaciente(String numIdentidad, String nombre, String apellido, String fechaNacimiento){
         jTFNumIdentidadPaciente.setText(numIdentidad);
         jTFNombrePaciente.setText(nombre);
         jTFApellidosPaciente.setText(apellido);
         jTFFechaNacimientoPaciente.setText(fechaNacimiento);
+    }
+    
+    public void llenarDatosVacunador(String numIdentidad, String nombre, String apellido){
+        JTFNumIdentidadVacunador.setText(numIdentidad);
+        jTFNombreVacunador.setText(nombre);
+        jTFApellidoVacunador.setText(apellido);
+    }
+
+    public void llenarDatosLote(String numLote, String fechaVencimiento, String marca){
+        jTFNumLote.setText(numLote);
+        jTFechaVencimiento.setText(fechaVencimiento);
+        jTFmarcaVacuna.setText(marca);
+    }
+    
+    public void llenarDatosEstablecimiento(String codigo, String nombre){
+        jTFCodigoEstablecimiento.setText(codigo);
+        jTFNombreEstablecimiento.setText(nombre);
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -53,13 +86,13 @@ public class JFFRegistroVacuna extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        jBtnGuardar = new javax.swing.JButton();
+        jBtnBuscarLote = new javax.swing.JButton();
         jLabel7 = new javax.swing.JLabel();
-        jTFNumLote7 = new javax.swing.JTextField();
-        jTFNumLote8 = new javax.swing.JTextField();
+        jTFechaVencimiento = new javax.swing.JTextField();
+        jTFNumLote = new javax.swing.JTextField();
         jDCFechaVacunacion = new com.toedter.calendar.JDateChooser();
         jLabel10 = new javax.swing.JLabel();
-        jTFNumLote9 = new javax.swing.JTextField();
+        jTFmarcaVacuna = new javax.swing.JTextField();
         jComboBox1 = new javax.swing.JComboBox<>();
         jLabel3 = new javax.swing.JLabel();
         jTFNumerodeRegistro = new javax.swing.JTextField();
@@ -72,11 +105,11 @@ public class JFFRegistroVacuna extends javax.swing.JFrame {
         jPanel4 = new javax.swing.JPanel();
         jLabel12 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
-        jBtnGuardar2 = new javax.swing.JButton();
+        jBtnBuscarVacunador = new javax.swing.JButton();
         jLabel15 = new javax.swing.JLabel();
-        jTFNumLote13 = new javax.swing.JTextField();
-        jTFNumLote14 = new javax.swing.JTextField();
-        jTFNumLote3 = new javax.swing.JTextField();
+        jTFApellidoVacunador = new javax.swing.JTextField();
+        jTFNombreVacunador = new javax.swing.JTextField();
+        JTFNumIdentidadVacunador = new javax.swing.JTextField();
         jPanel5 = new javax.swing.JPanel();
         jLabel16 = new javax.swing.JLabel();
         jLabel17 = new javax.swing.JLabel();
@@ -135,21 +168,21 @@ public class JFFRegistroVacuna extends javax.swing.JFrame {
         jLabel6.setText("# de Dosis");
         jPanel2.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 80, -1, -1));
 
-        jBtnGuardar.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jBtnGuardar.setForeground(new java.awt.Color(0, 153, 153));
-        jBtnGuardar.setText("Buscar");
-        jBtnGuardar.addActionListener(new java.awt.event.ActionListener() {
+        jBtnBuscarLote.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jBtnBuscarLote.setForeground(new java.awt.Color(0, 153, 153));
+        jBtnBuscarLote.setText("Buscar");
+        jBtnBuscarLote.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jBtnGuardarActionPerformed(evt);
+                jBtnBuscarLoteActionPerformed(evt);
             }
         });
-        jPanel2.add(jBtnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 100, 110, 30));
+        jPanel2.add(jBtnBuscarLote, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 100, 110, 30));
 
         jLabel7.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel7.setText("Fecha de Aplicación");
         jPanel2.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, -1, -1));
-        jPanel2.add(jTFNumLote7, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 40, 210, 30));
-        jPanel2.add(jTFNumLote8, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 40, 200, 30));
+        jPanel2.add(jTFechaVencimiento, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 40, 210, 30));
+        jPanel2.add(jTFNumLote, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 40, 200, 30));
 
         jDCFechaVacunacion.setDateFormatString("dd/MM/yyyy");
         jPanel2.add(jDCFechaVacunacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, 180, -1));
@@ -157,7 +190,7 @@ public class JFFRegistroVacuna extends javax.swing.JFrame {
         jLabel10.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel10.setText("Marca Vacuna");
         jPanel2.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 80, -1, -1));
-        jPanel2.add(jTFNumLote9, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 100, 170, 30));
+        jPanel2.add(jTFmarcaVacuna, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 100, 170, 30));
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         jPanel2.add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 100, -1, -1));
@@ -207,22 +240,22 @@ public class JFFRegistroVacuna extends javax.swing.JFrame {
         jLabel13.setText("Apellidos");
         jPanel4.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 20, -1, -1));
 
-        jBtnGuardar2.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jBtnGuardar2.setForeground(new java.awt.Color(0, 153, 153));
-        jBtnGuardar2.setText("Buscar");
-        jBtnGuardar2.addActionListener(new java.awt.event.ActionListener() {
+        jBtnBuscarVacunador.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jBtnBuscarVacunador.setForeground(new java.awt.Color(0, 153, 153));
+        jBtnBuscarVacunador.setText("Buscar");
+        jBtnBuscarVacunador.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jBtnGuardar2ActionPerformed(evt);
+                jBtnBuscarVacunadorActionPerformed(evt);
             }
         });
-        jPanel4.add(jBtnGuardar2, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 100, 110, 30));
+        jPanel4.add(jBtnBuscarVacunador, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 100, 110, 30));
 
         jLabel15.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel15.setText("Número de Identidad:");
         jPanel4.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, -1, -1));
-        jPanel4.add(jTFNumLote13, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 40, 210, 30));
-        jPanel4.add(jTFNumLote14, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 40, 200, 30));
-        jPanel4.add(jTFNumLote3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, 157, 30));
+        jPanel4.add(jTFApellidoVacunador, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 40, 210, 30));
+        jPanel4.add(jTFNombreVacunador, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 40, 200, 30));
+        jPanel4.add(JTFNumIdentidadVacunador, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, 157, 30));
 
         getContentPane().add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 540, 710, 140));
 
@@ -274,25 +307,43 @@ public class JFFRegistroVacuna extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_jLabel1MousePressed
 
-    private void jBtnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnGuardarActionPerformed
-    
-    }//GEN-LAST:event_jBtnGuardarActionPerformed
+    private void jBtnBuscarLoteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnBuscarLoteActionPerformed
+        try {
+            this.abrirVentanaSelectorLote();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al buscar lotes", "COVA System", JOptionPane.INFORMATION_MESSAGE);
+        } catch (ParseException ex) {
+            JOptionPane.showMessageDialog(null, "Error al buscar lotes", "COVA System", JOptionPane.INFORMATION_MESSAGE);
+        }
+    }//GEN-LAST:event_jBtnBuscarLoteActionPerformed
 
     private void jBtnBuscarEstablecimientoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnBuscarEstablecimientoActionPerformed
-        // TODO add your handling code here:
+        try {
+            this.abrirVentanaSelectorEstablecimiento();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al buscar establecimientos", "COVA System", JOptionPane.INFORMATION_MESSAGE);
+        } catch (ParseException ex) {
+            JOptionPane.showMessageDialog(null, "Error al buscar establecimientos", "COVA System", JOptionPane.INFORMATION_MESSAGE);
+        }
     }//GEN-LAST:event_jBtnBuscarEstablecimientoActionPerformed
 
-    private void jBtnGuardar2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnGuardar2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jBtnGuardar2ActionPerformed
+    private void jBtnBuscarVacunadorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnBuscarVacunadorActionPerformed
+        try {
+            this.abrirVentanaSelectorVacunador();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error al buscar vacunador", "COVA System", JOptionPane.INFORMATION_MESSAGE);
+        } catch (ParseException ex) {
+            JOptionPane.showMessageDialog(null, "Error al buscar vacunador", "COVA System", JOptionPane.INFORMATION_MESSAGE);
+        }
+    }//GEN-LAST:event_jBtnBuscarVacunadorActionPerformed
 
     private void jBtnBuscarPacienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnBuscarPacienteActionPerformed
         try {
             abrirVentanaSelectorPaciente();
         } catch (SQLException ex) {
-            Logger.getLogger(JFFRegistroVacuna.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "Error al buscar un paciente", "COVA System", JOptionPane.INFORMATION_MESSAGE);
         } catch (ParseException ex) {
-            Logger.getLogger(JFFRegistroVacuna.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(null, "Error al buscar un paciente", "COVA System", JOptionPane.INFORMATION_MESSAGE);
         }
     }//GEN-LAST:event_jBtnBuscarPacienteActionPerformed
 
@@ -332,10 +383,11 @@ public class JFFRegistroVacuna extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField JTFNumIdentidadVacunador;
     private javax.swing.JButton jBtnBuscarEstablecimiento;
+    private javax.swing.JButton jBtnBuscarLote;
     private javax.swing.JButton jBtnBuscarPaciente;
-    private javax.swing.JButton jBtnGuardar;
-    private javax.swing.JButton jBtnGuardar2;
+    private javax.swing.JButton jBtnBuscarVacunador;
     private javax.swing.JComboBox<String> jComboBox1;
     private com.toedter.calendar.JDateChooser jDCFechaVacunacion;
     private javax.swing.JLabel jLabel1;
@@ -363,18 +415,17 @@ public class JFFRegistroVacuna extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPfranjaSuperior;
     private javax.swing.JPanel jPfranjaSuperior1;
+    private javax.swing.JTextField jTFApellidoVacunador;
     private javax.swing.JTextField jTFApellidosPaciente;
     private javax.swing.JTextField jTFCodigoEstablecimiento;
     private javax.swing.JTextField jTFFechaNacimientoPaciente;
     private javax.swing.JTextField jTFNombreEstablecimiento;
     private javax.swing.JTextField jTFNombrePaciente;
+    private javax.swing.JTextField jTFNombreVacunador;
     private javax.swing.JTextField jTFNumIdentidadPaciente;
-    private javax.swing.JTextField jTFNumLote13;
-    private javax.swing.JTextField jTFNumLote14;
-    private javax.swing.JTextField jTFNumLote3;
-    private javax.swing.JTextField jTFNumLote7;
-    private javax.swing.JTextField jTFNumLote8;
-    private javax.swing.JTextField jTFNumLote9;
+    private javax.swing.JTextField jTFNumLote;
     private javax.swing.JTextField jTFNumerodeRegistro;
+    private javax.swing.JTextField jTFechaVencimiento;
+    private javax.swing.JTextField jTFmarcaVacuna;
     // End of variables declaration//GEN-END:variables
 }

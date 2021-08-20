@@ -162,4 +162,36 @@ public class CDVacunador {
         return miListaV;
     }
     
+
+
+    public List<CLVacunador> obtenerListaVacunadoresPorNombre(String nombreVacunador) throws SQLException {
+        String sql = "CALL mostrarVacunadorPorNombre(?)";
+        List<CLVacunador> miLista = null;
+        
+        try{
+            ps = cn.prepareStatement(sql);
+            ps.setString(1, nombreVacunador);
+            rs = ps.executeQuery();
+            
+            miLista = new ArrayList<>();
+            
+            while(rs.next()){
+                CLVacunador cl = new CLVacunador();
+                cl.setDniVacunador(rs.getString("dniVacunador"));
+                cl.setNombresV(rs.getString("nombre"));
+                cl.setApellidosV(rs.getString("apellidos"));
+                cl.setDireccionV(rs.getString("direccion"));
+                cl.setNumCelularV(rs.getString("numCelular")); 
+                cl.setEstado(rs.getString("estado"));
+                
+                miLista.add(cl);
+                
+            }
+        } catch(SQLException e){
+            
+            JOptionPane.showMessageDialog(null, "Error al mostrar vacunadores", "COVA System", JOptionPane.INFORMATION_MESSAGE);
+        }
+        
+        return miLista;
+    } 
 }

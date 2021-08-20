@@ -6,7 +6,9 @@
 package com.curlp.capapresentacion;
 
 
+import com.curlp.capadatos.CDLoteVacuna;
 import com.curlp.capadatos.CDPaciente;
+import com.curlp.capalogica.CLLoteVacuna;
 import com.curlp.capalogica.CLPaciente;
 import com.curlp.capapresentacion.*;
 import java.sql.SQLException;
@@ -25,7 +27,7 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author davidmendoza
  */
-public class JFFVisorDePaciente extends javax.swing.JFrame {
+public class JFFVisorDeLote extends javax.swing.JFrame {
 
     /**
      * Creates new form JFFPaciente
@@ -33,10 +35,10 @@ public class JFFVisorDePaciente extends javax.swing.JFrame {
      */
     JFFRegistroVacuna ventanaPrincipal = new JFFRegistroVacuna();
     
-    public JFFVisorDePaciente(JFFRegistroVacuna main) throws SQLException {
+    public JFFVisorDeLote(JFFRegistroVacuna main) throws SQLException {
         initComponents();
         agregarIconos();
-        llenarTabla();
+        poblarTablaLoteVacuna();
         this.setLocationRelativeTo(null);   
         this.ventanaPrincipal = main;
     }
@@ -46,10 +48,10 @@ public class JFFVisorDePaciente extends javax.swing.JFrame {
     
     DefaultTableModel modelo; // permitira manejar la jTable
 
-    private JFFVisorDePaciente() throws SQLException {
+    private JFFVisorDeLote() throws SQLException {
         initComponents();
         agregarIconos();
-        llenarTabla();
+        poblarTablaLoteVacuna();
         this.setLocationRelativeTo(null);
     }
     
@@ -58,70 +60,52 @@ public class JFFVisorDePaciente extends javax.swing.JFrame {
         +++++++++++++++++++++++ Metodos para gestion de jTable ++++++++++++++++++++++++++++++++++++
     
     */
+
     
-        private void limpiarTabla(){
-        
-        modelo = (DefaultTableModel) this.jTBPacientes.getModel();
-        
-        while(modelo.getRowCount() > 0){
-            modelo.removeRow(0);
+    private void limpiarTabla() {
+        DefaultTableModel dtm = (DefaultTableModel) this.jTblLoteVacuna.getModel();
+        while (dtm.getRowCount() > 0) {
+            dtm.removeRow(0);
         }
-        
     }
-    
-    private void llenarTabla() throws SQLException{
-        
-        // limpiar la tabla
+
+    // Metodo para poblar tabla loteVacuna
+    private void poblarTablaLoteVacuna() throws SQLException {
         limpiarTabla();
-        
-        // instanciar una clase tipo CDPaciente para la conexion con la base de datos 
-        CDPaciente registro = new CDPaciente();
-        
-        // recuperar todos los pacientes en forma de lista
-        List<CLPaciente> listaPacientes = registro.mostrarPacientes();
-        // instanciamos un model 
-        modelo = (DefaultTableModel) this.jTBPacientes.getModel();
-      
-        // llenar cada fila con un ciclo      
-        listaPacientes.stream().map((CLPaciente persona) ->{
-            Object[] fila = new Object[9];
-            fila[0] = persona.getNumIdentidad();
-            fila[1] = persona.getNombres();
-            fila[2] = persona.getApellidos();
-            fila[3] = persona.getNumCelular();
-            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-            fila[4] = (String) sdf.format(persona.getFechaNacimiento());
-            fila[5] = persona.getLugarTrabajo();
-            fila[6] = persona.getDireccion();
-            fila[7] = persona.getSexo();
-            fila[8] = persona.getProfesion();
+
+        CDLoteVacuna cdlv = new CDLoteVacuna();
+        List<CLLoteVacuna> miLista = cdlv.obtenerListaLotevacuna();
+        DefaultTableModel temp = (DefaultTableModel) this.jTblLoteVacuna.getModel();
+
+        miLista.stream().map((CLLoteVacuna cl) -> {
+            Object[] fila = new Object[5];
+            fila[0] = cl.getNumLoteVacuna();
+            fila[1] = cl.getFechaFabricacion();
+            fila[2] = cl.getFechaVencimiento();
+            fila[3] = cl.getIdFbricante();
+            fila[4] = cl.getNombreFabricante();
             return fila;
-        }).forEachOrdered(modelo::addRow);    
+        }).forEachOrdered(temp::addRow);
     }
     
-    private void llenarTablarPorNombre(String nombreCliente) throws SQLException {
+    private void llenarTablarPorNombre(String numLote) throws SQLException {
         limpiarTabla();
         // instanciar una clase tipo CDPaciente para la conexion con la base de datos 
-        CDPaciente registro = new CDPaciente();
+        CDLoteVacuna registro = new CDLoteVacuna();
         
         // recuperar todos los pacientes en forma de lista
-        List<CLPaciente> listaPacientes = registro.obtenerListaPacientesPorNombre(nombreCliente);
+        List<CLLoteVacuna> listaLotes = registro.obtenerListaLotesPorCod(numLote);
         // instanciamos un model 
-        modelo = (DefaultTableModel) this.jTBPacientes.getModel();
+        modelo = (DefaultTableModel) this.jTblLoteVacuna.getModel();
       
         // llenar cada fila con un ciclo      
-        listaPacientes.stream().map((CLPaciente persona) ->{
-            Object[] fila = new Object[9];
-            fila[0] = persona.getNumIdentidad();
-            fila[1] = persona.getNombres();
-            fila[2] = persona.getApellidos();
-            fila[3] = persona.getNumCelular();
-            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-            fila[4] = (String) sdf.format(persona.getFechaNacimiento());
-            fila[5] = persona.getLugarTrabajo();
-            fila[6] = persona.getDireccion();
-            fila[7] = persona.getSexo();
-            fila[8] = persona.getProfesion();
+        listaLotes.stream().map((CLLoteVacuna cl) ->{
+            Object[] fila = new Object[5];
+            fila[0] = cl.getNumLoteVacuna();
+            fila[1] = cl.getFechaFabricacion();
+            fila[2] = cl.getFechaVencimiento();
+            fila[3] = cl.getIdFbricante();
+            fila[4] = cl.getNombreFabricante();
             return fila;
         }).forEachOrdered(modelo::addRow);
         
@@ -129,21 +113,19 @@ public class JFFVisorDePaciente extends javax.swing.JFrame {
     }
     
     private void seleccionarFila() throws SQLException, ParseException{
-        if(this.jTBPacientes.getSelectedRow() != -1){
+        if(this.jTblLoteVacuna.getSelectedRow() != -1){
                 
-            String id, nombre, apellido, fechaNacimiento;
+            String cod, fecha, marca;
             
-            id = (String.valueOf(this.jTBPacientes.getValueAt(jTBPacientes.getSelectedRow(), 0)));
-            nombre = (String.valueOf(this.jTBPacientes.getValueAt(jTBPacientes.getSelectedRow(), 1)));
-            apellido = (String.valueOf(this.jTBPacientes.getValueAt(jTBPacientes.getSelectedRow(), 2)));
-            fechaNacimiento = (String.valueOf(this.jTBPacientes.getValueAt(jTBPacientes.getSelectedRow(),4)));
-            
-            this.ventanaPrincipal.llenarDatosPaciente(id, nombre, apellido, fechaNacimiento);
+            cod = (String.valueOf(this.jTblLoteVacuna.getValueAt(this.jTblLoteVacuna.getSelectedRow(), 0)));
+            fecha = (String.valueOf(this.jTblLoteVacuna.getValueAt(this.jTblLoteVacuna.getSelectedRow(),1)));
+            marca = (String.valueOf(this.jTblLoteVacuna.getValueAt(this.jTblLoteVacuna.getSelectedRow(),3)));
+            this.ventanaPrincipal.llenarDatosLote(cod,fecha,marca);
             
             this.setVisible(false);
             this.dispose();
         } else {
-            JOptionPane.showMessageDialog(null, "Por favor seleccione un paciente", "COVA System", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Por favor seleccione un lote", "COVA System", JOptionPane.INFORMATION_MESSAGE);
         }
     } 
     
@@ -185,11 +167,11 @@ public class JFFVisorDePaciente extends javax.swing.JFrame {
         jLBiconoNombre = new javax.swing.JLabel();
         jPMostrarPacientes = new javax.swing.JPanel();
         jTFBusqueda = new javax.swing.JTextField();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        jTBPacientes = new javax.swing.JTable();
         jLabel14 = new javax.swing.JLabel();
         jBtnSeleccionar = new javax.swing.JButton();
         jBtnMostrarTodos1 = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTblLoteVacuna = new javax.swing.JTable();
 
         jMIEditar.setText("Seleccionar");
         jMIEditar.addActionListener(new java.awt.event.ActionListener() {
@@ -255,7 +237,7 @@ public class JFFVisorDePaciente extends javax.swing.JFrame {
         jLabel1.setBackground(new java.awt.Color(0, 153, 153));
         jLabel1.setFont(new java.awt.Font("Tahoma", 3, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(0, 153, 153));
-        jLabel1.setText("Seleccionar un Paciente");
+        jLabel1.setText("Seleccionar un Lote");
 
         javax.swing.GroupLayout jPTituloLayout = new javax.swing.GroupLayout(jPTitulo);
         jPTitulo.setLayout(jPTituloLayout);
@@ -295,29 +277,8 @@ public class JFFVisorDePaciente extends javax.swing.JFrame {
             }
         });
 
-        jTBPacientes.setBackground(new java.awt.Color(204, 255, 204));
-        jTBPacientes.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jTBPacientes.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "Identidad", "Nombres", "Apellidos", "Num Celular", "Fecha de Nacimiento", "Lugar Trabajo", "Direccion", "Sexo", "Profesion"
-            }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, true, true, true, true
-            };
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        jTBPacientes.setShowGrid(true);
-        jScrollPane2.setViewportView(jTBPacientes);
-
         jLabel14.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jLabel14.setText("Buscar por nombre o apellido:");
+        jLabel14.setText("Buscar por codigo:");
 
         jBtnSeleccionar.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
         jBtnSeleccionar.setForeground(new java.awt.Color(0, 153, 153));
@@ -337,6 +298,23 @@ public class JFFVisorDePaciente extends javax.swing.JFrame {
             }
         });
 
+        jTblLoteVacuna.setBackground(new java.awt.Color(204, 255, 204));
+        jTblLoteVacuna.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jTblLoteVacuna.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "# Lote de Vacuna", "Fecha de Fabricación", "Fecha de Vencimiento", "ID Fabricante", "Fabricante"
+            }
+        ));
+        jTblLoteVacuna.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTblLoteVacunaMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(jTblLoteVacuna);
+
         javax.swing.GroupLayout jPMostrarPacientesLayout = new javax.swing.GroupLayout(jPMostrarPacientes);
         jPMostrarPacientes.setLayout(jPMostrarPacientesLayout);
         jPMostrarPacientesLayout.setHorizontalGroup(
@@ -348,15 +326,15 @@ public class JFFVisorDePaciente extends javax.swing.JFrame {
                         .addComponent(jBtnSeleccionar, javax.swing.GroupLayout.PREFERRED_SIZE, 278, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPMostrarPacientesLayout.createSequentialGroup()
                         .addGap(23, 23, 23)
-                        .addComponent(jLabel14)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTFBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, 434, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jBtnMostrarTodos1, javax.swing.GroupLayout.PREFERRED_SIZE, 278, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPMostrarPacientesLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 939, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGroup(jPMostrarPacientesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 881, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPMostrarPacientesLayout.createSequentialGroup()
+                                .addComponent(jLabel14)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jTFBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, 434, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jBtnMostrarTodos1, javax.swing.GroupLayout.PREFERRED_SIZE, 278, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addContainerGap(46, Short.MAX_VALUE))
         );
         jPMostrarPacientesLayout.setVerticalGroup(
             jPMostrarPacientesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -366,11 +344,11 @@ public class JFFVisorDePaciente extends javax.swing.JFrame {
                     .addComponent(jTFBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel14)
                     .addComponent(jBtnMostrarTodos1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(11, 11, 11)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 367, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 357, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(jBtnSeleccionar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(29, Short.MAX_VALUE))
+                .addContainerGap(38, Short.MAX_VALUE))
         );
 
         getContentPane().add(jPMostrarPacientes, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 950, 580));
@@ -405,20 +383,24 @@ public class JFFVisorDePaciente extends javax.swing.JFrame {
         try {
             seleccionarFila();
         } catch (SQLException ex) {
-            Logger.getLogger(JFFVisorDePaciente.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(JFFVisorDeLote.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ParseException ex) {
-            Logger.getLogger(JFFVisorDePaciente.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(JFFVisorDeLote.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jBtnSeleccionarActionPerformed
 
     private void jBtnMostrarTodos1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnMostrarTodos1ActionPerformed
         try{
-            this.llenarTabla();
+            this.poblarTablaLoteVacuna();
             this.jTFBusqueda.setText("");
         } catch(SQLException ex){
             JOptionPane.showMessageDialog(null,"Error: " + ex.getMessage());
         }
     }//GEN-LAST:event_jBtnMostrarTodos1ActionPerformed
+
+    private void jTblLoteVacunaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTblLoteVacunaMouseClicked
+
+    }//GEN-LAST:event_jTblLoteVacunaMouseClicked
 
     /**
      * @param args the command line arguments
@@ -437,14 +419,30 @@ public class JFFVisorDePaciente extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(JFFVisorDePaciente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(JFFVisorDeLote.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(JFFVisorDePaciente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(JFFVisorDeLote.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(JFFVisorDePaciente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(JFFVisorDeLote.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(JFFVisorDePaciente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(JFFVisorDeLote.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
@@ -466,9 +464,9 @@ public class JFFVisorDePaciente extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
-                    new JFFVisorDePaciente().setVisible(true);
+                    new JFFVisorDeLote().setVisible(true);
                 } catch (SQLException ex) {
-                    Logger.getLogger(JFFVisorDePaciente.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(JFFVisorDeLote.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         });
@@ -488,8 +486,8 @@ public class JFFVisorDePaciente extends javax.swing.JFrame {
     private javax.swing.JPanel jPMostrarPacientes;
     private javax.swing.JPanel jPTitulo;
     private javax.swing.JPanel jPfranjaSuperior;
-    private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTBPacientes;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField jTFBusqueda;
+    private javax.swing.JTable jTblLoteVacuna;
     // End of variables declaration//GEN-END:variables
 }
