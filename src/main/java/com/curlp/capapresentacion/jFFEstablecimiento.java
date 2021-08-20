@@ -112,11 +112,11 @@ public class jFFEstablecimiento extends javax.swing.JFrame {
 
                 cde.insertarEstablecimiento(cl);
 
-                JOptionPane.showMessageDialog(null, "Registro almacenado satisfactoriamente", "COVA System",
+                JOptionPane.showMessageDialog(null, "¡Registrado correctamente!", "COVA System",
                         JOptionPane.INFORMATION_MESSAGE);
 
             } catch (SQLException ex) {
-                JOptionPane.showMessageDialog(null, "Error al almacenar" + ex);
+                JOptionPane.showMessageDialog(null, "¡Error al almacenar!" + ex);
                 this.jTFNombre_Establecimiento.requestFocus();
             }
         }
@@ -148,11 +148,11 @@ public class jFFEstablecimiento extends javax.swing.JFrame {
                 cl.setNombreEstablecimiento(this.jTFNombre_Establecimiento.getText().trim());
                 cde.actualizarEstablecimiento(cl);
 
-                JOptionPane.showMessageDialog(null, "Registro editado satisfactoriamente ", "COVA System",
+                JOptionPane.showMessageDialog(null, "¡Registro actualizado!", "COVA System",
                         JOptionPane.INFORMATION_MESSAGE);
 
             } catch (SQLException ex) {
-                JOptionPane.showMessageDialog(null, "Error al modificar el registro" + ex);
+                JOptionPane.showMessageDialog(null, "¡Error al modificar el registro!" + ex);
                 this.jTFNombre_Establecimiento.requestFocus();
             }
         }
@@ -186,11 +186,11 @@ public class jFFEstablecimiento extends javax.swing.JFrame {
             cl.setCodEstablecimiento(Integer.parseInt(this.jTFCod_Establecimiento.getText().trim()));
             cde.eliminarEstablecimiento(cl);
 
-            JOptionPane.showMessageDialog(null, "Registro eliminado correctamente", "COVA System", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "¡Registro eliminado!", "COVA System", JOptionPane.INFORMATION_MESSAGE);
             this.jTFNombre_Establecimiento.requestFocus();
 
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Error al eliminar " + e);
+            JOptionPane.showMessageDialog(null, "¡Error al eliminar! " + e);
             this.jTFNombre_Establecimiento.requestFocus();
         }
     }

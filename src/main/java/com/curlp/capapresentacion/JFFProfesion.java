@@ -102,7 +102,7 @@ public class JFFProfesion extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "¡Registrado correctamente!", "COVA System", JOptionPane.INFORMATION_MESSAGE);
                 this.jTFProfesion.requestFocus();
             } catch (SQLException e) {
-                JOptionPane.showMessageDialog(null, "Error al almacenar" + e);
+                JOptionPane.showMessageDialog(null, "¡Error al almacenar!" + e);
                 this.jTFProfesion.requestFocus();
             }
         } else {
@@ -132,7 +132,7 @@ public class JFFProfesion extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "¡Registro actualizado!", "COVA System", JOptionPane.INFORMATION_MESSAGE);
                 this.jTFProfesion.requestFocus();
             } catch (SQLException e) {
-                JOptionPane.showMessageDialog(null, "Error al modificar" + e);
+                JOptionPane.showMessageDialog(null, "¡Error al modificar!" + e);
                 this.jTFProfesion.requestFocus();
             }
         } else {
@@ -169,7 +169,7 @@ public class JFFProfesion extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "¡Registro eliminado!", "COVA System", JOptionPane.INFORMATION_MESSAGE);
                 this.jTFProfesion.requestFocus();
             } catch (SQLException e) {
-                JOptionPane.showMessageDialog(null, "Error al eliminar" + e);
+                JOptionPane.showMessageDialog(null, "¡Error al eliminar!" + e);
                 this.jTFProfesion.requestFocus();
             }
         } else {
