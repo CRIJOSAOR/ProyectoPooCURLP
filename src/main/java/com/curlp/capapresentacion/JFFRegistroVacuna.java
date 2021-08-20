@@ -7,12 +7,15 @@ package com.curlp.capapresentacion;
 
 import com.curlp.capapresentacion.*;
 import com.curlp.capadatos.CDDosis;
+import com.curlp.capadatos.CDRegistroVacuna;
+import com.curlp.capalogica.CLRegistroVacuna;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 /**
@@ -28,58 +31,205 @@ public class JFFRegistroVacuna extends javax.swing.JFrame {
         initComponents();
         llenarComboBoxDosis();
     }
-    public void llenarComboBoxDosis() throws SQLException{
+
+    public void llenarComboBoxDosis() throws SQLException {
         CDDosis dosis = new CDDosis();
         List<String> lista = dosis.cargarDosis();
-        
-        this.jComboBox1.removeAllItems();
-        
-        for (String x: lista){
-             this.jComboBox1.addItem(x);
+
+        this.jCboDosis.removeAllItems();
+
+        for (String x : lista) {
+            this.jCboDosis.addItem(x);
         }
     }
-    public void abrirVentanaSelectorPaciente() throws SQLException, ParseException{
+
+    public void abrirVentanaSelectorPaciente() throws SQLException, ParseException {
         JFFVisorDePaciente visorPaciente = new JFFVisorDePaciente(this);
         visorPaciente.setVisible(true);
     }
-    
-    public void abrirVentanaSelectorVacunador() throws SQLException, ParseException{
+
+    public void abrirVentanaSelectorVacunador() throws SQLException, ParseException {
         JFFVisorDeVacunador visorVacunador = new JFFVisorDeVacunador(this);
         visorVacunador.setVisible(true);
     }
-    
-    public void abrirVentanaSelectorLote() throws SQLException, ParseException{
+
+    public void abrirVentanaSelectorLote() throws SQLException, ParseException {
         JFFVisorDeLote visorLote = new JFFVisorDeLote(this);
         visorLote.setVisible(true);
     }
 
-    public void abrirVentanaSelectorEstablecimiento() throws SQLException, ParseException{
+    public void abrirVentanaSelectorEstablecimiento() throws SQLException, ParseException {
         JFFVisorDeEstablecimiento visorEst = new JFFVisorDeEstablecimiento(this);
         visorEst.setVisible(true);
     }
-    
-    public void llenarDatosPaciente(String numIdentidad, String nombre, String apellido, String fechaNacimiento){
+
+    public void llenarDatosPaciente(String numIdentidad, String nombre, String apellido, String fechaNacimiento) {
         jTFNumIdentidadPaciente.setText(numIdentidad);
         jTFNombrePaciente.setText(nombre);
         jTFApellidosPaciente.setText(apellido);
         jTFFechaNacimientoPaciente.setText(fechaNacimiento);
     }
-    
-    public void llenarDatosVacunador(String numIdentidad, String nombre, String apellido){
+
+    public void llenarDatosVacunador(String numIdentidad, String nombre, String apellido) {
         JTFNumIdentidadVacunador.setText(numIdentidad);
         jTFNombreVacunador.setText(nombre);
         jTFApellidoVacunador.setText(apellido);
     }
 
-    public void llenarDatosLote(String numLote, String fechaVencimiento, String marca){
+    public void llenarDatosLote(String numLote, String fechaVencimiento, String marca) {
         jTFNumLote.setText(numLote);
         jTFechaVencimiento.setText(fechaVencimiento);
         jTFmarcaVacuna.setText(marca);
     }
-    
-    public void llenarDatosEstablecimiento(String codigo, String nombre){
+
+    public void llenarDatosEstablecimiento(String codigo, String nombre) {
         jTFCodigoEstablecimiento.setText(codigo);
         jTFNombreEstablecimiento.setText(nombre);
+    }
+
+    private boolean validarTextField() {
+        boolean estado;
+        estado = this.jTFNumerodeRegistro.getText().equals("");
+        return estado;
+    }
+    // Métodos para limpiar textFiled
+    private void limpiarTextField() {
+        this.jTFNumerodeRegistro.setText("");
+        this.jTFNumIdentidadPaciente.setText("");
+        this.jTFNombrePaciente.setText("");
+        this.jTFApellidosPaciente.setText("");
+        this.jTFCodigoEstablecimiento.setText("");
+        this.jTFNombreEstablecimiento.setText("");
+        this.jTFFechaNacimientoPaciente.setText("");
+        this.jDCFechaVacunacion.setCalendar(null);
+        this.jTFNumLote.setText("");
+        this.jTFechaVencimiento.setText("");
+        this.jTFmarcaVacuna.setText("");
+        this.jCboDosis.setSelectedIndex(0);
+        this.JTFNumIdentidadVacunador.setText("");
+        this.jTFNombreVacunador.setText("");
+        this.jTFApellidoVacunador.setText("");
+
+        this.jTFNumerodeRegistro.requestFocus();
+    }
+    // Metodo de insertar un  RegistroVacuna
+    private void insertarLoteVacuna() {
+        if (!validarTextField()) {
+            // recuperar datos de los Combo Box
+            try {
+                int dosis = this.jCboDosis.getSelectedIndex();
+                java.sql.Date fechaVacunacion = new java.sql.Date(this.jDCFechaVacunacion.getDate().getTime());
+                CDRegistroVacuna cdrv = new CDRegistroVacuna();
+                CLRegistroVacuna cl = new CLRegistroVacuna();
+                cl.setIdRegistroVacuna(Integer.parseInt(this.jTFNumerodeRegistro.getText().trim()));
+                cl.setFechaVacunacion(fechaVacunacion);
+                cl.setDniVacunador(this.JTFNumIdentidadVacunador.getText().trim());
+                cl.setCodEstablecimiento(Integer.parseInt(this.jTFCodigoEstablecimiento.getText().trim()));
+                cl.setNumLoteVacuna(this.jTFNumLote.getText().trim().toUpperCase());
+                cl.setDniPaciente(this.jTFNumIdentidadPaciente.getText().trim().toUpperCase());
+                cl.setDosis(dosis);
+
+                cdrv.insertarRegistroVacuna(cl);
+                JOptionPane.showMessageDialog(null, "¡Registrado correctamente!", "COVA System", JOptionPane.INFORMATION_MESSAGE);
+                this.jTFNumerodeRegistro.requestFocus();
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, "Error al almacenar el nuevo lote" + e);
+                this.jTFNumerodeRegistro.requestFocus();
+            }
+
+        } else {
+            JOptionPane.showMessageDialog(null, "Tiene que ingresar los datos del lote de vacunas", "COVA System", JOptionPane.INFORMATION_MESSAGE);
+            this.jTFNumerodeRegistro.requestFocus();
+        }
+    }
+
+    //Metodo para llamar el metodo para insertar  RegistroVacuna
+    private void insertar() throws SQLException {
+        insertarLoteVacuna();
+       // poblarTablaLoteVacuna();
+       // habilitarBotones(true, false, false, true);
+        limpiarTextField();
+    }
+     // Metodo para llamar el metodo para actualizar un lote
+    private void actualizarLoteVacuna() {
+        if (!validarTextField()) {
+            try {
+                int dosis = this.jCboDosis.getSelectedIndex();
+                java.sql.Date fechaVacunacion = new java.sql.Date(this.jDCFechaVacunacion.getDate().getTime());
+                CDRegistroVacuna cdrv = new CDRegistroVacuna();
+                CLRegistroVacuna cl = new CLRegistroVacuna();
+                 cl.setIdRegistroVacuna(Integer.parseInt(this.jTFNumerodeRegistro.getText().trim()));
+                cl.setFechaVacunacion(fechaVacunacion);
+                cl.setDniVacunador(this.JTFNumIdentidadVacunador.getText().trim());
+                cl.setCodEstablecimiento(Integer.parseInt(this.jTFCodigoEstablecimiento.getText().trim()));
+                cl.setNumLoteVacuna(this.jTFNumLote.getText().trim().toUpperCase());
+                cl.setDniPaciente(this.jTFNumIdentidadPaciente.getText().trim().toUpperCase());
+                cl.setDosis(dosis);
+                cdrv.actualizarRegistroVacuna(cl);
+                JOptionPane.showMessageDialog(null, "¡Registrado actualizado!", "COVA System", JOptionPane.INFORMATION_MESSAGE);
+                this.jTFNumerodeRegistro.requestFocus();
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, "Error al modificar" + e);
+                this.jTFNumerodeRegistro.requestFocus();
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Ingresar los nuevos datos del lote", "COVA System", JOptionPane.INFORMATION_MESSAGE);
+            this.jTFNumerodeRegistro.requestFocus();
+        }
+    }
+
+
+
+    // Metodo actualizar el registro loteVacuna
+    private void editar() throws SQLException {
+        actualizarLoteVacuna();
+               limpiarTextField();
+    }
+
+    // Metodo para eliminar lote
+    private void eliminarLoteVacuna() {
+        if (!validarTextField()) {
+            try {
+                CDRegistroVacuna cdrv = new CDRegistroVacuna();
+                CLRegistroVacuna cl = new CLRegistroVacuna();
+                cl.setIdRegistroVacuna(Integer.parseInt(this.jTFNumerodeRegistro.getText().trim()));
+                cdrv.eliminarRegistroVacuna(cl);
+                JOptionPane.showMessageDialog(null, "¡Registrado eliminado!", "COVA System", JOptionPane.INFORMATION_MESSAGE);
+                this.jTFNumerodeRegistro.requestFocus();
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, "Error al eliminar" + e);
+                this.jTFNumerodeRegistro.requestFocus();
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Ingresar el número de lote", "COVA System", JOptionPane.INFORMATION_MESSAGE);
+            this.jTFNumerodeRegistro.requestFocus();
+        }
+    }
+
+    // Metodo llamar eliminar 
+    private void eliminar() throws SQLException {
+        int resp = JOptionPane.showConfirmDialog(null, "¿Seguro que desea eliminar este lote?", "COVA System", JOptionPane.YES_NO_OPTION);
+        if (resp == JOptionPane.YES_OPTION) {
+            eliminarLoteVacuna();
+            limpiarTextField();
+        } else {
+            limpiarTextField();
+        }
+    }
+
+      public final void agregarIconos() {
+        ImageIcon iconobtn = new ImageIcon("src/main/java/com/curlp/capaimagenes/logout.png");
+        ImageIcon iconbtnGuardar = new ImageIcon("src/main/java/com/curlp/capaimagenes/save.png");
+        ImageIcon iconbtnEditar = new ImageIcon("src/main/java/com/curlp/capaimagenes/edit.png");
+        ImageIcon iconbtnEliminar = new ImageIcon("src/main/java/com/curlp/capaimagenes/delete.png");
+        ImageIcon iconLimpiar = new ImageIcon("src/main/java/com/curlp/capaimagenes/Limpiar.png");
+        ImageIcon iconUser = new ImageIcon("src/main/java/com/curlp/capaimagenes/user.png");
+        this.jBtnGuardar.setIcon(iconbtnGuardar);
+        this.jBtnEditar.setIcon(iconbtnEditar);
+        this.jBtnEliminar.setIcon(iconbtnEliminar);
+       //this.jBtnLimpiar.setIcon(iconLimpiar);
+        this.jBtnSalir.setIcon(iconobtn);
+        this.jLblUser.setIcon(iconUser);
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -94,7 +244,8 @@ public class JFFRegistroVacuna extends javax.swing.JFrame {
         jPfranjaSuperior = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jLbUser = new javax.swing.JLabel();
+        jBtnSalir = new javax.swing.JButton();
+        jLblUser = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
@@ -106,7 +257,7 @@ public class JFFRegistroVacuna extends javax.swing.JFrame {
         jDCFechaVacunacion = new com.toedter.calendar.JDateChooser();
         jLabel10 = new javax.swing.JLabel();
         jTFmarcaVacuna = new javax.swing.JTextField();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        jCboDosis = new javax.swing.JComboBox<>();
         jLabel3 = new javax.swing.JLabel();
         jTFNumerodeRegistro = new javax.swing.JTextField();
         jPanel3 = new javax.swing.JPanel();
@@ -134,6 +285,9 @@ public class JFFRegistroVacuna extends javax.swing.JFrame {
         jTFNombrePaciente = new javax.swing.JTextField();
         jTFNumIdentidadPaciente = new javax.swing.JTextField();
         jPfranjaSuperior1 = new javax.swing.JPanel();
+        jBtnGuardar = new javax.swing.JButton();
+        jBtnEditar = new javax.swing.JButton();
+        jBtnEliminar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -154,14 +308,23 @@ public class JFFRegistroVacuna extends javax.swing.JFrame {
                 jLabel1MousePressed(evt);
             }
         });
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 0, 50, 50));
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 10, 50, 50));
 
         jLabel2.setBackground(new java.awt.Color(0, 153, 153));
         jLabel2.setFont(new java.awt.Font("Tahoma", 3, 24)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(0, 153, 153));
         jLabel2.setText("Registro de Vacunación");
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 10, 350, 30));
-        jPanel1.add(jLbUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 10, 40, 40));
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 10, 350, 30));
+
+        jBtnSalir.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jBtnSalir.setText("Salir");
+        jBtnSalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBtnSalirActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jBtnSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 10, -1, -1));
+        jPanel1.add(jLblUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 14, 40, 40));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 740, -1));
 
@@ -211,8 +374,8 @@ public class JFFRegistroVacuna extends javax.swing.JFrame {
         jTFmarcaVacuna.setEditable(false);
         jPanel2.add(jTFmarcaVacuna, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 100, 170, 30));
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jPanel2.add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 100, -1, -1));
+        jCboDosis.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jPanel2.add(jCboDosis, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 100, -1, -1));
 
         getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 390, 710, 140));
 
@@ -336,6 +499,41 @@ public class JFFRegistroVacuna extends javax.swing.JFrame {
         jPfranjaSuperior1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
         getContentPane().add(jPfranjaSuperior1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 770, 740, 20));
 
+        jBtnGuardar.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jBtnGuardar.setForeground(new java.awt.Color(0, 153, 153));
+        jBtnGuardar.setText("Guardar");
+        jBtnGuardar.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jBtnGuardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBtnGuardarActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jBtnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 80, 110, 30));
+
+        jBtnEditar.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jBtnEditar.setForeground(new java.awt.Color(0, 153, 153));
+        jBtnEditar.setText("Editar");
+        jBtnEditar.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jBtnEditar.setEnabled(false);
+        jBtnEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBtnEditarActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jBtnEditar, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 81, 110, 30));
+
+        jBtnEliminar.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jBtnEliminar.setForeground(new java.awt.Color(0, 153, 153));
+        jBtnEliminar.setText("Eliminar");
+        jBtnEliminar.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jBtnEliminar.setEnabled(false);
+        jBtnEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBtnEliminarActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jBtnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 80, 110, 30));
+
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
@@ -384,6 +582,34 @@ public class JFFRegistroVacuna extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jBtnBuscarPacienteActionPerformed
 
+    private void jBtnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnGuardarActionPerformed
+        try {
+            insertar();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error al almacenar" + e);
+        }
+    }//GEN-LAST:event_jBtnGuardarActionPerformed
+
+    private void jBtnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnEditarActionPerformed
+        try {
+            editar();
+        } catch (SQLException ex) {
+            Logger.getLogger(null, "Error al actualizar" + ex);
+        }
+    }//GEN-LAST:event_jBtnEditarActionPerformed
+
+    private void jBtnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnEliminarActionPerformed
+        try {
+            eliminar();
+        } catch (SQLException ex) {
+            Logger.getLogger(null, "Error al ELIMINAR" + ex);
+        }
+    }//GEN-LAST:event_jBtnEliminarActionPerformed
+
+    private void jBtnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnSalirActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_jBtnSalirActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -429,7 +655,11 @@ public class JFFRegistroVacuna extends javax.swing.JFrame {
     private javax.swing.JButton jBtnBuscarLote;
     private javax.swing.JButton jBtnBuscarPaciente;
     private javax.swing.JButton jBtnBuscarVacunador;
-    private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JButton jBtnEditar;
+    private javax.swing.JButton jBtnEliminar;
+    private javax.swing.JButton jBtnGuardar;
+    private javax.swing.JButton jBtnSalir;
+    private javax.swing.JComboBox<String> jCboDosis;
     private com.toedter.calendar.JDateChooser jDCFechaVacunacion;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -448,7 +678,7 @@ public class JFFRegistroVacuna extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JLabel jLbUser;
+    private javax.swing.JLabel jLblUser;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;

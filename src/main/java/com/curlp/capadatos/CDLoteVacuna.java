@@ -39,7 +39,7 @@ public class CDLoteVacuna {
             ps.setDate(3, cl.getFechaVencimiento());
             ps.setInt(4, cl.getIdFbricante());
             ps.execute();
-            JOptionPane.showMessageDialog(null, "Registrado con Exito");
+           
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Error" + e.getMessage());
         }
