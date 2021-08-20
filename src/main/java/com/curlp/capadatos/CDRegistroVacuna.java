@@ -20,7 +20,8 @@ import javax.swing.JOptionPane;
  * @author sanch
  */
 public class CDRegistroVacuna {
-     // Declarar las variales de conexion y consulta:
+    // Declarar las variales de conexion y consulta:
+
     private final Connection cn;
     PreparedStatement ps;
     ResultSet rs;
@@ -43,8 +44,8 @@ public class CDRegistroVacuna {
             ps.setInt(4, cl.getCodEstablecimiento());
             ps.setString(5, cl.getNumLoteVacuna());
             ps.setString(6, cl.getDniPaciente());
-             ps.setInt(7, cl.getDosis());
-            
+            ps.setInt(7, cl.getDosis());
+        
             ps.execute();
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "aqui esta el error" + e.getMessage());
@@ -56,14 +57,14 @@ public class CDRegistroVacuna {
         String sql = "{CALL actualizarRegistroVacuna(?,?,?,?,?,?,?)}";
         try {
 
-               ps = cn.prepareCall(sql);
+            ps = cn.prepareCall(sql);
             ps.setInt(1, cl.getIdRegistroVacuna());
             ps.setDate(2, cl.getFechaVacunacion());
             ps.setString(3, cl.getDniVacunador());
             ps.setInt(4, cl.getCodEstablecimiento());
             ps.setString(5, cl.getNumLoteVacuna());
             ps.setString(6, cl.getDniPaciente());
-             ps.setInt(7, cl.getDosis());
+            ps.setInt(7, cl.getDosis());
             ps.execute();
 
         } catch (SQLException e) {
@@ -117,7 +118,7 @@ public class CDRegistroVacuna {
             miLista = new ArrayList<>();
             while (rs.next()) {
                 CLRegistroVacuna cl = new CLRegistroVacuna();
-                                
+
                 cl.setIdRegistroVacuna(rs.getInt("r.idRegistroVacuna"));
                 cl.setFechaVacunacion(rs.getDate("r.fechaVacunacion"));
                 cl.setDniVacunador(rs.getString("r.dniVacunador"));
@@ -158,17 +159,17 @@ public class CDRegistroVacuna {
     public List<CLRegistroVacuna> obtenerListaRegistroVacunaPorNombre(String codRegistro) throws SQLException {
         String sql = "CALL mostrarRegistroVacunaPorNombre(?)";
         List<CLRegistroVacuna> miLista = null;
-        
-        try{
+
+        try {
             ps = cn.prepareStatement(sql);
             ps.setString(1, codRegistro);
             rs = ps.executeQuery();
-            
+
             miLista = new ArrayList<>();
-            
-            while(rs.next()){
+
+            while (rs.next()) {
                 CLRegistroVacuna cl = new CLRegistroVacuna();
-                                
+
                 cl.setIdRegistroVacuna(rs.getInt("r.idRegistroVacuna"));
                 cl.setFechaVacunacion(rs.getDate("r.fechaVacunacion"));
                 cl.setDniVacunador(rs.getString("r.dniVacunador"));
@@ -178,13 +179,13 @@ public class CDRegistroVacuna {
                 cl.setDosis(rs.getInt("d.idDosis"));
 
                 miLista.add(cl);
-                
+
             }
-        } catch(SQLException e){
-            
+        } catch (SQLException e) {
+
             JOptionPane.showMessageDialog(null, "Error al mostrar Registros de Vacuna", "COVA System", JOptionPane.INFORMATION_MESSAGE);
         }
-        
+
         return miLista;
-    } 
+    }
 }

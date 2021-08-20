@@ -156,6 +156,7 @@ public class JFFVisorDeRegistroVacuna extends javax.swing.JFrame {
             CDVacunador  vacunador = new CDVacunador();
             CLVacunador datosV = vacunador.mostrarVacunadorX(idVacunador);
             ventanaPrincipal.llenarDatosVacunador(datosV.getDniVacunador(), datosV.getNombresV(), datosV.getApellidosV());
+            ventanaPrincipal.habilitarBotones(false, true, true, true);
             this.setVisible(false);
             this.dispose();
         } else {
@@ -366,9 +367,9 @@ public class JFFVisorDeRegistroVacuna extends javax.swing.JFrame {
                                 .addComponent(jLabel14)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jTFBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, 434, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jBtnMostrarTodos1, javax.swing.GroupLayout.PREFERRED_SIZE, 278, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGap(18, 18, 18)
+                                .addComponent(jBtnMostrarTodos1, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addContainerGap(43, Short.MAX_VALUE))
         );
         jPMostrarPacientesLayout.setVerticalGroup(
             jPMostrarPacientesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

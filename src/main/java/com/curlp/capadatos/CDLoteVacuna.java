@@ -39,7 +39,7 @@ public class CDLoteVacuna {
             ps.setDate(3, cl.getFechaVencimiento());
             ps.setInt(4, cl.getIdFbricante());
             ps.execute();
-           
+
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Error" + e.getMessage());
         }
@@ -142,18 +142,19 @@ public class CDLoteVacuna {
         }
         return miLista;
     }
+
     public List<CLLoteVacuna> obtenerListaLotesPorCod(String codLote) throws SQLException {
         String sql = "CALL mostrarLotePorCod(?)";
         List<CLLoteVacuna> miLista = null;
-        
-        try{
+
+        try {
             ps = cn.prepareStatement(sql);
             ps.setString(1, codLote);
             rs = ps.executeQuery();
-            
+
             miLista = new ArrayList<>();
-            
-            while(rs.next()){
+
+            while (rs.next()) {
                 CLLoteVacuna cl = new CLLoteVacuna();
                 cl.setNumLoteVacuna(rs.getString("lv.numLoteVacuna"));
                 cl.setFechaFabricacion(rs.getDate("lv.fechaFabricacion"));
@@ -162,16 +163,17 @@ public class CDLoteVacuna {
                 cl.setNombreFabricante(rs.getString("f.nombreFabricante"));
 
                 miLista.add(cl);
-                
+
             }
-        } catch(SQLException e){
-            
+        } catch (SQLException e) {
+
             JOptionPane.showMessageDialog(null, "Error al mostrar lotes", "COVA System", JOptionPane.INFORMATION_MESSAGE);
         }
-        
+
         return miLista;
-    } 
-    public CLLoteVacuna mostrarLoteVacunaX(String codLote) throws SQLException {
+    }
+
+ public CLLoteVacuna mostrarLoteVacunaX(String codLote) throws SQLException {
         String sql = "CALL mostrarLoteVacunaX(?)";
         
         CLLoteVacuna cl = new CLLoteVacuna();
@@ -197,4 +199,5 @@ public class CDLoteVacuna {
         
         return cl;
     }
+
 }
